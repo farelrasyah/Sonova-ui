@@ -1,4 +1,4 @@
-                       # 🎥 Sonova - YouTube Video Downloader
+# 🎥 Sonova - YouTube Video Downloader
 
 <div align="center">
   <img src="https://img.shields.io/badge/Next.js-15.4.1-black?style=for-the-badge&logo=next.js&logoColor=white" alt="Next.js" />
