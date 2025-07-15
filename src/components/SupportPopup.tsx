@@ -29,7 +29,7 @@ export default function SupportPopup({ open, onClose }: SupportPopupProps) {
           </div>
           <div className="px-8 pb-8 w-full flex flex-col items-center">
             <p className="text-slate-600 text-center max-w-md mb-6 text-base font-normal">
-              I'm a student in software engineering with a strong focus on full-stack development for web and mobile platforms. I also develop Chrome extensions and enjoy creating practical tools that improve user experience and productivity.
+              I&apos;m a student in software engineering with a strong focus on full-stack development for web and mobile platforms. I also develop Chrome extensions and enjoy creating practical tools that improve user experience and productivity.
             </p>
             <div className="w-full border-t border-slate-100 mb-6"></div>
             {/* Info Grid */}
