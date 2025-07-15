@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 export default function Header() {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeItem, setActiveItem] = useState('YouTube Video Downloader');
 
   const toggleDarkMode = () => {
     setIsDarkMode(!isDarkMode);
@@ -12,90 +13,113 @@ export default function Header() {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
+  const handleItemClick = (item: string) => {
+    setActiveItem(item);
+    setIsMobileMenuOpen(false);
+  };
+
+  const menuItems = [
+    'YouTube Video Downloader',
+    '4K Videos Downloader', 
+    'YouTube to MP3',
+    'YouTube Playlist Downloader',
+    'YouTube to WAV',
+    'YouTube 1080P Downloader'
+  ];
+
   return (
-    <header className="bg-white sticky top-0 z-50 shadow-sm border-b border-gray-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+    <header className="fixed top-0 left-0 right-0 z-50 transition-all-300 glass-soft">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <div className="flex items-center">
-            <span className="text-xl font-bold">
-              <span className="text-blue-900">loader</span>
-              <span className="text-purple-600">.fo</span>
-            </span>
+          <div className="flex items-center animate-fade-in-left">
+            <div className="relative">
+              <span className="text-2xl font-bold tracking-tight">
+                <span className="gradient-text-soft">loader</span>
+                <span className="text-slate-400">.fo</span>
+              </span>
+              <div className="absolute -bottom-1 left-0 w-12 h-0.5 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full opacity-60"></div>
+            </div>
           </div>
 
           {/* Navigation Menu */}
-          <nav className="hidden lg:flex items-center space-x-6 text-sm font-medium">
-            <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors px-3 py-2 rounded-md hover:bg-blue-50">
-              YouTube Video Downloader
-            </a>
-            <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors px-3 py-2 rounded-md hover:bg-blue-50">
-              4K Videos Downloader
-            </a>
-            <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors px-3 py-2 rounded-md hover:bg-blue-50">
-              YouTube to MP3
-            </a>
-            <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors px-3 py-2 rounded-md hover:bg-blue-50">
-              YouTube Playlist Downloader
-            </a>
-            <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors px-3 py-2 rounded-md hover:bg-blue-50">
-              YouTube to WAV
-            </a>
-            <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors px-3 py-2 rounded-md hover:bg-blue-50">
-              YouTube 1080P Downloader
-            </a>
+          <nav className="hidden lg:flex items-center space-x-2 animate-fade-in-up">
+            {menuItems.map((item, index) => (
+              <a
+                key={item}
+                href="#"
+                onClick={() => handleItemClick(item)}
+                className={`relative px-4 py-3 text-sm font-medium transition-gentle rounded-soft group ${
+                  activeItem === item
+                    ? 'text-slate-700 bg-white/60 shadow-soft'
+                    : 'text-slate-600 hover:text-slate-700 hover:bg-white/40'
+                }`}
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                {item}
+                {activeItem === item && (
+                  <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full"></div>
+                )}
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-50 to-purple-50 opacity-0 group-hover:opacity-100 transition-gentle rounded-soft -z-10"></div>
+              </a>
+            ))}
           </nav>
 
           {/* Right Side - Dark Mode Toggle and Mobile Menu */}
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-4 animate-fade-in-right">
             {/* Dark Mode Toggle */}
             <button 
               onClick={toggleDarkMode}
-              className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2 rounded-full transition-all duration-200 text-sm flex items-center space-x-2"
+              className="relative bg-gradient-to-r from-slate-100 to-slate-200 hover:from-slate-200 hover:to-slate-300 text-slate-700 font-medium px-5 py-2.5 rounded-soft transition-gentle text-sm flex items-center space-x-2 shadow-soft btn-hover overflow-hidden"
             >
-              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
-              </svg>
               <span>Dark</span>
+              <div className="relative">
+                <svg className="w-4 h-4 transition-gentle" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                </svg>
+              </div>
             </button>
 
             {/* Mobile Menu Button */}
             <button 
               onClick={toggleMobileMenu}
-              className="lg:hidden text-gray-700 hover:text-blue-600 p-2"
+              className="lg:hidden p-2.5 rounded-soft text-slate-600 hover:text-slate-700 hover:bg-white/50 transition-gentle"
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              <svg className="w-6 h-6 transition-gentle" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} 
+                  d={isMobileMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
               </svg>
             </button>
           </div>
         </div>
 
         {/* Mobile Menu */}
-        {isMobileMenuOpen && (
-          <div className="lg:hidden border-t border-gray-200 py-4">
+        <div className={`lg:hidden transition-all duration-500 ease-out overflow-hidden ${
+          isMobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+        }`}>
+          <div className="py-6 border-t border-slate-200/30">
             <nav className="flex flex-col space-y-2">
-              <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors px-3 py-2 rounded-md hover:bg-blue-50">
-                YouTube Video Downloader
-              </a>
-              <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors px-3 py-2 rounded-md hover:bg-blue-50">
-                4K Videos Downloader
-              </a>
-              <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors px-3 py-2 rounded-md hover:bg-blue-50">
-                YouTube to MP3
-              </a>
-              <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors px-3 py-2 rounded-md hover:bg-blue-50">
-                YouTube Playlist Downloader
-              </a>
-              <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors px-3 py-2 rounded-md hover:bg-blue-50">
-                YouTube to WAV
-              </a>
-              <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors px-3 py-2 rounded-md hover:bg-blue-50">
-                YouTube 1080P Downloader
-              </a>
+              {menuItems.map((item, index) => (
+                <a
+                  key={item}
+                  href="#"
+                  onClick={() => handleItemClick(item)}
+                  className={`relative px-5 py-3 text-sm font-medium transition-gentle rounded-soft ${
+                    activeItem === item
+                      ? 'text-slate-700 bg-white/60 shadow-soft'
+                      : 'text-slate-600 hover:text-slate-700 hover:bg-white/40'
+                  }`}
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  {item}
+                  {activeItem === item && (
+                    <div className="absolute left-2 top-1/2 transform -translate-y-1/2 w-1 h-6 bg-gradient-to-b from-blue-400 to-purple-400 rounded-full"></div>
+                  )}
+                </a>
+              ))}
             </nav>
           </div>
-        )}
+        </div>
       </div>
     </header>
   );

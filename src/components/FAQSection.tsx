@@ -8,75 +8,93 @@ interface FAQItem {
 }
 
 const faqData: { [key: string]: FAQItem[] } = {
-  youtubeDownloader: [
+  general: [
     {
-      question: "Are there any subscription plans, or is it free to use this product?",
-      answer: "Our service is completely free to use. There are no subscription plans or hidden costs."
+      question: "Is loader.fo completely free to use?",
+      answer: "Yes, our service is completely free with no hidden costs, subscriptions, or limitations on downloads."
     },
     {
-      question: "Can this downloader be used without providing personal information?",
-      answer: "Yes, you can use our downloader without providing any personal information or creating an account."
+      question: "Do I need to create an account?",
+      answer: "No account required. You can start downloading immediately without any personal information."
     },
     {
-      question: "Can this downloader be used without providing personal information?",
-      answer: "Yes, you can use our downloader without providing any personal information or creating an account."
+      question: "What video formats are supported?",
+      answer: "We support MP4, MP3, WEBM, and many other popular formats to suit your needs."
     },
     {
-      question: "Can this downloader be used without providing personal information?",
-      answer: "Yes, you can use our downloader without providing any personal information or creating an account."
+      question: "Are there any download limits?",
+      answer: "No limits whatsoever. Download as many videos as you want, whenever you want."
     }
   ],
-  loaderFo: [
+  technical: [
     {
-      question: "Are there any subscription plans, or is it free to use this product?",
-      answer: "Our service is completely free to use. There are no subscription plans or hidden costs."
+      question: "How fast are the downloads?",
+      answer: "Our high-performance servers ensure maximum download speeds based on your internet connection."
     },
     {
-      question: "Can this downloader be used without providing personal information?",
-      answer: "Yes, you can use our downloader without providing any personal information or creating an account."
+      question: "Do I need to install software?",
+      answer: "No installation required. Everything works directly in your web browser for instant access."
     },
     {
-      question: "Can this downloader be used without providing personal information?",
-      answer: "Yes, you can use our downloader without providing any personal information or creating an account."
+      question: "Is my data secure?",
+      answer: "Absolutely. We prioritize your privacy and never collect, store, or share your personal information."
     },
     {
-      question: "Can this downloader be used without providing personal information?",
-      answer: "Yes, you can use our downloader without providing any personal information or creating an account."
+      question: "Which platforms are supported?",
+      answer: "We support YouTube, Facebook, Twitter, TikTok, Instagram, and many other popular platforms."
     }
   ]
 };
 
-function FAQAccordion({ items, category }: { items: FAQItem[], category: string }) {
+function FAQAccordion({ items, title }: { items: FAQItem[], title: string }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <div className="space-y-3">
-      <div className="flex items-center gap-2 mb-4">
-        <h3 className="text-base font-semibold text-gray-900">
-          {category === 'youtubeDownloader' ? 'YouTubeDownloader: FAQs' : 'loader.fo: FAQs'}
-        </h3>
-        <div className="w-5 h-5 bg-blue-100 rounded-full flex items-center justify-center">
-          <span className="text-blue-600 text-xs font-bold">?</span>
+    <div className="space-y-4">
+      <div className="flex items-center gap-3 mb-8">
+        <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-500 rounded-soft-lg flex items-center justify-center">
+          <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
         </div>
+        <h3 className="text-xl font-bold text-slate-800">
+          {title}
+        </h3>
       </div>
+      
       {items.map((item, index) => (
-        <div key={index} className="border border-gray-200 rounded-lg overflow-hidden">
-          <button
-            className="w-full px-4 py-3 text-left flex items-center justify-between hover:bg-gray-50 transition-colors"
-            onClick={() => setOpenIndex(openIndex === index ? null : index)}
-          >
-            <span className="text-gray-900 font-medium pr-4 text-sm">{item.question}</span>
-            <div className="w-5 h-5 bg-gray-200 rounded-full flex items-center justify-center flex-shrink-0">
-              <span className="text-gray-600 text-xs font-bold">
-                {openIndex === index ? '−' : '+'}
-              </span>
+        <div key={index} className="group">
+          <div className="bg-white/70 backdrop-blur-xl border border-white/20 rounded-soft-xl overflow-hidden shadow-soft hover:shadow-soft-lg transition-gentle">
+            <button
+              className="w-full px-8 py-6 text-left flex items-center justify-between hover:bg-white/50 transition-gentle"
+              onClick={() => setOpenIndex(openIndex === index ? null : index)}
+            >
+              <span className="text-slate-800 font-medium pr-4 flex-1">{item.question}</span>
+              <div className={`w-10 h-10 rounded-soft-lg flex items-center justify-center transition-gentle flex-shrink-0 ${
+                openIndex === index ? 'bg-gradient-to-br from-blue-500 to-purple-500' : 'bg-slate-100'
+              }`}>
+                <svg 
+                  className={`w-5 h-5 transition-gentle ${
+                    openIndex === index ? 'text-white rotate-45' : 'text-slate-600'
+                  }`} 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                </svg>
+              </div>
+            </button>
+            <div className={`transition-all duration-500 ease-out ${
+              openIndex === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+            } overflow-hidden`}>
+              <div className="px-8 pb-6 border-t border-white/20">
+                <div className="pt-6 text-slate-600 leading-relaxed">
+                  {item.answer}
+                </div>
+              </div>
             </div>
-          </button>
-          {openIndex === index && (
-            <div className="px-4 pb-3 text-gray-600 border-t border-gray-100 text-sm">
-              {item.answer}
-            </div>
-          )}
+          </div>
         </div>
       ))}
     </div>
@@ -85,23 +103,50 @@ function FAQAccordion({ items, category }: { items: FAQItem[], category: string 
 
 export default function FAQSection() {
   return (
-    <section className="bg-gradient-to-b from-purple-50 to-white py-20 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-6xl mx-auto">
-        {/* Title with Custom Underline */}
-        <div className="text-center mb-16">
-          <div className="relative inline-block">
-            <h2 className="text-4xl font-bold text-gray-900">
-              Frequently Asked Questions
+    <section className="bg-gradient-to-b from-white via-slate-50/30 to-white py-24 px-6 lg:px-8 relative overflow-hidden">
+      {/* Background Elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-32 left-16 w-24 h-24 bg-gradient-to-br from-blue-100/20 to-purple-100/20 rounded-soft-xl blur-xl animate-gentle-float"></div>
+        <div className="absolute bottom-32 right-16 w-32 h-32 bg-gradient-to-br from-slate-100/30 to-indigo-100/30 rounded-soft-xl blur-xl animate-float" style={{ animationDelay: '3s' }}></div>
+      </div>
+
+      <div className="max-w-7xl mx-auto relative z-10">
+        {/* Title */}
+        <div className="text-center mb-20 animate-fade-in-up">
+          <div className="inline-block">
+            <div className="mb-4">
+              <span className="text-slate-500 text-lg font-light tracking-wide">Get Answers</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-slate-800 tracking-tight">
+              Frequently Asked <span className="gradient-text-soft">Questions</span>
             </h2>
-            {/* Custom Purple Underline */}
-            <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-1/2 h-1 bg-purple-600 rounded-full"></div>
+            <div className="w-20 h-1 bg-gradient-to-r from-blue-400 via-purple-400 to-slate-400 rounded-full mx-auto opacity-60"></div>
           </div>
         </div>
 
         {/* FAQ Grid */}
-        <div className="grid md:grid-cols-2 gap-12">
-          <FAQAccordion items={faqData.youtubeDownloader} category="youtubeDownloader" />
-          <FAQAccordion items={faqData.loaderFo} category="loaderFo" />
+        <div className="grid lg:grid-cols-2 gap-12">
+          <div className="animate-fade-in-left" style={{ animationDelay: '0.2s' }}>
+            <FAQAccordion items={faqData.general} title="General Questions" />
+          </div>
+          <div className="animate-fade-in-right" style={{ animationDelay: '0.4s' }}>
+            <FAQAccordion items={faqData.technical} title="Technical Support" />
+          </div>
+        </div>
+
+        {/* Bottom Help Section */}
+        <div className="text-center mt-16 animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
+          <div className="inline-block bg-white/60 backdrop-blur-xl border border-white/20 rounded-soft-xl p-8 shadow-soft-xl">
+            <h3 className="text-xl font-semibold text-slate-800 mb-3">
+              Still have questions?
+            </h3>
+            <p className="text-slate-600 mb-6">
+              Our support team is here to help you with any questions or concerns.
+            </p>
+            <button className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold px-8 py-3 rounded-soft-lg transition-gentle shadow-soft-lg btn-hover magnetic">
+              Contact Support
+            </button>
+          </div>
         </div>
       </div>
     </section>
