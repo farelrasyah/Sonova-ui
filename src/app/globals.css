@@ -1,20 +1,51 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 @import "tailwindcss";
+
+/* Animations for SupportPopup */
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease;
+}
+
+@keyframes slide-up-soft {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-up-soft {
+  animation: slide-up-soft 0.4s cubic-bezier(0.4,0,0.2,1);
+}
 
 :root {
   --background: #fefefe;
   --foreground: #2d3748;
-  --primary: #667eea;
-  --primary-light: #f7fafc;
-  --secondary: #764ba2;
-  --accent: #a8b3cf;
+  --primary: #6366f1;
+  --primary-light: #f8fafc;
+  --secondary: #8b5cf6;
+  --accent: #a1a1aa;
   --muted: #f8fafc;
   --border: #e2e8f0;
-  --soft-blue: #e6f3ff;
-  --soft-purple: #f3f0ff;
-  --soft-gray: #f7fafc;
-  --warm-gray: #718096;
-  --light-gray: #edf2f7;
+  --soft-blue: #eff6ff;
+  --soft-purple: #f3f4f6;
+  --soft-gray: #f9fafb;
+  --warm-gray: #71717a;
+  --light-gray: #f3f4f6;
+  --soft-indigo: #eef2ff;
+  --soft-violet: #f5f3ff;
+  --soft-slate: #f8fafc;
+  --elegant-blue: #e0f2fe;
+  --elegant-purple: #f3e8ff;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -136,6 +167,58 @@ html {
 }
 
 /* Header specific styles */
+/* Sticky header */
+.header-elegant {
+  background: linear-gradient(135deg, 
+    rgba(248, 250, 252, 0.98) 0%, 
+    rgba(241, 245, 249, 0.98) 50%, 
+    rgba(248, 250, 252, 0.98) 100%);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.4);
+  box-shadow: 0 4px 24px rgba(100, 116, 139, 0.08);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  /* position: relative; */
+}
+
+.header-elegant::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(99, 102, 241, 0.2) 20%, 
+    rgba(139, 92, 246, 0.2) 80%, 
+    transparent);
+}
+
+/* Soft hover effects for header items */
+.header-elegant .nav-item-soft {
+  position: relative;
+  overflow: hidden;
+}
+
+.header-elegant .nav-item-soft::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(99, 102, 241, 0.05), 
+    transparent);
+  transition: left 0.6s ease;
+}
+
+.header-elegant .nav-item-soft:hover::before {
+  left: 100%;
+}
+
 header {
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
@@ -235,7 +318,7 @@ header {
 }
 
 .gradient-text-soft {
-  background: linear-gradient(135deg, #667eea, #764ba2, #a8b3cf);
+  background: linear-gradient(135deg, #6366f1, #8b5cf6, #a855f7);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

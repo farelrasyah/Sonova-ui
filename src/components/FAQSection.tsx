@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import SupportPopup from './SupportPopup';
 
 interface FAQItem {
   question: string;
@@ -102,8 +103,10 @@ function FAQAccordion({ items, title }: { items: FAQItem[], title: string }) {
 }
 
 export default function FAQSection() {
+  const [isSupportOpen, setIsSupportOpen] = useState(false);
   return (
-    <section className="bg-gradient-to-b from-white via-slate-50/30 to-white py-24 px-6 lg:px-8 relative overflow-hidden">
+    <>
+      <section className="bg-gradient-to-b from-white via-slate-50/30 to-white py-24 px-6 lg:px-8 relative overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-32 left-16 w-24 h-24 bg-gradient-to-br from-blue-100/20 to-purple-100/20 rounded-soft-xl blur-xl animate-gentle-float"></div>
@@ -143,12 +146,17 @@ export default function FAQSection() {
             <p className="text-slate-600 mb-6">
               Our support team is here to help you with any questions or concerns.
             </p>
-            <button className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold px-8 py-3 rounded-soft-lg transition-gentle shadow-soft-lg btn-hover magnetic">
+            <button
+              className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold px-8 py-3 rounded-soft-lg transition-gentle shadow-soft-lg btn-hover magnetic"
+              onClick={() => setIsSupportOpen(true)}
+            >
               Contact Support
             </button>
           </div>
         </div>
       </div>
     </section>
+    <SupportPopup open={isSupportOpen} onClose={() => setIsSupportOpen(false)} />
+    </>
   );
 }
