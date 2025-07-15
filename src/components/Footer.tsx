@@ -20,7 +20,7 @@ export default function Footer() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
               </div>
-              <span className="text-2xl font-bold gradient-text-soft">Loader.fo</span>
+              <span className="text-2xl font-bold gradient-text-soft">Sonal</span>
             </div>
             <p className="text-slate-600 leading-relaxed mb-6 max-w-md">
               Fast, secure, and completely free video downloader. Download from YouTube, Facebook, TikTok, and more without any limitations.
@@ -138,7 +138,7 @@ export default function Footer() {
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="flex items-center gap-6">
               <p className="text-slate-600 text-sm">
-                © 2024 Loader.fo. All rights reserved.
+                © 2024 Sonova. All rights reserved.
               </p>
               <div className="flex items-center gap-4">
                 <a href="#" className="text-slate-500 hover:text-blue-600 transition-gentle text-sm">Privacy Policy</a>

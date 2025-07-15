@@ -10,7 +10,7 @@ interface FAQItem {
 const faqData: { [key: string]: FAQItem[] } = {
   general: [
     {
-      question: "Is loader.fo completely free to use?",
+      question: "Is Sonova completely free to use?",
       answer: "Yes, our service is completely free with no hidden costs, subscriptions, or limitations on downloads."
     },
     {

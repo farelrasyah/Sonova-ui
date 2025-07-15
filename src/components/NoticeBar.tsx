@@ -2,31 +2,45 @@ import React from 'react';
 
 export default function NoticeBar() {
   return (
-    <div className="bg-gradient-to-r from-slate-800 via-slate-900 to-slate-800 py-8 px-6 lg:px-8 relative overflow-hidden">
-      {/* Subtle Background Pattern */}
-      <div className="absolute inset-0 opacity-5" style={{
-        backgroundImage: 'radial-gradient(circle at 2px 2px, rgb(255, 255, 255) 1px, transparent 0)',
-        backgroundSize: '24px 24px'
-      }}></div>
+    <div className="bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/20 py-12 px-6 lg:px-8 relative overflow-hidden">
+      {/* Elegant Background Elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-8 left-20 w-24 h-24 bg-gradient-to-br from-amber-200/30 to-orange-200/30 rounded-full blur-xl animate-gentle-float"></div>
+        <div className="absolute bottom-8 right-20 w-32 h-32 bg-gradient-to-br from-blue-200/20 to-purple-200/20 rounded-full blur-xl animate-float" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute top-12 right-32 w-20 h-20 bg-gradient-to-br from-slate-200/25 to-indigo-200/25 rounded-full blur-xl animate-gentle-float" style={{ animationDelay: '4s' }}></div>
+      </div>
       
-      <div className="max-w-4xl mx-auto relative z-10">
-        <div className="flex items-center justify-center gap-4 animate-fade-in-up">
-          {/* Elegant Warning Icon */}
-          <div className="flex-shrink-0">
-            <div className="w-10 h-10 bg-gradient-to-br from-amber-400 to-orange-400 rounded-soft shadow-soft-lg flex items-center justify-center">
-              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.5 0L4.268 18.5c-.77.833.192 2.5 1.732 2.5z" />
-              </svg>
+      <div className="max-w-5xl mx-auto relative z-10">
+        <div className="relative">
+          {/* Soft Container with Subtle Definition */}
+          <div className="bg-white/40 backdrop-blur-sm border border-white/30 rounded-3xl p-8 shadow-soft hover:shadow-soft-lg transition-gentle animate-fade-in-up">
+            <div className="flex items-center justify-center gap-6 flex-wrap">
+           
+              
+              {/* Content */}
+              <div className="text-center flex-1">
+                <div className="mb-2">
+                  <span className="text-amber-600 text-xs font-semibold tracking-widest uppercase opacity-80">
+                    Important Notice
+                  </span>
+                </div>
+                <p className="text-slate-700 font-medium text-base md:text-lg leading-relaxed">
+                  We respect copyright laws and do not support downloading copyrighted material
+                </p>
+                
+                {/* Decorative Elements */}
+                <div className="flex items-center justify-center gap-2 mt-4">
+                  <div className="w-6 h-0.5 bg-gradient-to-r from-transparent via-amber-400/50 to-transparent rounded-full"></div>
+                  <div className="w-1.5 h-1.5 bg-gradient-to-br from-amber-400 to-orange-400 rounded-full"></div>
+                  <div className="w-6 h-0.5 bg-gradient-to-r from-transparent via-amber-400/50 to-transparent rounded-full"></div>
+                </div>
+              </div>
             </div>
           </div>
           
-          {/* Notice Content */}
-          <div className="text-center">
-            <p className="text-white font-medium text-sm md:text-base tracking-wide leading-relaxed">
-              We respect copyright laws and do not support downloading copyrighted material
-            </p>
-            <div className="mt-2 w-16 h-0.5 bg-gradient-to-r from-amber-400 to-orange-400 rounded-full mx-auto opacity-60"></div>
-          </div>
+          {/* Floating Accent Elements */}
+          <div className="absolute -top-2 -right-2 w-4 h-4 bg-gradient-to-br from-blue-400/30 to-purple-400/30 rounded-full blur-sm animate-pulse"></div>
+          <div className="absolute -bottom-2 -left-2 w-3 h-3 bg-gradient-to-br from-amber-400/30 to-orange-400/30 rounded-full blur-sm animate-pulse" style={{ animationDelay: '1s' }}></div>
         </div>
       </div>
     </div>

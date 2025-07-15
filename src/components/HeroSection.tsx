@@ -1,6 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 export default function HeroSection() {
+  const [selectedFormat, setSelectedFormat] = useState('MP4');
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const formats = [
+    { 
+      value: 'MP4', 
+      label: 'MP4 Format', 
+      icon: '🎥'
+    },
+    { 
+      value: 'MP3', 
+      label: 'MP3 Audio', 
+      icon: '🎵'
+    },
+    { 
+      value: 'WEBM', 
+      label: 'WEBM Format', 
+      icon: '🌐'
+    }
+  ];
+
+  const selectedFormatData = formats.find(f => f.value === selectedFormat);
+
   return (
     <section className="relative min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/30 flex items-center justify-center px-6 lg:px-8 pt-20 overflow-hidden">
       {/* Animated Background Elements */}
@@ -46,17 +69,44 @@ export default function HeroSection() {
         <div className="mb-20 animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
           <div className="bg-white/70 backdrop-blur-xl rounded-soft-xl p-8 shadow-soft-xl border border-white/20 max-w-4xl mx-auto">
             <div className="flex flex-col lg:flex-row items-center gap-6">
+              {/* Elegant Format Dropdown */}
               <div className="relative flex-shrink-0">
-                <select className="appearance-none px-6 py-4 border-0 rounded-soft-lg bg-slate-50/80 text-slate-700 font-medium shadow-soft focus:outline-none focus:ring-2 focus:ring-blue-200 focus:bg-white transition-gentle pr-12 cursor-pointer">
-                  <option value="MP4">MP4 Format</option>
-                  <option value="MP3">MP3 Audio</option>
-                  <option value="WEBM">WEBM Format</option>
-                </select>
-                <div className="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none">
-                  <svg className="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <button
+                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                  className="flex items-center justify-between px-5 py-4 bg-white/80 backdrop-blur-sm border border-slate-200/50 rounded-soft-lg shadow-soft hover:bg-white hover:shadow-soft-lg transition-gentle min-w-[160px] group"
+                >
+                  <div className="flex items-center gap-2">
+                    <span className="text-lg">{selectedFormatData?.icon}</span>
+                    <span className="font-medium text-slate-700">{selectedFormatData?.label}</span>
+                  </div>
+                  <svg className={`w-4 h-4 text-slate-400 transition-gentle ml-2 ${isDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
-                </div>
+                </button>
+
+                {/* Dropdown Menu */}
+                {isDropdownOpen && (
+                  <div className="absolute top-full left-0 right-0 mt-2 bg-white/95 backdrop-blur-xl rounded-soft-lg shadow-soft-xl border border-white/30 overflow-hidden z-50 animate-fade-in-up">
+                    {formats.map((format) => (
+                      <button
+                        key={format.value}
+                        onClick={() => {
+                          setSelectedFormat(format.value);
+                          setIsDropdownOpen(false);
+                        }}
+                        className={`w-full flex items-center gap-3 px-5 py-3 text-left hover:bg-slate-50/80 transition-gentle ${
+                          selectedFormat === format.value ? 'bg-blue-50/60' : ''
+                        }`}
+                      >
+                        <span className="text-base">{format.icon}</span>
+                        <span className="font-medium text-slate-700">{format.label}</span>
+                        {selectedFormat === format.value && (
+                          <div className="ml-auto w-2 h-2 bg-blue-500 rounded-full"></div>
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
               
               <input

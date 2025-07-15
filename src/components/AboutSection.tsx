@@ -17,7 +17,7 @@ export default function AboutSection() {
               <span className="text-slate-500 text-lg font-light tracking-wide">Introducing</span>
             </div>
             <h2 className="text-5xl md:text-6xl font-bold mb-6 tracking-tight">
-              <span className="gradient-text-soft">loader.fo</span>
+              <span className="gradient-text-soft">Sonova</span>
             </h2>
             <div className="w-20 h-1 bg-gradient-to-r from-blue-400 via-purple-400 to-slate-400 rounded-full mx-auto opacity-60"></div>
           </div>

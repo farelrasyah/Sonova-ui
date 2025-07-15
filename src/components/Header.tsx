@@ -32,11 +32,10 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <div className="flex items-center animate-fade-in-left">
+        <div className="flex items-center animate-fade-in-left mr-8 lg:mr-12">
             <div className="relative">
               <span className="text-2xl font-bold tracking-tight">
-                <span className="gradient-text-soft">loader</span>
-                <span className="text-slate-400">.fo</span>
+                <span className="gradient-text-soft">Sonova</span>
               </span>
               <div className="absolute -bottom-1 left-0 w-12 h-0.5 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full opacity-60"></div>
             </div>

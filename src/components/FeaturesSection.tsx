@@ -129,7 +129,7 @@ export default function FeaturesSection() {
               Ready to Experience the Difference?
             </h3>
             <p className="text-slate-600 mb-6">
-              Join millions of users who trust loader.fo for their video downloading needs.
+              Join millions of users who trust Sonova for their video downloading needs.
             </p>
             <button className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold px-8 py-3 rounded-soft-lg transition-gentle shadow-soft-lg btn-hover magnetic">
               Get Started Now
