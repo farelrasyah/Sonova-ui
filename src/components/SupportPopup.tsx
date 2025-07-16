@@ -29,18 +29,6 @@ export default function SupportPopup({ open, onClose }: SupportPopupProps) {
   }, [open, onClose]);
 
   // Animation variants
-  const backdropVariants = {
-    hidden: { opacity: 0 },
-    visible: { 
-      opacity: 1,
-      transition: { duration: 0.3 }
-    },
-    exit: { 
-      opacity: 0,
-      transition: { duration: 0.2 }
-    }
-  };
-
   const modalVariants = {
     hidden: { 
       opacity: 0, 
@@ -257,7 +245,7 @@ export default function SupportPopup({ open, onClose }: SupportPopupProps) {
               transition={{ delay: 0.45 }}
             >
               <p className="text-sm text-slate-500">
-                Ready to build something amazing together? Let's connect!
+                Ready to build something amazing together? Let&apos;s connect!
               </p>
             </motion.div>
           </motion.div>
