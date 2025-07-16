@@ -1,13 +1,17 @@
 import React from 'react';
 
-interface FeatureCard {
+export interface FeatureCard {
   title: string;
   description: string;
   icon: React.ReactNode;
   gradient: string;
 }
 
-const features: FeatureCard[] = [
+interface FeaturesSectionProps {
+  features: FeatureCard[];
+}
+
+const defaultFeatures: FeatureCard[] = [
   {
     title: "No Download Limit",
     description: "Unlimited downloads anytime, anywhere. No restrictions, just pure freedom.",
@@ -70,7 +74,7 @@ const features: FeatureCard[] = [
   }
 ];
 
-export default function FeaturesSection() {
+export default function FeaturesSection({ features = defaultFeatures }: FeaturesSectionProps) {
   return (
     <section className="bg-gradient-to-b from-slate-50/50 via-white to-slate-50/50 py-24 px-6 lg:px-8 relative overflow-hidden">
       {/* Background Elements */}

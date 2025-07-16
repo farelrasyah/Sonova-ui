@@ -8,44 +8,7 @@ interface FAQItem {
   answer: string;
 }
 
-const faqData: { [key: string]: FAQItem[] } = {
-  general: [
-    {
-      question: "Is Sonova completely free to use?",
-      answer: "Yes, our service is completely free with no hidden costs, subscriptions, or limitations on downloads."
-    },
-    {
-      question: "Do I need to create an account?",
-      answer: "No account required. You can start downloading immediately without any personal information."
-    },
-    {
-      question: "What video formats are supported?",
-      answer: "We support MP4, MP3, WEBM, and many other popular formats to suit your needs."
-    },
-    {
-      question: "Are there any download limits?",
-      answer: "No limits whatsoever. Download as many videos as you want, whenever you want."
-    }
-  ],
-  technical: [
-    {
-      question: "How fast are the downloads?",
-      answer: "Our high-performance servers ensure maximum download speeds based on your internet connection."
-    },
-    {
-      question: "Do I need to install software?",
-      answer: "No installation required. Everything works directly in your web browser for instant access."
-    },
-    {
-      question: "Is my data secure?",
-      answer: "Absolutely. We prioritize your privacy and never collect, store, or share your personal information."
-    },
-    {
-      question: "Which platforms are supported?",
-      answer: "We support YouTube, Facebook, Twitter, TikTok, Instagram, and many other popular platforms."
-    }
-  ]
-};
+// FAQ data is now passed as a prop
 
 function FAQAccordion({ items, title }: { items: FAQItem[], title: string }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -102,7 +65,14 @@ function FAQAccordion({ items, title }: { items: FAQItem[], title: string }) {
   );
 }
 
-export default function FAQSection() {
+interface FAQSectionProps {
+  faqs?: Array<{
+    question: string;
+    answer: string;
+  }>;
+}
+
+export default function FAQSection({ faqs = [] }: FAQSectionProps) {
   const [isSupportOpen, setIsSupportOpen] = useState(false);
   return (
     <>
@@ -129,11 +99,14 @@ export default function FAQSection() {
 
         {/* FAQ Grid */}
         <div className="grid lg:grid-cols-2 gap-12">
-          <div className="animate-fade-in-left" style={{ animationDelay: '0.2s' }}>
-            <FAQAccordion items={faqData.general} title="General Questions" />
-          </div>
-          <div className="animate-fade-in-right" style={{ animationDelay: '0.4s' }}>
-            <FAQAccordion items={faqData.technical} title="Technical Support" />
+          <div className="animate-fade-in-left w-full" style={{ animationDelay: '0.2s' }}>
+            {faqs.length > 0 ? (
+              <FAQAccordion items={faqs} title="Frequently Asked Questions" />
+            ) : (
+              <div className="text-center py-8 text-slate-500">
+                No FAQs available at the moment.
+              </div>
+            )}
           </div>
         </div>
 

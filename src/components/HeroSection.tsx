@@ -1,6 +1,13 @@
+'use client';
+
 import React, { useState } from 'react';
 
-export default function HeroSection() {
+interface HeroSectionProps {
+  title: string;
+  description: string;
+}
+
+export default function HeroSection({ title, description }: HeroSectionProps) {
   const [selectedFormat, setSelectedFormat] = useState('MP4');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -15,11 +22,6 @@ export default function HeroSection() {
       label: 'MP3 Audio', 
       icon: '🎵'
     },
-    { 
-      value: 'WEBM', 
-      label: 'WEBM Format', 
-      icon: '🌐'
-    }
   ];
 
   const selectedFormatData = formats.find(f => f.value === selectedFormat);
@@ -46,19 +48,26 @@ export default function HeroSection() {
         {/* Main Title */}
         <div className="mb-8 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold leading-tight mb-6 tracking-tight">
-            <span className="text-slate-800">YouTube Video </span>
-            <span className="block gradient-text-soft">Downloader</span>
+            {title ? (
+              <>
+                {title.split(' ').slice(0, -1).join(' ')}{' '}
+                <span className="gradient-text-soft">{title.split(' ').slice(-1)}</span>
+              </>
+            ) : (
+              <>
+                YouTube Video <span className="gradient-text-soft">Downloader</span>
+              </>
+            )}
           </h1>
-          <div className="flex justify-center">
+          <div className="flex justify-center mb-6">
             <div className="w-32 h-1 bg-gradient-to-r from-blue-400 via-purple-400 to-slate-400 rounded-full opacity-60"></div>
           </div>
+          <p className="text-xl text-slate-600 max-w-3xl mx-auto mb-8">
+            {description || 'Download high-quality YouTube videos quickly and easily. Convert to MP4 or MP3 format with just a few clicks. No registration required.'}
+          </p>
         </div>
 
-        {/* Subtitle */}
-        <p className="text-xl md:text-2xl text-slate-600 mb-16 max-w-4xl mx-auto leading-relaxed font-light animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
-          Experience seamless video downloading with our elegant, fast, and secure solution. 
-          Transform your favorite content into offline media effortlessly.
-        </p>
+
 
         {/* Download Form */}
         <div className="mb-20 animate-fade-in-up" style={{ animationDelay: '0.6s' }}>

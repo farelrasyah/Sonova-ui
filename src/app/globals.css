@@ -69,6 +69,15 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Gradient Text */
+.gradient-text-soft {
+  background: linear-gradient(90deg, #4f46e5, #7c3aed, #a855f7);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline;
+}
+
 /* Global animations */
 @keyframes fadeInUp {
   from {
