@@ -137,20 +137,20 @@ export default function FAQSection() {
           </div>
         </div>
 
-        {/* Bottom Help Section */}
+        {/* Bottom About Section */}
         <div className="text-center mt-16 animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
           <div className="inline-block bg-white/60 backdrop-blur-xl border border-white/20 rounded-soft-xl p-8 shadow-soft-xl">
             <h3 className="text-xl font-semibold text-slate-800 mb-3">
-              Still have questions?
+              Want to know more about me?
             </h3>
             <p className="text-slate-600 mb-6">
-              Our support team is here to help you with any questions or concerns.
+              Learn more about the team behind Sonova and our mission.
             </p>
             <button
-              className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold px-8 py-3 rounded-soft-lg transition-gentle shadow-soft-lg btn-hover magnetic"
+              className="bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white font-semibold px-8 py-3 rounded-soft-lg transition-gentle shadow-soft-lg btn-hover magnetic"
               onClick={() => setIsSupportOpen(true)}
             >
-              Contact Support
+              About Me
             </button>
           </div>
         </div>
