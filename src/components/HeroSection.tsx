@@ -25,7 +25,7 @@ export default function HeroSection() {
   const selectedFormatData = formats.find(f => f.value === selectedFormat);
 
   return (
-    <section className="relative min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/30 flex items-center justify-center px-6 lg:px-8 pt-20 overflow-hidden">
+    <section id="download-section" className="relative min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/30 flex items-center justify-center px-6 lg:px-8 pt-20 overflow-hidden">
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         {/* Floating Shapes */}
@@ -41,12 +41,7 @@ export default function HeroSection() {
       </div>
 
       <div className="relative z-10 max-w-6xl mx-auto text-center">
-        {/* Subtle Brand Mark */}
-        <div className="mb-12 animate-fade-in-up">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-100 to-purple-100 rounded-soft shadow-soft">
-            <div className="w-6 h-6 bg-gradient-to-br from-blue-400 to-purple-400 rounded-full animate-pulse-slow"></div>
-          </div>
-        </div>
+      
 
         {/* Main Title */}
         <div className="mb-8 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>

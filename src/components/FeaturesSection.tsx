@@ -131,7 +131,15 @@ export default function FeaturesSection() {
             <p className="text-slate-600 mb-6">
               Join millions of users who trust Sonova for their video downloading needs.
             </p>
-            <button className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold px-8 py-3 rounded-soft-lg transition-gentle shadow-soft-lg btn-hover magnetic">
+            <button 
+              onClick={() => {
+                const element = document.getElementById('download-section');
+                if (element) {
+                  element.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
+              className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold px-8 py-3 rounded-soft-lg transition-gentle shadow-soft-lg btn-hover magnetic"
+            >
               Get Started Now
             </button>
           </div>

@@ -22,11 +22,11 @@ export default function Header() {
 
   const menuItems = [
     'YouTube Video Downloader',
-    '4K Videos Downloader', 
-    'YouTube to MP3',
-    'YouTube Playlist Downloader',
-    'YouTube to WAV',
-    'YouTube 1080P Downloader'
+    'YouTube Playlist Downloader', 
+    'Instagram Video Downloader',
+    'TikTok Video Downloader',
+    'Twitter Video Downloader',
+    // 'MindReplay Video Downloade'
   ];
 
   return (
