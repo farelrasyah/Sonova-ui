@@ -6,22 +6,26 @@ export default function TwitterDownloader() {
     {
       title: 'Video Downloader',
       description: 'Download videos from Twitter in high quality with just one click.',
-      icon: <FaVideo className="h-6 w-6 text-blue-400" />
+      icon: <FaVideo className="h-6 w-6 text-blue-400" />,
+      gradient: 'from-blue-100 to-cyan-100'
     },
     {
       title: 'Image Downloader',
       description: 'Save images from tweets in their original quality.',
-      icon: <FaImage className="h-6 w-6 text-blue-400" />
+      icon: <FaImage className="h-6 w-6 text-blue-400" />,
+      gradient: 'from-green-100 to-emerald-100'
     },
     {
       title: 'Fast & Easy',
       description: 'Quickly download Twitter media without any complicated steps.',
-      icon: <FaDownload className="h-6 w-6 text-blue-400" />
+      icon: <FaDownload className="h-6 w-6 text-blue-400" />,
+      gradient: 'from-purple-100 to-violet-100'
     },
     {
       title: 'No Registration',
       description: 'Download Twitter content without needing to create an account or log in.',
-      icon: <FaTwitter className="h-6 w-6 text-blue-400" />
+      icon: <FaTwitter className="h-6 w-6 text-blue-400" />,
+      gradient: 'from-amber-100 to-yellow-100'
     }
   ];
 
