@@ -1,41 +1,46 @@
+'use client';
+
 import { FaDownload, FaPlay, FaMusic, FaHashtag, FaUserClock, FaMobileAlt } from 'react-icons/fa';
+import { useLanguage } from '@/contexts/LanguageContext';
 import PageTemplate from '@/components/PageTemplate';
 
 export default function TiktokDownloader() {
+  const { t } = useLanguage();
+  
   const features = [
     {
-      title: 'No Watermark',
-      description: 'Download TikTok videos without the annoying watermark, just pure content.',
+      title: t.tiktok.features.noWatermarkTitle,
+      description: t.tiktok.features.noWatermarkDesc,
       icon: <FaPlay className="h-6 w-6 text-pink-500" />,
       gradient: 'from-pink-100 to-rose-100'
     },
     {
-      title: 'High Quality',
-      description: 'Get your TikTok videos in the highest available quality, up to 1080p HD.',
+      title: t.tiktok.features.hdQualityTitle,
+      description: t.tiktok.features.hdQualityDesc,
       icon: <FaMusic className="h-6 w-6 text-pink-500" />,
       gradient: 'from-purple-100 to-pink-100'
     },
     {
-      title: 'Fast Downloads',
-      description: 'Quickly download TikTok videos with our high-speed servers.',
+      title: t.tiktok.features.fastTitle,
+      description: t.tiktok.features.fastDesc,
       icon: <FaDownload className="h-6 w-6 text-pink-500" />,
       gradient: 'from-rose-100 to-pink-100'
     },
     {
-      title: '24/7 Availability',
-      description: 'Our service is always online, ready to process your downloads anytime.',
+      title: t.tiktok.features.availabilityTitle,
+      description: t.tiktok.features.availabilityDesc,
       icon: <FaUserClock className="h-6 w-6 text-pink-500" />,
       gradient: 'from-blue-100 to-indigo-100'
     },
     {
-      title: 'Mobile Friendly',
-      description: 'Works perfectly on all devices, including smartphones and tablets.',
+      title: t.tiktok.features.mobileFriendlyTitle,
+      description: t.tiktok.features.mobileFriendlyDesc,
       icon: <FaMobileAlt className="h-6 w-6 text-pink-500" />,
       gradient: 'from-green-100 to-emerald-100'
     },
     {
-      title: 'Trending Hashtags',
-      description: 'Discover and download videos from trending hashtags.',
+      title: t.tiktok.features.trendingTitle,
+      description: t.tiktok.features.trendingDesc,
       icon: <FaHashtag className="h-6 w-6 text-pink-500" />,
       gradient: 'from-fuchsia-100 to-purple-100'
     }
@@ -43,29 +48,29 @@ export default function TiktokDownloader() {
 
   const faqs = [
     {
-      question: 'How to download TikTok videos without watermark?',
-      answer: 'Simply paste the TikTok video URL into our downloader and click the download button. We\'ll provide you with a watermark-free version.'
+      question: t.tiktok.faq.q1,
+      answer: t.tiktok.faq.a1
     },
     {
-      question: 'Is it legal to download TikTok videos?',
-      answer: 'Downloading videos for personal use is generally acceptable, but please respect copyright and the original creator\'s rights.'
+      question: t.tiktok.faq.q2,
+      answer: t.tiktok.faq.a2
     },
     {
-      question: 'Can I download private TikTok videos?',
-      answer: 'No, we only support downloading public TikTok videos.'
+      question: t.tiktok.faq.q3,
+      answer: t.tiktok.faq.a3
     },
     {
-      question: 'What devices are supported?',
-      answer: 'Our TikTok downloader works on all devices including smartphones, tablets, and computers.'
+      question: t.tiktok.faq.q4,
+      answer: t.tiktok.faq.a4
     }
   ];
 
   return (
     <PageTemplate
-      title="TikTok Video Downloader | No Watermark HD Videos"
-      description="Download TikTok videos without watermark in HD quality. Fast, free, and easy to use TikTok downloader."
-      heroTitle="TikTok Video Downloader"
-      heroDescription="Download TikTok videos without watermark in high quality. Save your favorite TikTok videos to watch offline anytime, anywhere!"
+      title={t.tiktok.title}
+      description={t.tiktok.description}
+      heroTitle={t.tiktok.heroTitle}
+      heroDescription={t.tiktok.heroDescription}
       features={features}
       faqs={faqs}
     />

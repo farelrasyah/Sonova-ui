@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { motion, AnimatePresence } from 'framer-motion';
 
 type SupportPopupProps = {
@@ -7,6 +8,22 @@ type SupportPopupProps = {
 };
 
 export default function SupportPopup({ open, onClose }: SupportPopupProps) {
+  const { t } = useLanguage();
+  
+  // Default translations in case they're not provided in the language files
+  const translations = {
+    title: t.support?.title || "Farel Rasyah",
+    role: t.support?.role || "Full-Stack Developer",
+    bio: t.support?.bio || "I'm a passionate software engineering student specializing in full-stack development for web and mobile platforms. I love crafting elegant solutions and building practical tools that enhance user experience and productivity.",
+    education: t.support?.education || "Education",
+    school: t.support?.school || "SMKN 4 MALANG",
+    location: t.support?.location || "Location",
+    city: t.support?.city || "Malang, Indonesia",
+    email: t.support?.email || "Email",
+    viewGithub: t.support?.viewGithub || "View GitHub",
+    contactMe: t.support?.contactMe || "Contact Me",
+    footerText: t.support?.footerText || "Ready to build something amazing together? Let's connect!"
+  };
   const popupRef = useRef<HTMLDivElement>(null);
 
   // Close popup when clicking outside
@@ -117,7 +134,7 @@ export default function SupportPopup({ open, onClose }: SupportPopupProps) {
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ delay: 0.2 }}
                 >
-                  Farel Rasyah
+                  {translations.title}
                 </motion.h2>
                 <motion.span 
                   className="text-indigo-500 font-semibold text-base mb-3 tracking-wider"
@@ -125,7 +142,7 @@ export default function SupportPopup({ open, onClose }: SupportPopupProps) {
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ delay: 0.25 }}
                 >
-                  Full-Stack Developer
+                  {translations.role}
                 </motion.span>
               </motion.div>
               
@@ -139,7 +156,7 @@ export default function SupportPopup({ open, onClose }: SupportPopupProps) {
                   <div className="absolute -inset-1 bg-gradient-to-r from-blue-200 to-indigo-200 rounded-lg blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
                   <div className="relative p-6 bg-white/60 backdrop-blur-sm rounded-lg shadow-inner">
                     <p className="text-slate-800 text-center text-base leading-relaxed">
-                      I&apos;m a passionate software engineering student specializing in full-stack development for web and mobile platforms. I love crafting elegant solutions and building practical tools that enhance user experience and productivity.
+                      {translations.bio}
                     </p>
                   </div>
                 </div>
@@ -160,7 +177,7 @@ export default function SupportPopup({ open, onClose }: SupportPopupProps) {
                       </svg>
                     </div>
                     <div>
-                      <p className="text-sm font-medium text-slate-500">Education</p>
+                      <p className="text-sm font-medium text-slate-500">{translations.education}</p>
                       <p className="text-slate-800 font-semibold">SMKN 4 MALANG</p>
                     </div>
                   </div>
@@ -172,7 +189,7 @@ export default function SupportPopup({ open, onClose }: SupportPopupProps) {
                       </svg>
                     </div>
                     <div>
-                      <p className="text-sm font-medium text-slate-500">Location</p>
+                      <p className="text-sm font-medium text-slate-500">{translations.location}</p>
                       <p className="text-slate-800 font-semibold">Malang, Indonesia</p>
                     </div>
                   </div>
@@ -184,7 +201,7 @@ export default function SupportPopup({ open, onClose }: SupportPopupProps) {
                       </svg>
                     </div>
                     <div className="flex-1">
-                      <p className="text-sm font-medium text-slate-500">Email</p>
+                      <p className="text-sm font-medium text-slate-500">{translations.email}</p>
                       <a 
                         href="mailto:farelrasyah87@gmail.com" 
                         className="text-indigo-600 hover:text-indigo-700 font-semibold transition-colors duration-200"
@@ -216,7 +233,7 @@ export default function SupportPopup({ open, onClose }: SupportPopupProps) {
                     <svg className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M12 2C6.477 2 2 6.484 2 12.021c0 4.428 2.865 8.184 6.839 9.504.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.004.07 1.532 1.032 1.532 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.339-2.221-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.295 2.748-1.025 2.748-1.025.546 1.378.202 2.397.1 2.65.64.7 1.028 1.595 1.028 2.688 0 3.847-2.337 4.695-4.566 4.944.36.31.68.921.68 1.857 0 1.34-.012 2.422-.012 2.753 0 .267.18.578.688.48C19.138 20.2 22 16.447 22 12.021 22 6.484 17.523 2 12 2z" />
                     </svg>
-                    <span>View GitHub</span>
+                    <span>{translations.viewGithub}</span>
                   </motion.a>
                   
                   <motion.a 
@@ -231,7 +248,7 @@ export default function SupportPopup({ open, onClose }: SupportPopupProps) {
                     <svg className="w-5 h-5 text-indigo-600 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
-                    <span>Contact Me</span>
+                    <span>{translations.contactMe}</span>
                   </motion.a>
                 </motion.div>
               </motion.div>
@@ -245,7 +262,7 @@ export default function SupportPopup({ open, onClose }: SupportPopupProps) {
               transition={{ delay: 0.45 }}
             >
               <p className="text-sm text-slate-500">
-                Ready to build something amazing together? Let&apos;s connect!
+                {translations.footerText}
               </p>
             </motion.div>
           </motion.div>

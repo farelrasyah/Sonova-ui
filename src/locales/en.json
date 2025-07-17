@@ -1,0 +1,403 @@
+{
+  "nav": {
+    "home": "Home",
+    "twitter": "Twitter Downloader",
+    "tiktok": "TikTok Downloader",
+    "instagram": "Instagram Downloader",
+    "youtube": "YouTube Playlist Downloader",
+    "mindreplay": "MindReplay Downloader"
+  },
+  "about": {
+    "introducing": "Introducing",
+    "title": "Sonova",
+    "description": "The most sophisticated and user-friendly video downloader on the internet. Supporting multiple platforms including YouTube, Twitter, Facebook, TikTok, and more.",
+    "stats": [
+      { "number": "10M+", "label": "Downloads" },
+      { "number": "99.9%", "label": "Uptime" },
+      { "number": "50+", "label": "Platforms" },
+      { "number": "24/7", "label": "Available" }
+    ],
+    "features": [
+      {
+        "title": "Multi-Platform Support",
+        "description": "Download from YouTube, Twitter, Instagram, TikTok, and many more platforms.",
+        "descriptionLong": "Your all-in-one platform for video downloading. High-speed processing, multiple format support, and instant access to your favorite content, all in one place."
+      },
+      {
+        "title": "High Speed Downloads",
+        "description": "Get your videos quickly with our high-speed download servers.",
+        "descriptionLong": "Experience lightning-fast downloads with our optimized servers. Save time and enjoy your content without the wait, no matter where you are in the world."
+      },
+      {
+        "title": "No Registration",
+        "description": "Start downloading immediately without any sign-up required.",
+        "descriptionLong": "Experience seamless offline entertainment with our advanced download technology. No more buffering, no more interruptions - just pure, uninterrupted content enjoyment."
+      }
+    ]
+  },
+  "features": {
+    "sectionSubtitle": "Why Choose Us",
+    "sectionTitle": "What Makes Us ",
+    "ctaTitle": "Ready to Experience the Difference?",
+    "ctaDescription": "Join millions of users who trust Sonova for their video downloading needs.",
+    "ctaButton": "Get Started Now",
+    "default": [
+      {
+        "title": "No Download Limit",
+        "description": "Unlimited downloads anytime, anywhere. No restrictions, just pure freedom.",
+        "gradient": "from-blue-100 to-cyan-100"
+      },
+      {
+        "title": "Always Free",
+        "description": "Completely free forever. No subscriptions, no hidden costs, just pure value.",
+        "gradient": "from-green-100 to-emerald-100"
+      },
+      {
+        "title": "Lightning Fast",
+        "description": "High-performance servers ensuring the fastest downloads in record time.",
+        "gradient": "from-purple-100 to-pink-100"
+      },
+      {
+        "title": "Simple & Intuitive",
+        "description": "Just paste the URL, select format, and download. Elegant simplicity at its best.",
+        "gradient": "from-indigo-100 to-blue-100"
+      }
+    ]
+  },
+  "home": {
+    "title": "Download YouTube Videos",
+    "description": "Fast, secure, and free YouTube downloader. Save your favorite videos in MP4 or extract audio in MP3 format with just a few clicks.",
+    "notice": {
+      "title": "Important Notice",
+      "description": "We respect copyright laws and do not support downloading copyrighted material"
+    },
+    "features": [
+      {
+        "title": "Lightning Fast",
+        "description": "High-speed downloads"
+      },
+      {
+        "title": "Secure & Safe",
+        "description": "Your privacy protected"
+      },
+      {
+        "title": "High Quality",
+        "description": "Best video resolution"
+      }
+    ],
+    "faq": [
+      {
+        "question": "Is it free to use?",
+        "answer": "Yes, our service is completely free to use with no hidden charges."
+      },
+      {
+        "question": "Do I need to install any software?",
+        "answer": "No, you can download videos directly from your browser without any installation."
+      }
+    ]
+  },
+  "instagram": {
+    "title": "Instagram Downloader",
+    "description": "Download photos, videos, and reels from Instagram in high quality.",
+    "heroTitle": "Instagram Downloader",
+    "heroDescription": "Download photos, videos, and reels from Instagram with ease. Save your favorite content to view offline.",
+    "features": {
+      "photoTitle": "Photo Downloader",
+      "photoDesc": "Download high-quality photos from Instagram posts and stories.",
+      "videoTitle": "Video Downloader",
+      "videoDesc": "Save Instagram videos and IGTV content in the best available quality.",
+      "reelsTitle": "Reels Downloader",
+      "reelsDesc": "Download Instagram Reels to watch them offline anytime.",
+      "storiesTitle": "Stories Saver",
+      "storiesDesc": "Save Instagram stories before they disappear.",
+      "privateTitle": "Private Account Support",
+      "privateDesc": "Download content from private accounts (with permission)."
+    },
+    "faq": {
+      "q1": "How do I download from Instagram?",
+      "a1": "Copy the Instagram post URL and paste it into our downloader. Click download and save the content.",
+      "q2": "Can I download private Instagram content?",
+      "a2": "You can only download content from private accounts if you have access to that account.",
+      "q3": "Is there a limit to how much I can download?",
+      "a3": "No, you can download as much content as you want without any limits."
+    }
+  },
+  "tiktok": {
+    "title": "TikTok Downloader",
+    "description": "Download TikTok videos without watermark in HD quality.",
+    "heroTitle": "TikTok Video Downloader",
+    "heroDescription": "Download TikTok videos without watermark in the highest quality available. Save your favorite TikToks to watch offline.",
+    "features": {
+      "noWatermarkTitle": "No Watermark",
+      "noWatermarkDesc": "Download clean TikTok videos without the annoying watermark.",
+      "hdQualityTitle": "HD Quality",
+      "hdQualityDesc": "Get the highest quality videos directly from TikTok's servers.",
+      "fastTitle": "Super Fast",
+      "fastDesc": "Download videos in seconds with our high-speed servers.",
+      "availabilityTitle": "24/7 Availability",
+      "availabilityDesc": "Our service is always online, ready to process your downloads anytime.",
+      "mobileFriendlyTitle": "Mobile Friendly",
+      "mobileFriendlyDesc": "Works perfectly on all mobile devices and tablets.",
+      "trendingTitle": "Trending Hashtags",
+      "trendingDesc": "Discover and download videos from trending hashtags.",
+      "noRegistrationTitle": "No Registration",
+      "noRegistrationDesc": "Start downloading immediately without creating an account."
+    },
+    "faq": {
+      "q1": "How do I download TikTok videos without watermark?",
+      "a1": "Simply paste the TikTok video URL and click download. We'll remove the watermark automatically.",
+      "q2": "Is it legal to download TikTok videos?",
+      "a2": "It's legal for personal use. Please respect copyright and only download content you have permission to use.",
+      "q3": "What video quality can I download?",
+      "a3": "You can download videos in the highest quality available, up to 1080p HD.",
+      "q4": "What devices are supported?",
+      "a4": "Our TikTok downloader works on all devices including smartphones, tablets, and computers."
+    }
+  },
+  "youtube": {
+    "title": "YouTube Playlist Downloader",
+    "description": "Download entire YouTube playlists in MP4 or MP3 format.",
+    "heroTitle": "YouTube Playlist Downloader",
+    "heroDescription": "Download entire YouTube playlists with a single click. Save videos in MP4 or extract audio as MP3 files.",
+    "features": {
+      "playlistTitle": "Full Playlist Support",
+      "playlistDesc": "Download entire playlists with all videos in one go.",
+      "formatTitle": "Multiple Formats",
+      "formatDesc": "Choose between MP4 video or MP3 audio format.",
+      "qualityTitle": "Quality Selection",
+      "qualityDesc": "Select from various quality options including HD and Full HD.",
+      "batchTitle": "Batch Download",
+      "batchDesc": "Download multiple videos at once to save time.",
+      "speedTitle": "High Speed",
+      "speedDesc": "Fast downloads with our optimized servers."
+    },
+    "faq": {
+      "q1": "How do I download a YouTube playlist?",
+      "a1": "Paste the playlist URL and click download. All videos will be queued for download.",
+      "q2": "Can I download private or unlisted playlists?",
+      "a2": "You can only download public playlists or private playlists that you have access to.",
+      "q3": "Is there a limit to playlist size?",
+      "a3": "No, you can download playlists of any size."
+    }
+  },
+  "support": {
+    "title": "Farel Rasyah",
+    "role": "Full-Stack Developer",
+    "bio": "I'm a passionate software engineering student specializing in full-stack development for web and mobile platforms. I love crafting elegant solutions and building practical tools that enhance user experience and productivity.",
+    "education": "Education",
+    "school": "SMKN 4 MALANG",
+    "location": "Location",
+    "city": "Malang, Indonesia",
+    "email": "Email",
+    "viewGithub": "View GitHub",
+    "contactMe": "Contact Me",
+    "footerText": "Ready to build something amazing together? Let's connect!"
+  },
+  "footer": {
+    "tagline": "Fast, secure, and completely free video downloader. Download from YouTube, Facebook, TikTok, and more without any limitations.",
+    "freeBadge": "100% Free Forever",
+    "features": "Features",
+    "freeDownloads": "Free Downloads",
+    "noRegistration": "No Registration",
+    "highQuality": "High Quality",
+    "multiplePlatforms": "Multiple Platforms",
+    "support": "Support",
+    "helpCenter": "Help Center",
+    "contactUs": "Contact Us",
+    "reportIssue": "Report Issue",
+    "statusPage": "Status Page",
+    "supportedPlatforms": "Supported Platforms",
+    "copyright": "© 2024 Sonova. All rights reserved.",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "systemStatus": "All systems operational",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "contact": "Contact Us"
+  },
+  "youtube": {
+    "title": "YouTube Playlist Downloader",
+    "description": "Download complete YouTube playlists in high quality. Save entire playlists as MP4 or MP3 with our fast and free downloader.",
+    "heroTitle": "YouTube Playlist Downloader",
+    "heroDescription": "Download complete YouTube playlists with ease. Save entire music collections, tutorials, or any playlist in your preferred format and quality.",
+    "features": [
+      {
+        "title": "Entire Playlist Download",
+        "description": "Download complete YouTube playlists with a single click, saving you time and effort."
+      },
+      {
+        "title": "Multiple Formats",
+        "description": "Choose from various formats including MP4, MP3, and more to suit your needs."
+      },
+      {
+        "title": "High Quality",
+        "description": "Download videos in up to 4K quality or extract high-quality audio."
+      },
+      {
+        "title": "Mobile Friendly",
+        "description": "Access and download your playlists from any device, including smartphones and tablets."
+      },
+      {
+        "title": "Background Processing",
+        "description": "Continue browsing while your playlists are being processed in the background."
+      },
+      {
+        "title": "Batch Download",
+        "description": "Download multiple videos from a playlist simultaneously for faster results."
+      }
+    ],
+    "faq": [
+      {
+        "question": "How do I download a YouTube playlist?",
+        "answer": "Simply paste the YouTube playlist URL into our downloader, select your preferred format and quality, then click download."
+      },
+      {
+        "question": "Can I download private or unlisted playlists?",
+        "answer": "No, our downloader only works with public YouTube playlists."
+      },
+      {
+        "question": "What video qualities are available?",
+        "answer": "You can download videos in various qualities from 144p up to 4K, depending on the original video quality."
+      },
+      {
+        "question": "Is there a limit to the playlist size?",
+        "answer": "You can download playlists of any size, but very large playlists may take longer to process."
+      }
+    ]
+  },
+  "mindreplay": {
+    "title": "MindReplay Downloader",
+    "description": "Download your MindReplay sessions and memories.",
+    "heroTitle": "MindReplay Downloader",
+    "heroDescription": "Save your MindReplay sessions and memories to your device for offline viewing.",
+    "features": {
+      "sessionsTitle": "Session Downloader",
+      "sessionsDesc": "Download your meditation and focus sessions to listen offline.",
+      "memoriesTitle": "Memory Saver",
+      "memoriesDesc": "Save your MindReplay memories to your device.",
+      "highQualityTitle": "High Quality Audio",
+      "highQualityDesc": "Download in the highest available audio quality.",
+      "organizedTitle": "Organized Library",
+      "organizedDesc": "Keep your downloads organized by categories and dates.",
+      "noInternetTitle": "Offline Access",
+      "noInternetDesc": "Enjoy your content without an internet connection."
+    },
+    "faq": {
+      "q1": "How do I download my MindReplay sessions?",
+      "a1": "Log in to your account, go to your library, and click the download button next to any session.",
+      "q2": "Can I download sessions for offline listening?",
+      "a2": "Yes, you can download any session to listen to without an internet connection.",
+      "q3": "Are there any download limits?",
+      "a3": "Premium users can download an unlimited number of sessions."
+    }
+  },
+  "common": {
+    "download": "Download",
+    "loading": "Loading...",
+    "error": "An error occurred. Please try again.",
+    "success": "Success!"
+  },
+  "youtube": {
+    "features": [
+      {
+        "title": "High Quality",
+        "description": "Download videos in up to 4K quality or extract high-quality audio."
+      },
+      {
+        "title": "Mobile Friendly",
+        "description": "Access and download your playlists from any device, including smartphones and tablets."
+      },
+      {
+        "title": "Background Processing",
+        "description": "Continue browsing while your playlists are being processed in the background."
+      },
+      {
+        "title": "Batch Download",
+        "description": "Download multiple videos from a playlist simultaneously for faster results."
+      }
+    ],
+    "faq": [
+      {
+        "question": "How do I download a YouTube playlist?",
+        "answer": "Simply paste the YouTube playlist URL into our downloader, select your preferred format and quality, then click download."
+      },
+      {
+        "question": "Can I download private or unlisted playlists?",
+        "answer": "No, our downloader only works with public YouTube playlists."
+      },
+      {
+        "question": "What video qualities are available?",
+        "answer": "You can download videos in various qualities from 144p up to 4K, depending on the original video quality."
+      },
+      {
+        "question": "Is there a limit to the playlist size?",
+        "answer": "You can download playlists of any size, but very large playlists may take longer to process."
+      }
+    ]
+  },
+  "mindreplay": {
+    "title": "MindReplay Downloader",
+    "description": "Download your MindReplay sessions and memories.",
+    "heroTitle": "MindReplay Downloader",
+    "heroDescription": "Save your MindReplay sessions and memories to your device for offline viewing.",
+    "features": {
+      "sessionsTitle": "Session Downloader",
+      "sessionsDesc": "Download your meditation and focus sessions to listen offline.",
+      "memoriesTitle": "Memory Saver",
+      "memoriesDesc": "Save your MindReplay memories to your device.",
+      "highQualityTitle": "High Quality Audio",
+      "highQualityDesc": "Download in the highest available audio quality.",
+      "organizedTitle": "Organized Library",
+      "organizedDesc": "Keep your downloads organized by categories and dates.",
+      "noInternetTitle": "Offline Access",
+      "noInternetDesc": "Enjoy your content without an internet connection."
+    },
+    "faq": {
+      "q1": "How do I download my MindReplay sessions?",
+      "a1": "Log in to your account, go to your library, and click the download button next to any session.",
+      "q2": "Can I download sessions for offline listening?",
+      "a2": "Yes, you can download any session to listen to without an internet connection.",
+      "q3": "Are there any download limits?",
+      "a3": "Premium users can download an unlimited number of sessions."
+    }
+  },
+  "twitter": {
+    "title": "Twitter Video Downloader",
+    "description": "Download videos from Twitter in high quality with just one click.",
+    "heroTitle": "Twitter Video Downloader",
+    "heroDescription": "Download videos, GIFs, and images from Twitter with ease. Save your favorite Twitter content to watch or share offline.",
+    "placeholder": "Paste Twitter video URL here",
+    "button": "Download Video",
+    "features": {
+      "videoTitle": "Video Downloader",
+      "videoDesc": "Download videos from Twitter in high quality with just one click.",
+      "imageTitle": "Image Downloader",
+      "imageDesc": "Save images from tweets in their original quality.",
+      "fastTitle": "Fast & Easy",
+      "fastDesc": "Quickly download Twitter media without any complicated steps.",
+      "mobileTitle": "Mobile Friendly",
+      "mobileDesc": "Works perfectly on all devices, including smartphones and tablets.",
+      "trendingTitle": "Trending Hashtags",
+      "trendingDesc": "Discover and download media from trending Twitter hashtags.",
+      "noAccountTitle": "No Registration",
+      "noAccountDesc": "Download Twitter content without needing to create an account or log in."
+    },
+    "faq": {
+      "q1": "How do I download videos from Twitter?",
+      "a1": "Copy the URL of the tweet containing the video and paste it into our downloader. Click download and save the video to your device.",
+      "q2": "Can I download videos from private Twitter accounts?",
+      "a2": "No, you can only download videos from public Twitter accounts.",
+      "q3": "What video formats are supported?",
+      "a3": "Our downloader supports MP4 format, which is compatible with most devices and media players.",
+      "q4": "Is there a limit to the video length I can download?",
+      "a4": "You can download videos of any length, but longer videos may take more time to process."
+    }
+  },
+  "faqSection": {
+    "subtitle": "Get Answers",
+    "title": "Frequently Asked {highlight}Questions",
+    "sectionTitle": "Frequently Asked Questions",
+    "noFAQs": "No FAQs available at the moment."
+  }
+}
+

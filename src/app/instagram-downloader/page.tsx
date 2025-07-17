@@ -1,71 +1,56 @@
+'use client';
+
 import { FaDownload, FaPlay, FaUserFriends, FaHeart, FaBolt, FaLayerGroup } from 'react-icons/fa';
 import PageTemplate from '@/components/PageTemplate';
+import { useLanguage } from '@/contexts/LanguageContext';
+
+// Map icon names to their corresponding components
+const iconComponents: { [key: string]: React.ReactNode } = {
+  play: <FaPlay className="h-6 w-6 text-indigo-500" />,
+  heart: <FaHeart className="h-6 w-6 text-indigo-500" />,
+  download: <FaDownload className="h-6 w-6 text-indigo-500" />,
+  bolt: <FaBolt className="h-6 w-6 text-indigo-500" />,
+  'layer-group': <FaLayerGroup className="h-6 w-6 text-indigo-500" />,
+  'user-friends': <FaUserFriends className="h-6 w-6 text-indigo-500" />
+};
+
+// Gradient classes for the feature cards
+const gradientClasses = [
+  'from-blue-100 to-indigo-100',
+  'from-pink-100 to-rose-100',
+  'from-purple-100 to-indigo-100',
+  'from-yellow-100 to-amber-100',
+  'from-green-100 to-emerald-100',
+  'from-cyan-100 to-blue-100'
+];
 
 export default function InstagramDownloader() {
-  const features = [
-    {
-      title: 'High-Quality Downloads',
-      description: 'Download Instagram videos in the highest available quality, including HD and 4K where available.',
-      icon: <FaPlay className="h-6 w-6 text-indigo-500" />,
-      gradient: 'from-blue-100 to-indigo-100'
-    },
-    {
-      title: 'No Watermarks',
-      description: 'Get clean, watermark-free videos from Instagram with just one click.',
-      icon: <FaHeart className="h-6 w-6 text-indigo-500" />,
-      gradient: 'from-pink-100 to-rose-100'
-    },
-    {
-      title: 'Multiple Format Support',
-      description: 'Download in various formats including MP4, AVI, and more to suit your needs.',
-      icon: <FaDownload className="h-6 w-6 text-indigo-500" />,
-      gradient: 'from-purple-100 to-indigo-100'
-    },
-    {
-      title: 'Fast Processing',
-      description: 'Quickly process and prepare your downloads in seconds, no matter the video length.',
-      icon: <FaBolt className="h-6 w-6 text-indigo-500" />,
-      gradient: 'from-yellow-100 to-amber-100'
-    },
-    {
-      title: 'Batch Download',
-      description: 'Download multiple Instagram videos at once with our batch processing feature.',
-      icon: <FaLayerGroup className="h-6 w-6 text-indigo-500" />,
-      gradient: 'from-green-100 to-emerald-100'
-    },
-    {
-      title: 'Private Accounts',
-      description: 'Download from public profiles with ease. Note: We respect privacy and only support downloads from public accounts.',
-      icon: <FaUserFriends className="h-6 w-6 text-indigo-500" />,
-      gradient: 'from-cyan-100 to-blue-100'
-    }
-  ];
+  const { t } = useLanguage();
+  
+  // Transform features data to match the expected format
+  const features = Array.isArray(t.instagram?.features) 
+    ? t.instagram.features.map((feature: any, index: number) => ({
+        title: feature.title || '',
+        description: feature.description || '',
+        icon: iconComponents[feature.icon] || null,
+        gradient: gradientClasses[index % gradientClasses.length]
+      }))
+    : [];
 
-  const faqs = [
-    {
-      question: 'How do I download Instagram videos?',
-      answer: 'Simply paste the Instagram video URL into our downloader and click the download button. The video will be processed and ready to save to your device.'
-    },
-    {
-      question: 'Is it free to download Instagram videos?',
-      answer: 'Yes, our Instagram video downloader is completely free to use with no hidden charges.'
-    },
-    {
-      question: 'Can I download videos from private Instagram accounts?',
-      answer: 'No, we respect user privacy and only support downloads from public Instagram accounts.'
-    },
-    {
-      question: 'What video qualities are available for download?',
-      answer: 'You can download videos in various qualities, including the original quality posted on Instagram.'
-    }
-  ];
+  // Transform FAQ data to match the expected format
+  const faqs = t.instagram?.faq 
+    ? Object.entries(t.instagram.faq).map(([key, value]) => ({
+        question: key.startsWith('q') ? String(value) : '',
+        answer: key.startsWith('a') ? String(value) : ''
+      })).filter(item => item.question && item.answer)
+    : [];
 
   return (
     <PageTemplate
-      title="Instagram Video Downloader | Download Instagram Videos & Reels"
-      description="Download Instagram videos, reels, and IGTV in high quality. Fast, free, and easy to use Instagram video downloader."
-      heroTitle="Instagram Video Downloader"
-      heroDescription="Download Instagram videos, reels, and IGTV in the highest quality. No registration required - save your favorite Instagram content with just one click!"
+      title={`${t.instagram?.title} | Download Instagram Videos & Reels`}
+      description={t.instagram?.description || ''}
+      heroTitle={t.instagram?.heroTitle || ''}
+      heroDescription={t.instagram?.heroDescription || ''}
       features={features}
       faqs={faqs}
     />

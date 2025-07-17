@@ -1,6 +1,9 @@
 import React from 'react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function NoticeBar() {
+  const { t } = useLanguage();
+  
   return (
     <div className="bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/20 py-12 px-6 lg:px-8 relative overflow-hidden">
       {/* Elegant Background Elements */}
@@ -21,11 +24,11 @@ export default function NoticeBar() {
               <div className="text-center flex-1">
                 <div className="mb-2">
                   <span className="text-amber-600 text-xs font-semibold tracking-widest uppercase opacity-80">
-                    Important Notice
+                    {t.home.notice.title}
                   </span>
                 </div>
                 <p className="text-slate-700 font-medium text-base md:text-lg leading-relaxed">
-                  We respect copyright laws and do not support downloading copyrighted material
+                  {t.home.notice.description}
                 </p>
                 
                 {/* Decorative Elements */}

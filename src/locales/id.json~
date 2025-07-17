@@ -1,0 +1,128 @@
+{
+  "nav": {
+    "home": "Beranda",
+    "twitter": "Pengunduh Twitter",
+    "tiktok": "Pengunduh TikTok",
+    "instagram": "Pengunduh Instagram",
+    "youtube": "Pengunduh YouTube Playlist",
+    "mindreplay": "Pengunduh MindReplay"
+  },
+  "about": {
+    "introducing": "Perkenalkan",
+    "title": "Sonova",
+    "description": "Pengunduh video paling canggih dan ramah pengguna di internet. Mendukung berbagai platform termasuk YouTube, Twitter, Facebook, TikTok, dan banyak lagi.",
+    "stats": [
+      { "number": "10Jt+", "label": "Unduhan" },
+      { "number": "99,9%", "label": "Waktu Aktif" },
+      { "number": "50+", "label": "Platform" },
+      { "number": "24/7", "label": "Tersedia" }
+    ],
+    "features": [
+      {
+        "title": "Dukungan Multi-Platform",
+        "description": "Unduh dari YouTube, Twitter, Instagram, TikTok, dan banyak platform lainnya.",
+        "descriptionLong": "Platform lengkap untuk mengunduh video. Pemrosesan berkecepatan tinggi, dukungan berbagai format, dan akses instan ke konten favorit Anda, semuanya dalam satu tempat."
+      },
+      {
+        "title": "Unduhan Berkecepatan Tinggi",
+        "description": "Dapatkan video Anda dengan cepat menggunakan server unduhan berkecepatan tinggi kami.",
+        "descriptionLong": "Nikmati unduhan super cepat dengan server yang dioptimalkan kami. Hemat waktu dan nikmati konten tanpa menunggu, di mana pun Anda berada di dunia."
+      },
+      {
+        "title": "Tanpa Registrasi",
+        "description": "Mulai mengunduh segera tanpa perlu mendaftar.",
+        "descriptionLong": "Nikmati hiburan offline yang mulus dengan teknologi unduhan canggih kami. Tidak ada lagi buffering, tidak ada lagi gangguan - hanya kesenangan konten yang tak terputus."
+      }
+    ]
+  },
+  "features": {
+    "default": [
+      {
+        "title": "Tanpa Batas Unduhan",
+        "description": "Unduh tanpa batas kapan saja, di mana saja. Tanpa pembatasan, hanya kebebasan murni.",
+        "gradient": "from-blue-100 to-cyan-100"
+      },
+      {
+        "title": "Selalu Gratis",
+        "description": "Sepenuhnya gratis selamanya. Tanpa langganan, tanpa biaya tersembunyi, hanya nilai murni.",
+        "gradient": "from-green-100 to-emerald-100"
+      },
+      {
+        "title": "Super Cepat",
+        "description": "Server berkinerja tinggi memastikan unduhan tercepat dalam waktu singkat.",
+        "gradient": "from-purple-100 to-pink-100"
+      },
+      {
+        "title": "Sederhana & Intuitif",
+        "description": "Cukup tempel URL, pilih format, dan unduh. Kesederhanaan yang elegan.",
+        "gradient": "from-indigo-100 to-blue-100"
+      }
+    ]
+  },
+  "home": {
+    "title": "Unduh Video YouTube",
+    "description": "Pengunduh YouTube yang cepat, aman, dan gratis. Simpan video favorit Anda dalam format MP4 atau ekstrak audio dalam format MP3 hanya dengan beberapa klik.",
+    "notice": {
+      "title": "Pemberitahuan Penting",
+      "description": "Kami menghormati undang-undang hak cipta dan tidak mendukung pengunduhan materi berhak cipta"
+    },
+    "features": [
+      {
+        "title": "Sangat Cepat",
+        "description": "Unduhan berkecepatan tinggi"
+      },
+      {
+        "title": "Aman & Terlindungi",
+        "description": "Privasi Anda terlindungi"
+      },
+      {
+        "title": "Kualitas Tinggi",
+        "description": "Resolusi video terbaik"
+      }
+    ],
+    "faq": [
+      {
+        "question": "Apakah ini gratis?",
+        "answer": "Ya, layanan kami sepenuhnya gratis tanpa biaya tersembunyi."
+      },
+      {
+        "question": "Apakah saya perlu menginstal perangkat lunak?",
+        "answer": "Tidak, Anda dapat mengunduh video langsung dari browser tanpa perlu menginstal apa pun."
+      }
+    ]
+  },
+  "instagram": {
+    "title": "Pengunduh Instagram",
+    "description": "Unduh foto, video, dan reels dari Instagram dalam kualitas tinggi.",
+    "heroTitle": "Pengunduh Instagram",
+    "heroDescription": "Unduh foto, video, dan reels dari Instagram dengan mudah. Simpan konten favorit Anda untuk dilihat secara offline.",
+    "features": {
+      "photoTitle": "Pengunduh Foto",
+      "photoDesc": "Unduh foto berkualitas tinggi dari postingan dan cerita Instagram."
+    }
+  },
+  "tiktok": {
+    "title": "Pengunduh TikTok",
+    "description": "Unduh video TikTok tanpa watermark dalam kualitas HD.",
+    "heroTitle": "Pengunduh Video TikTok",
+    "heroDescription": "Unduh video TikTok tanpa watermark dalam kualitas tertinggi yang tersedia. Simpan TikTok favorit Anda untuk ditonton secara offline."
+  },
+  "twitter": {
+    "title": "Pengunduh Video Twitter",
+    "description": "Unduh video dari Twitter dengan kualitas tinggi",
+    "heroTitle": "Pengunduh Video Twitter",
+    "heroDescription": "Unduh video, GIF, dan gambar dari Twitter dengan mudah. Simpan konten Twitter favorit Anda untuk ditonton atau dibagikan secara offline."
+  },
+  "youtube": {
+    "title": "Pengunduh YouTube Playlist",
+    "description": "Unduh seluruh playlist YouTube sekaligus dengan mudah.",
+    "heroTitle": "Pengunduh Playlist YouTube",
+    "heroDescription": "Unduh seluruh playlist YouTube sekaligus dengan mudah. Pilih kualitas video dan format yang diinginkan."
+  },
+  "mindreplay": {
+    "title": "Pengunduh MindReplay",
+    "description": "Unduh sesi dan kenangan MindReplay Anda.",
+    "heroTitle": "Pengunduh MindReplay",
+    "heroDescription": "Simpan sesi dan kenangan MindReplay Anda ke perangkat untuk dilihat secara offline."
+  }
+}

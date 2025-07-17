@@ -1,0 +1,317 @@
+{
+  "nav": {
+    "home": "Beranda",
+    "twitter": "Pengunduh Twitter",
+    "tiktok": "Pengunduh TikTok",
+    "instagram": "Pengunduh Instagram",
+    "youtube": "Pengunduh YouTube Playlist",
+    "mindreplay": "Pengunduh MindReplay"
+  },
+  "about": {
+    "introducing": "Perkenalkan",
+    "title": "Sonova",
+    "description": "Pengunduh video paling canggih dan ramah pengguna di internet. Mendukung berbagai platform termasuk YouTube, Twitter, Facebook, TikTok, dan banyak lagi.",
+    "stats": [
+      { "number": "10Jt+", "label": "Unduhan" },
+      { "number": "99,9%", "label": "Waktu Aktif" },
+      { "number": "50+", "label": "Platform" },
+      { "number": "24/7", "label": "Tersedia" }
+    ],
+    "features": [
+      {
+        "title": "Dukungan Multi-Platform",
+        "description": "Unduh dari YouTube, Twitter, Instagram, TikTok, dan banyak platform lainnya.",
+        "descriptionLong": "Platform lengkap untuk mengunduh video. Pemrosesan berkecepatan tinggi, dukungan berbagai format, dan akses instan ke konten favorit Anda, semuanya dalam satu tempat."
+      },
+      {
+        "title": "Unduhan Berkecepatan Tinggi",
+        "description": "Dapatkan video Anda dengan cepat menggunakan server unduhan berkecepatan tinggi kami.",
+        "descriptionLong": "Nikmati unduhan super cepat dengan server yang dioptimalkan kami. Hemat waktu dan nikmati konten tanpa menunggu, di mana pun Anda berada di dunia."
+      },
+      {
+        "title": "Tanpa Registrasi",
+        "description": "Mulai mengunduh segera tanpa perlu mendaftar.",
+        "descriptionLong": "Nikmati hiburan offline yang mulus dengan teknologi unduhan canggih kami. Tidak ada lagi buffering, tidak ada lagi gangguan - hanya kesenangan konten yang tak terputus."
+      }
+    ]
+  },
+  "features": {
+    "sectionSubtitle": "Mengapa Memilih Kami",
+    "sectionTitle": "Apa yang Membuat Kami ",
+    "ctaTitle": "Siap Merasakan Perbedaannya?",
+    "ctaDescription": "Bergabunglah dengan jutaan pengguna yang mempercayai Sonova untuk kebutuhan pengunduhan video mereka.",
+    "ctaButton": "Mulai Sekarang",
+    "default": [
+      {
+        "title": "Tanpa Batas Unduhan",
+        "description": "Unduh tanpa batas kapan saja, di mana saja. Tanpa pembatasan, hanya kebebasan murni.",
+        "gradient": "from-blue-100 to-cyan-100"
+      },
+      {
+        "title": "Selalu Gratis",
+        "description": "Sepenuhnya gratis selamanya. Tanpa langganan, tanpa biaya tersembunyi, hanya nilai murni.",
+        "gradient": "from-green-100 to-emerald-100"
+      },
+      {
+        "title": "Super Cepat",
+        "description": "Server berkinerja tinggi memastikan unduhan tercepat dalam waktu singkat.",
+        "gradient": "from-purple-100 to-pink-100"
+      },
+      {
+        "title": "Sederhana & Intuitif",
+        "description": "Cukup tempel URL, pilih format, dan unduh. Kesederhanaan yang elegan.",
+        "gradient": "from-indigo-100 to-blue-100"
+      }
+    ]
+  },
+  "home": {
+    "title": "Unduh Video YouTube",
+    "description": "Pengunduh YouTube yang cepat, aman, dan gratis. Simpan video favorit Anda dalam format MP4 atau ekstrak audio dalam format MP3 hanya dengan beberapa klik.",
+    "notice": {
+      "title": "Pemberitahuan Penting",
+      "description": "Kami menghormati undang-undang hak cipta dan tidak mendukung pengunduhan materi berhak cipta"
+    },
+    "features": [
+      {
+        "title": "Sangat Cepat",
+        "description": "Unduhan berkecepatan tinggi"
+      },
+      {
+        "title": "Aman & Terlindungi",
+        "description": "Privasi Anda terlindungi"
+      },
+      {
+        "title": "Kualitas Tinggi",
+        "description": "Resolusi video terbaik"
+      }
+    ],
+    "faq": [
+      {
+        "question": "Apakah ini gratis?",
+        "answer": "Ya, layanan kami sepenuhnya gratis tanpa biaya tersembunyi."
+      },
+      {
+        "question": "Apakah saya perlu menginstal perangkat lunak?",
+        "answer": "Tidak, Anda dapat mengunduh video langsung dari browser tanpa perlu menginstal apa pun."
+      }
+    ]
+  },
+  "instagram": {
+    "title": "Pengunduh Instagram",
+    "description": "Unduh foto, video, dan reels dari Instagram dalam kualitas tinggi.",
+    "heroTitle": "Pengunduh Instagram",
+    "heroDescription": "Unduh foto, video, dan reels dari Instagram dengan mudah. Simpan konten favorit Anda untuk dilihat secara offline.",
+    "features": {
+      "photoTitle": "Pengunduh Foto",
+      "photoDesc": "Unduh foto berkualitas tinggi dari postingan dan cerita Instagram.",
+      "videoTitle": "Pengunduh Video",
+      "videoDesc": "Simpan video dan konten IGTV dalam kualitas terbaik yang tersedia.",
+      "reelsTitle": "Pengunduh Reels",
+      "reelsDesc": "Unduh Instagram Reels untuk ditonton secara offline kapan saja.",
+      "storiesTitle": "Penyimpan Cerita",
+      "storiesDesc": "Simpan cerita Instagram sebelum menghilang.",
+      "privateTitle": "Dukungan Akun Privat",
+      "privateDesc": "Unduh konten dari akun privat (dengan izin)."
+    },
+    "faq": {
+      "q1": "Bagaimana cara mengunduh dari Instagram?",
+      "a1": "Salin URL postingan Instagram dan tempelkan ke pengunduh kami. Klik unduh dan simpan kontennya.",
+      "q2": "Bisakah saya mengunduh konten Instagram privat?",
+      "a2": "Anda hanya dapat mengunduh konten dari akun privat jika Anda memiliki akses ke akun tersebut.",
+      "q3": "Apakah ada batasan berapa banyak yang bisa saya unduh?",
+      "a3": "Tidak, Anda dapat mengunduh sebanyak yang Anda inginkan tanpa batasan."
+    }
+  },
+  "tiktok": {
+    "title": "Pengunduh TikTok",
+    "description": "Unduh video TikTok tanpa watermark dalam kualitas HD.",
+    "heroTitle": "Pengunduh Video TikTok",
+    "heroDescription": "Unduh video TikTok tanpa watermark dalam kualitas tertinggi yang tersedia. Simpan TikTok favorit Anda untuk ditonton secara offline.",
+    "features": {
+      "noWatermarkTitle": "Tanpa Watermark",
+      "noWatermarkDesc": "Unduh video TikTok bersih tanpa watermark yang mengganggu.",
+      "hdQualityTitle": "Kualitas HD",
+      "hdQualityDesc": "Dapatkan video dengan kualitas tertinggi langsung dari server TikTok.",
+      "fastTitle": "Sangat Cepat",
+      "fastDesc": "Unduh video dalam hitungan detik dengan server berkecepatan tinggi kami.",
+      "mobileFriendlyTitle": "Ramah Perangkat Seluler",
+      "mobileFriendlyDesc": "Berfungsi sempurna di semua perangkat seluler dan tablet.",
+      "noRegistrationTitle": "Tanpa Pendaftaran",
+      "noRegistrationDesc": "Mulai mengunduh segera tanpa perlu membuat akun."
+    },
+    "faq": {
+      "q1": "Bagaimana cara mengunduh video TikTok tanpa watermark?",
+      "a1": "Cukup tempel URL video TikTok dan klik unduh. Kami akan menghapus watermarknya secara otomatis.",
+      "q2": "Apakah legal mengunduh video TikTok?",
+      "a2": "Legal untuk penggunaan pribadi. Harap menghormati hak cipta dan hanya mengunduh konten yang Anda izinkan.",
+      "q3": "Kualitas video apa yang bisa saya unduh?",
+      "a3": "Anda dapat mengunduh video dalam kualitas tertinggi yang tersedia, hingga 1080p HD."
+    }
+  },
+  "faq": {
+    "subtitle": "Dapatkan Jawaban",
+    "title": "Pertanyaan yang Sering {highlight}Diajukan",
+    "sectionTitle": "Pertanyaan yang Sering Diajukan",
+    "noFAQs": "Tidak ada FAQ yang tersedia saat ini.",
+    "ctaTitle": "Ingin tahu lebih banyak tentang saya?",
+    "ctaDescription": "Pelajari lebih lanjut tentang tim di balik Sonova dan misi kami.",
+    "ctaButton": "Tentang Saya",
+    "items": [
+      {
+        "question": "Bagaimana cara mengunduh video?",
+        "answer": "Cukup tempel URL video dan klik unduh. Semudah itu!"
+      },
+      {
+        "question": "Apakah ini gratis?",
+        "answer": "Ya, layanan dasar kami sepenuhnya gratis tanpa biaya tersembunyi."
+      },
+      {
+        "question": "Format video apa saja yang didukung?",
+        "answer": "Kami mendukung MP4, WebM, dan format video populer lainnya."
+      },
+      {
+        "question": "Bisakah saya mengunduh video dalam kualitas HD?",
+        "answer": "Ya, kami mendukung kualitas HD bahkan 4K jika tersedia."
+      }
+    ]
+  },
+  "support": {
+    "title": "Farel Rasyah",
+    "role": "Pengembang Full-Stack",
+    "bio": "Saya seorang mahasiswa teknik perangkat lunak yang bersemangat dalam pengembangan full-stack untuk platform web dan mobile. Saya suka menciptakan solusi yang elegan dan membangun alat praktis yang meningkatkan pengalaman dan produktivitas pengguna.",
+    "education": "Pendidikan",
+    "school": "SMKN 4 MALANG",
+    "location": "Lokasi",
+    "city": "Malang, Indonesia",
+    "email": "Email",
+    "viewGithub": "Lihat GitHub",
+    "contactMe": "Hubungi Saya",
+    "footerText": "Siap membangun sesuatu yang luar biasa bersama? Mari terhubung!"
+  },
+  "youtube": {
+    "title": "Pengunduh Playlist YouTube",
+    "description": "Unduh playlist YouTube lengkap dalam kualitas tinggi. Simpan seluruh playlist sebagai MP4 atau MP3 dengan pengunduh kami yang cepat dan gratis.",
+    "heroTitle": "Pengunduh Playlist YouTube",
+    "heroDescription": "Unduh seluruh playlist YouTube dengan mudah. Simpan koleksi musik, tutorial, atau playlist apa pun dalam format dan kualitas pilihan Anda.",
+    "features": [
+      {
+        "title": "Unduh Seluruh Playlist",
+        "description": "Unduh seluruh playlist YouTube dengan sekali klik, menghemat waktu dan usaha Anda."
+      },
+      {
+        "title": "Berbagai Format",
+        "description": "Pilih dari berbagai format termasuk MP4, MP3, dan lainnya sesuai kebutuhan Anda."
+      },
+      {
+        "title": "Kualitas Tinggi",
+        "description": "Unduh video dalam kualitas hingga 4K atau ekstrak audio berkualitas tinggi."
+      },
+      {
+        "title": "Ramah Perangkat Seluler",
+        "description": "Akses dan unduh playlist Anda dari perangkat apa pun, termasuk ponsel pintar dan tablet."
+      },
+      {
+        "title": "Proses Latar Belakang",
+        "description": "Lanjutkan menjelajah sementara playlist Anda diproses di latar belakang."
+      },
+      {
+        "title": "Unduh Sekaligus",
+        "description": "Unduh beberapa video dari playlist secara bersamaan untuk hasil yang lebih cepat."
+      }
+    ],
+    "faq": [
+      {
+        "question": "Bagaimana cara mengunduh playlist YouTube?",
+        "answer": "Cukup tempel URL playlist YouTube ke pengunduh kami, pilih format dan kualitas yang Anda inginkan, lalu klik unduh."
+      },
+      {
+        "question": "Bisakah saya mengunduh playlist yang bersifat pribadi atau tidak terdaftar?",
+        "answer": "Tidak, pengunduh kami hanya berfungsi dengan playlist YouTube yang bersifat publik."
+      },
+      {
+        "question": "Kualitas video apa saja yang tersedia?",
+        "answer": "Anda dapat mengunduh video dalam berbagai kualitas dari 144p hingga 4K, tergantung pada kualitas video aslinya."
+      },
+      {
+        "question": "Apakah ada batasan ukuran playlist?",
+        "answer": "Anda dapat mengunduh playlist dengan ukuran berapa pun, tetapi playlist yang sangat besar mungkin membutuhkan waktu lebih lama untuk diproses."
+      }
+    ]
+  },
+  "mindreplay": {
+    "title": "Pengunduh MindReplay",
+    "description": "Unduh sesi dan kenangan MindReplay Anda.",
+    "heroTitle": "Pengunduh MindReplay",
+    "heroDescription": "Simpan sesi dan kenangan MindReplay Anda ke perangkat untuk dilihat secara offline.",
+    "features": {
+      "sessionsTitle": "Pengunduh Sesi",
+      "sessionsDesc": "Unduh sesi meditasi dan fokus Anda untuk didengarkan secara offline.",
+      "memoriesTitle": "Penyimpan Kenangan",
+      "memoriesDesc": "Simpan kenangan MindReplay Anda ke perangkat.",
+      "highQualityTitle": "Audio Berkualitas Tinggi",
+      "highQualityDesc": "Unduh dalam kualitas audio tertinggi yang tersedia.",
+      "organizedTitle": "Perpustakaan Terorganisir",
+      "organizedDesc": "Jaga unduhan Anda tetap terorganisir berdasarkan kategori dan tanggal.",
+      "noInternetTitle": "Akses Offline",
+      "noInternetDesc": "Nikmati konten Anda tanpa koneksi internet."
+    },
+    "faq": {
+      "q1": "Bagaimana cara mengunduh sesi MindReplay saya?",
+      "a1": "Masuk ke akun Anda, buka perpustakaan, dan klik tombol unduh di sebelah sesi apa pun.",
+      "q2": "Bisakah saya mengunduh sesi untuk didengarkan secara offline?",
+      "a2": "Ya, Anda dapat mengunduh sesi apa pun untuk didengarkan tanpa koneksi internet.",
+      "q3": "Apakah ada batasan unduhan?",
+      "a3": "Pengguna premium dapat mengunduh jumlah sesi yang tidak terbatas."
+    }
+  },
+  "twitter": {
+    "title": "Pengunduh Video Twitter",
+    "description": "Unduh video dari Twitter dengan kualitas tinggi",
+    "heroTitle": "Pengunduh Video Twitter",
+    "heroDescription": "Unduh video, GIF, dan gambar dari Twitter dengan mudah. Simpan konten Twitter favorit Anda untuk ditonton atau dibagikan secara offline.",
+    "features": {
+      "videoTitle": "Unduh Video",
+      "videoDesc": "Simpan video Twitter dalam kualitas aslinya.",
+      "gifTitle": "Unduh GIF",
+      "gifDesc": "Simpan GIF dari Twitter dalam format aslinya.",
+      "imageTitle": "Unduh Gambar",
+      "imageDesc": "Unduh gambar dari tweet dalam kualitas tertinggi.",
+      "threadTitle": "Dukungan Thread",
+      "threadDesc": "Unduh seluruh thread Twitter sekaligus.",
+      "hdTitle": "Kualitas HD",
+      "hdDesc": "Dapatkan video dalam kualitas HD jika tersedia.",
+      "noAccountTitle": "Tanpa Akun",
+      "noAccountDesc": "Tidak perlu masuk untuk mengunduh konten publik."
+    },
+    "faq": {
+      "q1": "Bagaimana cara mengunduh video dari Twitter?",
+      "a1": "Salin URL tweet yang berisi video dan tempelkan ke pengunduh kami. Klik unduh untuk menyimpan videonya.",
+      "q2": "Bisakah saya mengunduh video dari akun privat?",
+      "a2": "Tidak, Anda hanya dapat mengunduh konten dari akun publik.",
+      "q3": "Apakah ada batasan ukuran video yang bisa saya unduh?",
+      "a3": "Tidak ada batasan ukuran. Anda dapat mengunduh video apa pun dari Twitter."
+    }
+  },
+  "footer": {
+    "tagline": "Pengunduh video yang cepat, aman, dan sepenuhnya gratis. Unduh dari YouTube, Facebook, TikTok, dan lainnya tanpa batasan apa pun.",
+    "freeBadge": "100% Gratis Selamanya",
+    "features": "Fitur",
+    "freeDownloads": "Unduhan Gratis",
+    "noRegistration": "Tanpa Registrasi",
+    "highQuality": "Kualitas Tinggi",
+    "multiplePlatforms": "Banyak Platform",
+    "support": "Dukungan",
+    "helpCenter": "Pusat Bantuan",
+    "contactUs": "Hubungi Kami",
+    "reportIssue": "Laporkan Masalah",
+    "statusPage": "Status Layanan",
+    "supportedPlatforms": "Platform yang Didukung",
+    "copyright": "© 2024 Sonova. Seluruh hak cipta dilindungi.",
+    "privacyPolicy": "Kebijakan Privasi",
+    "termsOfService": "Syarat Layanan",
+    "systemStatus": "Semua sistem berjalan normal",
+    "privacy": "Kebijakan Privasi",
+    "terms": "Syarat Layanan",
+    "contact": "Hubungi Kami"
+  }
+}

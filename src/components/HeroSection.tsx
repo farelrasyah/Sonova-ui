@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface HeroSectionProps {
   title: string;
@@ -8,6 +9,8 @@ interface HeroSectionProps {
 }
 
 export default function HeroSection({ title, description }: HeroSectionProps) {
+  const { t } = useLanguage();
+  
   const [selectedFormat, setSelectedFormat] = useState('MP4');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -133,11 +136,14 @@ export default function HeroSection({ title, description }: HeroSectionProps) {
 
         {/* Feature Highlights */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto animate-fade-in-up" style={{ animationDelay: '0.8s' }}>
-          {[
-            { icon: '⚡', title: 'Lightning Fast', desc: 'High-speed downloads' },
-            { icon: '🛡️', title: 'Secure & Safe', desc: 'Your privacy protected' },
-            { icon: '🎯', title: 'High Quality', desc: 'Best video resolution' }
-          ].map((feature, index) => (
+          {t.home.features.map((feature, index) => {
+            const icons = ['⚡', '🛡️', '🎯'];
+            return {
+              icon: icons[index % icons.length],
+              title: feature.title,
+              desc: feature.description
+            };
+          }).map((feature, index) => (
             <div key={index} className="group text-center animate-fade-in-up" style={{ animationDelay: `${0.9 + index * 0.1}s` }}>
               <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-white to-slate-50 rounded-soft-xl shadow-soft mb-4 group-hover:scale-110 transition-gentle">
                 <span className="text-2xl">{feature.icon}</span>

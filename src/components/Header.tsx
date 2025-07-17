@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { LanguageSwitcher } from './LanguageSwitcher';
 
 export default function Header() {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -22,13 +24,15 @@ export default function Header() {
     router.push(path);
   };
 
+  const { t } = useLanguage();
+
   const menuItems = [
-    { name: 'YouTube Video Downloader', path: '/' },
-    { name: 'YouTube Playlist', path: '/youtube-playlist-downloader' },
-    { name: 'Instagram', path: '/instagram-downloader' },
-    { name: 'TikTok', path: '/tiktok-downloader' },
-    { name: 'Twitter', path: '/twitter-downloader' },
-    { name: 'MindReplay', path: '/mindreplay-downloader' }
+    { name: t.nav.home, path: '/' },
+    { name: t.nav.youtube, path: '/youtube-playlist-downloader' },
+    { name: t.nav.instagram, path: '/instagram-downloader' },
+    { name: t.nav.tiktok, path: '/tiktok-downloader' },
+    { name: t.nav.twitter, path: '/twitter-downloader' },
+    { name: t.nav.mindreplay, path: '/mindreplay-downloader' }
   ];
 
   // Get active item based on current path
@@ -84,18 +88,24 @@ export default function Header() {
 
           {/* Right Side - Dark Mode Toggle and Mobile Menu */}
           <div className="flex items-center space-x-4 animate-fade-in-right">
-            {/* Dark Mode Toggle */}
-            <button 
-              onClick={toggleDarkMode}
-              className="relative bg-gradient-to-r from-slate-50 to-slate-100 dark:from-gray-800 dark:to-gray-700 text-slate-700 dark:text-gray-200 font-medium px-5 py-2.5 rounded-soft transition-gentle text-sm flex items-center space-x-2 shadow-soft btn-hover overflow-hidden"
-            >
-              <span>{isDarkMode ? 'Light' : 'Dark'}</span>
-              <div className="relative">
-                <svg className="w-4 h-4 transition-gentle" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
-                </svg>
-              </div>
-            </button>
+            <div className="flex items-center space-x-2">
+              <LanguageSwitcher />
+              <button
+                onClick={toggleDarkMode}
+                className="p-2 rounded-full text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
+                aria-label={isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'}
+              >
+                {isDarkMode ? (
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-9 1a1 1 0 100-2H4a1 1 0 100 2h1zm2 3a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zm7-1a1 1 0 100 2h1a1 1 0 100-2h-1z" clipRule="evenodd" fillRule="evenodd" />
+                  </svg>
+                ) : (
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+                  </svg>
+                )}
+              </button>
+            </div>
 
             {/* Mobile Menu Button */}
             <button 

@@ -1,73 +1,62 @@
-import { FaDownload, FaList, FaMusic, FaYoutube, FaMobileAlt, FaClock, FaCheckCircle } from 'react-icons/fa';
-import PageTemplate from '@/components/PageTemplate';
+'use client';
+
+import { FaList, FaMusic, FaYoutube, FaMobileAlt, FaClock, FaCheckCircle } from 'react-icons/fa';
+import PageTemplate from "@/components/PageTemplate";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { useEffect, useState } from "react";
 
 export default function YoutubePlaylistDownloader() {
-  const features = [
-    {
-      title: 'Entire Playlist Download',
-      description: 'Download complete YouTube playlists with a single click, saving you time and effort.',
-      icon: <FaList className="h-6 w-6 text-red-500" />,
-      gradient: 'from-red-100 to-pink-100'
-    },
-    {
-      title: 'Multiple Formats',
-      description: 'Choose from various formats including MP4, MP3, and more to suit your needs.',
-      icon: <FaMusic className="h-6 w-6 text-red-500" />,
-      gradient: 'from-orange-100 to-amber-100'
-    },
-    {
-      title: 'High Quality',
-      description: 'Download videos in up to 4K quality or extract high-quality audio.',
-      icon: <FaYoutube className="h-6 w-6 text-red-500" />,
-      gradient: 'from-yellow-100 to-orange-100'
-    },
-    {
-      title: 'Mobile Friendly',
-      description: 'Access and download your playlists from any device, including smartphones and tablets.',
-      icon: <FaMobileAlt className="h-6 w-6 text-red-500" />,
-      gradient: 'from-blue-100 to-indigo-100'
-    },
-    {
-      title: 'Background Processing',
-      description: 'Continue browsing while your playlists are being processed in the background.',
-      icon: <FaClock className="h-6 w-6 text-red-500" />,
-      gradient: 'from-purple-100 to-violet-100'
-    },
-    {
-      title: 'Batch Download',
-      description: 'Download multiple videos from a playlist simultaneously for faster results.',
-      icon: <FaCheckCircle className="h-6 w-6 text-red-500" />,
-      gradient: 'from-green-100 to-teal-100'
-    }
+  const { t } = useLanguage();
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) {
+    return null; // Or a loading state
+  }
+  
+  // Icons and gradients that don't need translation
+  const featureIcons = [
+    <FaList key="list" className="h-6 w-6 text-red-500" />,
+    <FaMusic key="music" className="h-6 w-6 text-red-500" />,
+    <FaYoutube key="youtube" className="h-6 w-6 text-red-500" />,
+    <FaMobileAlt key="mobile" className="h-6 w-6 text-red-500" />,
+    <FaClock key="clock" className="h-6 w-6 text-red-500" />,
+    <FaCheckCircle key="check" className="h-6 w-6 text-red-500" />
+  ];
+  
+  const gradients = [
+    'from-red-100 to-pink-100',
+    'from-orange-100 to-amber-100',
+    'from-yellow-100 to-orange-100',
+    'from-blue-100 to-indigo-100',
+    'from-purple-100 to-violet-100',
+    'from-green-100 to-teal-100'
   ];
 
-  const faqs = [
-    {
-      question: 'How do I download a YouTube playlist?',
-      answer: 'Simply paste the YouTube playlist URL into our downloader, select your preferred format and quality, then click download.'
-    },
-    {
-      question: 'Can I download private or unlisted playlists?',
-      answer: 'No, our downloader only works with public YouTube playlists.'
-    },
-    {
-      question: 'What video qualities are available?',
-      answer: 'You can download videos in various qualities from 144p up to 4K, depending on the original video quality.'
-    },
-    {
-      question: 'Is there a limit to the playlist size?',
-      answer: 'You can download playlists of any size, but very large playlists may take longer to process.'
-    }
-  ];
+  // Map translated features with icons and gradients
+  const features = (t.youtube?.features || []).map((feature: any, index: number) => ({
+    ...feature,
+    icon: featureIcons[index % featureIcons.length],
+    gradient: gradients[index % gradients.length]
+  }));
+
+  // Transform FAQ data to match the expected format
+  const faqItems = t.youtube?.faq?.map((item: any) => ({
+    question: item.question,
+    answer: item.answer
+  })) || [];
 
   return (
     <PageTemplate
-      title="YouTube Playlist Downloader | Download Full Playlists in HD"
-      description="Download complete YouTube playlists in high quality. Save entire playlists as MP4 or MP3 with our fast and free downloader."
-      heroTitle="YouTube Playlist Downloader"
-      heroDescription="Download complete YouTube playlists with ease. Save entire music collections, tutorials, or any playlist in your preferred format and quality."
+      title={`${t.youtube?.title || 'YouTube Playlist Downloader'} | Download Full Playlists in HD`}
+      description={t.youtube?.description || ''}
+      heroTitle={t.youtube?.heroTitle || ''}
+      heroDescription={t.youtube?.heroDescription || ''}
       features={features}
-      faqs={faqs}
+      faqs={faqItems}
     />
   );
 }

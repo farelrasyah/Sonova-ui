@@ -1,71 +1,88 @@
+'use client';
+
 import { FaDownload, FaTwitter, FaVideo, FaImage, FaMobileAlt, FaHashtag, FaGlobe } from 'react-icons/fa';
 import PageTemplate from '@/components/PageTemplate';
+import { useLanguage } from '@/contexts/LanguageContext';
+
+interface Feature {
+  title: string;
+  description: string;
+  icon: React.ReactNode;
+  gradient: string;
+}
+
+interface FAQ {
+  question: string;
+  answer: string;
+}
 
 export default function TwitterDownloader() {
-  const features = [
+  const { t } = useLanguage();
+
+  const features: Feature[] = [
     {
-      title: 'Video Downloader',
-      description: 'Download videos from Twitter in high quality with just one click.',
+      title: t.twitter.features.videoTitle,
+      description: t.twitter.features.videoDesc,
       icon: <FaVideo className="h-6 w-6 text-blue-400" />,
       gradient: 'from-blue-100 to-cyan-100'
     },
     {
-      title: 'Image Downloader',
-      description: 'Save images from tweets in their original quality.',
+      title: t.twitter.features.imageTitle,
+      description: t.twitter.features.imageDesc,
       icon: <FaImage className="h-6 w-6 text-blue-400" />,
       gradient: 'from-green-100 to-emerald-100'
     },
     {
-      title: 'Fast & Easy',
-      description: 'Quickly download Twitter media without any complicated steps.',
+      title: t.twitter.features.fastTitle,
+      description: t.twitter.features.fastDesc,
       icon: <FaDownload className="h-6 w-6 text-blue-400" />,
       gradient: 'from-purple-100 to-violet-100'
     },
     {
-      title: 'Mobile Friendly',
-      description: 'Works perfectly on all devices, including smartphones and tablets.',
+      title: t.twitter.features.mobileTitle,
+      description: t.twitter.features.mobileDesc,
       icon: <FaMobileAlt className="h-6 w-6 text-blue-400" />,
       gradient: 'from-pink-100 to-rose-100'
     },
     {
-      title: 'Trending Hashtags',
-      description: 'Discover and download media from trending Twitter hashtags.',
+      title: t.twitter.features.trendingTitle,
+      description: t.twitter.features.trendingDesc,
       icon: <FaHashtag className="h-6 w-6 text-blue-400" />,
       gradient: 'from-amber-100 to-yellow-100'
     },
     {
-      title: 'No Registration',
-      description: 'Download Twitter content without needing to create an account or log in.',
+      title: t.twitter.features.noAccountTitle,
+      description: t.twitter.features.noAccountDesc,
       icon: <FaGlobe className="h-6 w-6 text-blue-400" />,
       gradient: 'from-indigo-100 to-blue-100'
     }
   ];
 
-  const faqs = [
+  const faqs: FAQ[] = [
     {
-      question: 'How do I download videos from Twitter?',
-      answer: 'Copy the URL of the tweet containing the video and paste it into our downloader. Click download and save the video to your device.'
+      question: t.twitter.faq.q1,
+      answer: t.twitter.faq.a1
     },
     {
-      question: 'Can I download videos from private Twitter accounts?',
-      answer: 'No, you can only download videos from public Twitter accounts.'
+      question: t.twitter.faq.q2,
+      answer: t.twitter.faq.a2
     },
     {
-      question: 'What video formats are supported?',
-      answer: 'Our downloader supports MP4 format, which is compatible with most devices and media players.'
+      question: t.twitter.faq.q3,
+      answer: t.twitter.faq.a3
     },
     {
-      question: 'Is there a limit to the video length I can download?',
-      answer: 'You can download videos of any length, but longer videos may take more time to process.'
+      question: t.twitter.faq.q4,
+      answer: t.twitter.faq.a4
     }
   ];
 
   return (
     <PageTemplate
-      title="Twitter Video Downloader | Download Twitter Videos & GIFs"
-      description="Download videos, GIFs, and images from Twitter in high quality. Fast, free, and easy to use Twitter downloader."
-      heroTitle="Twitter Video Downloader"
-      heroDescription="Download videos, GIFs, and images from Twitter with ease. Save your favorite Twitter content to watch or share offline."
+      title={t.twitter.title}
+      description={t.twitter.description}
+      heroTitle={t.twitter.heroTitle}
+      heroDescription={t.twitter.heroDescription}
       features={features}
       faqs={faqs}
     />

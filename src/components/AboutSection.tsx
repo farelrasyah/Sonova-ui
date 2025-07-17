@@ -1,6 +1,9 @@
 import React from 'react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function AboutSection() {
+  const { t } = useLanguage();
+  
   return (
     <section className="bg-gradient-to-b from-white via-slate-50/30 to-white py-24 px-6 lg:px-8 relative overflow-hidden">
       {/* Subtle Background Elements */}
@@ -14,10 +17,10 @@ export default function AboutSection() {
         <div className="text-center mb-20 animate-fade-in-up">
           <div className="inline-block">
             <div className="mb-4">
-              <span className="text-slate-500 text-lg font-light tracking-wide">Introducing</span>
+              <span className="text-slate-500 text-lg font-light tracking-wide">{t.about.introducing}</span>
             </div>
             <h2 className="text-5xl md:text-6xl font-bold mb-6 tracking-tight">
-              <span className="gradient-text-soft">Sonova</span>
+              <span className="gradient-text-soft">{t.about.title}</span>
             </h2>
             <div className="w-20 h-1 bg-gradient-to-r from-blue-400 via-purple-400 to-slate-400 rounded-full mx-auto opacity-60"></div>
           </div>
@@ -26,8 +29,7 @@ export default function AboutSection() {
         {/* Description */}
         <div className="max-w-4xl mx-auto text-center mb-20 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
           <p className="text-xl md:text-2xl text-slate-600 leading-relaxed font-light">
-            The most sophisticated and user-friendly video downloader on the internet. 
-            Supporting multiple platforms including YouTube, Twitter, Facebook, TikTok, and more.
+            {t.about.description}
           </p>
         </div>
 
@@ -44,15 +46,13 @@ export default function AboutSection() {
                   </svg>
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold text-slate-800 mb-1">
-                    Buffer-Free Entertainment
-                  </h3>
+                  <h3 className="text-xl font-semibold text-slate-800 mb-3">{t.about.features[2].title}</h3>
+                  <p className="text-slate-600">{t.about.features[2].description}</p>
                   <div className="w-12 h-0.5 bg-gradient-to-r from-blue-400 to-indigo-400 rounded-full"></div>
                 </div>
               </div>
               <p className="text-slate-600 leading-relaxed">
-                Experience seamless offline entertainment with our advanced download technology. 
-                No more buffering, no more interruptions - just pure, uninterrupted content enjoyment.
+                {t.about.features[2].descriptionLong}
               </p>
             </div>
           </div>
@@ -68,15 +68,13 @@ export default function AboutSection() {
                   </svg>
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold text-slate-800 mb-1">
-                    Complete Solution
-                  </h3>
+                  <h3 className="text-xl font-semibold text-slate-800 mb-3">{t.about.features[0].title}</h3>
+                  <p className="text-slate-600">{t.about.features[0].description}</p>
                   <div className="w-12 h-0.5 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full"></div>
                 </div>
               </div>
               <p className="text-slate-600 leading-relaxed">
-                Your all-in-one platform for video downloading. High-speed processing, 
-                multiple format support, and instant access to your favorite content, all in one place.
+                {t.about.features[0].descriptionLong}
               </p>
             </div>
           </div>
@@ -85,12 +83,7 @@ export default function AboutSection() {
         {/* Stats Section */}
         <div className="mt-20 animate-fade-in-up" style={{ animationDelay: '0.8s' }}>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
-            {[
-              { number: '10M+', label: 'Downloads' },
-              { number: '99.9%', label: 'Uptime' },
-              { number: '50+', label: 'Platforms' },
-              { number: '24/7', label: 'Available' }
-            ].map((stat, index) => (
+            {t.about.stats.map((stat, index) => (
               <div key={index} className="text-center group">
                 <div className="text-2xl md:text-3xl font-bold gradient-text-soft mb-2 group-hover:scale-110 transition-gentle">
                   {stat.number}

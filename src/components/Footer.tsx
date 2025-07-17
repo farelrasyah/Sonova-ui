@@ -1,6 +1,29 @@
 import React from 'react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function Footer() {
+  const { t } = useLanguage();
+  
+  // Default translations in case they're not provided in the language files
+  const translations = {
+    tagline: t.footer?.tagline || "Fast, secure, and completely free video downloader. Download from YouTube, Facebook, TikTok, and more without any limitations.",
+    freeBadge: t.footer?.freeBadge || "100% Free Forever",
+    features: t.footer?.features || "Features",
+    freeDownloads: t.footer?.freeDownloads || "Free Downloads",
+    noRegistration: t.footer?.noRegistration || "No Registration",
+    highQuality: t.footer?.highQuality || "High Quality",
+    multiplePlatforms: t.footer?.multiplePlatforms || "Multiple Platforms",
+    support: t.footer?.support || "Support",
+    helpCenter: t.footer?.helpCenter || "Help Center",
+    contactUs: t.footer?.contactUs || "Contact Us",
+    reportIssue: t.footer?.reportIssue || "Report Issue",
+    statusPage: t.footer?.statusPage || "Status Page",
+    supportedPlatforms: t.footer?.supportedPlatforms || "Supported Platforms",
+    copyright: t.footer?.copyright || `© ${new Date().getFullYear()} Sonova. All rights reserved.`,
+    privacyPolicy: t.footer?.privacyPolicy || "Privacy Policy",
+    termsOfService: t.footer?.termsOfService || "Terms of Service",
+    systemStatus: t.footer?.systemStatus || "All systems operational"
+  };
   return (
     <footer className="bg-gradient-to-b from-slate-50 to-white py-16 px-6 lg:px-8 relative overflow-hidden">
       {/* Background Elements */}
@@ -23,7 +46,7 @@ export default function Footer() {
               <span className="text-2xl font-bold gradient-text-soft">Sonal</span>
             </div>
             <p className="text-slate-600 leading-relaxed mb-6 max-w-md">
-              Fast, secure, and completely free video downloader. Download from YouTube, Facebook, TikTok, and more without any limitations.
+              {translations.tagline}
             </p>
             <div className="flex items-center gap-4">
               <div className="bg-white/60 backdrop-blur-xl border border-white/20 rounded-soft-xl p-4 shadow-soft">
@@ -31,7 +54,7 @@ export default function Footer() {
                   <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  <span className="text-sm font-medium">100% Free Forever</span>
+                  <span className="text-sm font-medium">{translations.freeBadge}</span>
                 </div>
               </div>
             </div>
@@ -41,32 +64,32 @@ export default function Footer() {
           <div className="animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
             <h4 className="text-slate-800 font-semibold mb-6 flex items-center gap-2">
               <div className="w-2 h-2 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full"></div>
-              Features
+              {translations.features}
             </h4>
             <ul className="space-y-3">
               <li><a href="#" className="text-slate-600 hover:text-blue-600 transition-gentle flex items-center gap-2 group">
                 <svg className="w-4 h-4 text-slate-400 group-hover:text-blue-500 transition-gentle" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
-                Free Downloads
+                {translations.freeDownloads}
               </a></li>
               <li><a href="#" className="text-slate-600 hover:text-blue-600 transition-gentle flex items-center gap-2 group">
                 <svg className="w-4 h-4 text-slate-400 group-hover:text-blue-500 transition-gentle" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
-                No Registration
+                {translations.noRegistration}
               </a></li>
               <li><a href="#" className="text-slate-600 hover:text-blue-600 transition-gentle flex items-center gap-2 group">
                 <svg className="w-4 h-4 text-slate-400 group-hover:text-blue-500 transition-gentle" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
-                High Quality
+                {translations.highQuality}
               </a></li>
               <li><a href="#" className="text-slate-600 hover:text-blue-600 transition-gentle flex items-center gap-2 group">
                 <svg className="w-4 h-4 text-slate-400 group-hover:text-blue-500 transition-gentle" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
-                Multiple Platforms
+                {translations.multiplePlatforms}
               </a></li>
             </ul>
           </div>
@@ -75,32 +98,32 @@ export default function Footer() {
           <div className="animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
             <h4 className="text-slate-800 font-semibold mb-6 flex items-center gap-2">
               <div className="w-2 h-2 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full"></div>
-              Support
+              {translations.support}
             </h4>
             <ul className="space-y-3">
               <li><a href="#" className="text-slate-600 hover:text-blue-600 transition-gentle flex items-center gap-2 group">
                 <svg className="w-4 h-4 text-slate-400 group-hover:text-blue-500 transition-gentle" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
-                Help Center
+                {translations.helpCenter}
               </a></li>
               <li><a href="#" className="text-slate-600 hover:text-blue-600 transition-gentle flex items-center gap-2 group">
                 <svg className="w-4 h-4 text-slate-400 group-hover:text-blue-500 transition-gentle" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
-                Contact Us
+                {translations.contactUs}
               </a></li>
               <li><a href="#" className="text-slate-600 hover:text-blue-600 transition-gentle flex items-center gap-2 group">
                 <svg className="w-4 h-4 text-slate-400 group-hover:text-blue-500 transition-gentle" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
-                Report Issue
+                {translations.reportIssue}
               </a></li>
               <li><a href="#" className="text-slate-600 hover:text-blue-600 transition-gentle flex items-center gap-2 group">
                 <svg className="w-4 h-4 text-slate-400 group-hover:text-blue-500 transition-gentle" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
-                Status Page
+                {translations.statusPage}
               </a></li>
             </ul>
           </div>
@@ -109,7 +132,7 @@ export default function Footer() {
         {/* Supported Platforms */}
         <div className="mb-12 animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
           <div className="text-center mb-8">
-            <h4 className="text-slate-800 font-semibold mb-4">Supported Platforms</h4>
+            <h4 className="text-slate-800 font-semibold mb-4">{translations.supportedPlatforms}</h4>
             <div className="w-16 h-1 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full mx-auto opacity-60"></div>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -138,16 +161,16 @@ export default function Footer() {
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="flex items-center gap-6">
               <p className="text-slate-600 text-sm">
-                © 2024 Sonova. All rights reserved.
+                {translations.copyright}
               </p>
               <div className="flex items-center gap-4">
-                <a href="#" className="text-slate-500 hover:text-blue-600 transition-gentle text-sm">Privacy Policy</a>
-                <a href="#" className="text-slate-500 hover:text-blue-600 transition-gentle text-sm">Terms of Service</a>
+                <a href="#" className="text-slate-500 hover:text-blue-600 transition-gentle text-sm">{translations.privacyPolicy}</a>
+                <a href="#" className="text-slate-500 hover:text-blue-600 transition-gentle text-sm">{translations.termsOfService}</a>
               </div>
             </div>
             <div className="flex items-center gap-2 text-slate-600">
               <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-              <span className="text-sm">All systems operational</span>
+              <span className="text-sm">{translations.systemStatus}</span>
             </div>
           </div>
         </div>

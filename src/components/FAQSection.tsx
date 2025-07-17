@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useLanguage } from '@/contexts/LanguageContext';
 import SupportPopup from './SupportPopup';
 
 interface FAQItem {
@@ -74,8 +75,38 @@ interface FAQSectionProps {
   }>;
 }
 
-export default function FAQSection({ faqs = [] }: FAQSectionProps) {
+export default function FAQSection({ faqs: propFAQs = [] }: FAQSectionProps) {
   const [isSupportOpen, setIsSupportOpen] = useState(false);
+  const { t } = useLanguage();
+  // Define FAQ data type
+  type FAQTranslations = {
+    subtitle: string;
+    title: string;
+    sectionTitle: string;
+    noFAQs: string;
+    ctaTitle: string;
+    ctaDescription: string;
+    ctaButton: string;
+    items: FAQItem[];
+  };
+
+  // Check if faq exists in translations, if not use fallback
+  const faqData: FAQTranslations = 'faq' in t ? (t.faq as FAQTranslations) : {
+    subtitle: 'Get Answers',
+    title: 'Frequently Asked {highlight}Questions',
+    sectionTitle: 'Frequently Asked Questions',
+    noFAQs: 'No FAQs available at the moment.',
+    ctaTitle: 'Want to know more about me?',
+    ctaDescription: 'Learn more about the team behind Sonova and our mission.',
+    ctaButton: 'About Me',
+    items: []
+  };
+  
+  const faqs = propFAQs.length > 0 ? propFAQs : faqData.items;
+  
+  // Log the FAQ translations for debugging
+  console.log('FAQ translations:', faqData);
+
   return (
     <>
       <section className="bg-gradient-to-b from-white via-slate-50/30 to-white py-24 px-6 lg:px-8 relative overflow-hidden">
@@ -90,10 +121,14 @@ export default function FAQSection({ faqs = [] }: FAQSectionProps) {
         <div className="text-center mb-20 animate-fade-in-up">
           <div className="inline-block">
             <div className="mb-4">
-              <span className="text-slate-500 text-lg font-light tracking-wide">Get Answers</span>
+              <span className="text-slate-500 text-lg font-light tracking-wide">{faqData.subtitle}</span>
             </div>
             <h2 className="text-4xl md:text-5xl font-bold mb-6 text-slate-800 tracking-tight">
-              Frequently Asked <span className="gradient-text-soft">Questions</span>
+              {faqData.title?.replace('{highlight}', '')}
+              <span className="gradient-text-soft">
+                {faqData.title?.includes('{highlight}') ? 
+                  faqData.title.split('{highlight}')[1] : 'Questions'}
+              </span>
             </h2>
             <div className="w-20 h-1 bg-gradient-to-r from-blue-400 via-purple-400 to-slate-400 rounded-full mx-auto opacity-60"></div>
           </div>
@@ -103,29 +138,33 @@ export default function FAQSection({ faqs = [] }: FAQSectionProps) {
         <div className="w-full">
           {faqs.length > 0 ? (
             <div className="animate-fade-in-left" style={{ animationDelay: '0.2s' }}>
-              <FAQAccordion items={faqs} title="Frequently Asked Questions" />
+              <FAQAccordion items={faqs} title={faqData.sectionTitle} />
             </div>
           ) : (
             <div className="text-center py-8 text-slate-500">
-              No FAQs available at the moment.
+              {faqData.noFAQs}
             </div>
           )}
         </div>
 
         {/* Bottom About Section */}
         <div className="text-center mt-16 animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
-          <div className="inline-block bg-white/60 backdrop-blur-xl border border-white/20 rounded-soft-xl p-8 shadow-soft-xl">
-            <h3 className="text-xl font-semibold text-slate-800 mb-3">
-              Want to know more about me?
+          <FAQAccordion
+            items={faqs}
+            title={faqData.sectionTitle}
+          />
+          <div className="mt-10 text-center">
+            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+              {faqData.ctaTitle}
             </h3>
-            <p className="text-slate-600 mb-6">
-              Learn more about the team behind Sonova and our mission.
+            <p className="text-gray-600 dark:text-gray-300 mb-6 max-w-2xl mx-auto">
+              {faqData.ctaDescription}
             </p>
             <button
-              className="bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white font-semibold px-8 py-3 rounded-soft-lg transition-gentle shadow-soft-lg btn-hover magnetic"
               onClick={() => setIsSupportOpen(true)}
+              className="px-6 py-3 bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-medium rounded-lg hover:opacity-90 transition-opacity"
             >
-              About Me
+              {faqData.ctaButton}
             </button>
           </div>
         </div>
