@@ -1,4 +1,4 @@
-import { FaDownload, FaPlay, FaMusic, FaHashtag } from 'react-icons/fa';
+import { FaDownload, FaPlay, FaMusic, FaHashtag, FaUserClock, FaMobileAlt } from 'react-icons/fa';
 import PageTemplate from '@/components/PageTemplate';
 
 export default function TiktokDownloader() {
@@ -20,6 +20,18 @@ export default function TiktokDownloader() {
       description: 'Quickly download TikTok videos with our high-speed servers.',
       icon: <FaDownload className="h-6 w-6 text-pink-500" />,
       gradient: 'from-rose-100 to-pink-100'
+    },
+    {
+      title: '24/7 Availability',
+      description: 'Our service is always online, ready to process your downloads anytime.',
+      icon: <FaUserClock className="h-6 w-6 text-pink-500" />,
+      gradient: 'from-blue-100 to-indigo-100'
+    },
+    {
+      title: 'Mobile Friendly',
+      description: 'Works perfectly on all devices, including smartphones and tablets.',
+      icon: <FaMobileAlt className="h-6 w-6 text-pink-500" />,
+      gradient: 'from-green-100 to-emerald-100'
     },
     {
       title: 'Trending Hashtags',

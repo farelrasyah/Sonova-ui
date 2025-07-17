@@ -1,4 +1,4 @@
-import { FaDownload, FaList, FaMusic, FaYoutube } from 'react-icons/fa';
+import { FaDownload, FaList, FaMusic, FaYoutube, FaMobileAlt, FaClock, FaCheckCircle } from 'react-icons/fa';
 import PageTemplate from '@/components/PageTemplate';
 
 export default function YoutubePlaylistDownloader() {
@@ -22,9 +22,21 @@ export default function YoutubePlaylistDownloader() {
       gradient: 'from-yellow-100 to-orange-100'
     },
     {
+      title: 'Mobile Friendly',
+      description: 'Access and download your playlists from any device, including smartphones and tablets.',
+      icon: <FaMobileAlt className="h-6 w-6 text-red-500" />,
+      gradient: 'from-blue-100 to-indigo-100'
+    },
+    {
+      title: 'Background Processing',
+      description: 'Continue browsing while your playlists are being processed in the background.',
+      icon: <FaClock className="h-6 w-6 text-red-500" />,
+      gradient: 'from-purple-100 to-violet-100'
+    },
+    {
       title: 'Batch Download',
       description: 'Download multiple videos from a playlist simultaneously for faster results.',
-      icon: <FaDownload className="h-6 w-6 text-red-500" />,
+      icon: <FaCheckCircle className="h-6 w-6 text-red-500" />,
       gradient: 'from-green-100 to-teal-100'
     }
   ];

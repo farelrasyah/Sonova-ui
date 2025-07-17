@@ -14,7 +14,7 @@ function FAQAccordion({ items, title }: { items: FAQItem[], title: string }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <div className="space-y-4">
+    <div className="w-full">
       <div className="flex items-center gap-3 mb-8">
         <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-500 rounded-soft-lg flex items-center justify-center">
           <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -26,7 +26,8 @@ function FAQAccordion({ items, title }: { items: FAQItem[], title: string }) {
         </h3>
       </div>
       
-      {items.map((item, index) => (
+      <div className="grid md:grid-cols-2 gap-4">
+        {items.map((item, index) => (
         <div key={index} className="group">
           <div className="bg-white/70 backdrop-blur-xl border border-white/20 rounded-soft-xl overflow-hidden shadow-soft hover:shadow-soft-lg transition-gentle">
             <button
@@ -61,6 +62,7 @@ function FAQAccordion({ items, title }: { items: FAQItem[], title: string }) {
           </div>
         </div>
       ))}
+      </div>
     </div>
   );
 }
@@ -98,16 +100,16 @@ export default function FAQSection({ faqs = [] }: FAQSectionProps) {
         </div>
 
         {/* FAQ Grid */}
-        <div className="grid lg:grid-cols-2 gap-12">
-          <div className="animate-fade-in-left w-full" style={{ animationDelay: '0.2s' }}>
-            {faqs.length > 0 ? (
+        <div className="w-full">
+          {faqs.length > 0 ? (
+            <div className="animate-fade-in-left" style={{ animationDelay: '0.2s' }}>
               <FAQAccordion items={faqs} title="Frequently Asked Questions" />
-            ) : (
-              <div className="text-center py-8 text-slate-500">
-                No FAQs available at the moment.
-              </div>
-            )}
-          </div>
+            </div>
+          ) : (
+            <div className="text-center py-8 text-slate-500">
+              No FAQs available at the moment.
+            </div>
+          )}
         </div>
 
         {/* Bottom About Section */}

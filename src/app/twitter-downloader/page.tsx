@@ -1,4 +1,4 @@
-import { FaDownload, FaTwitter, FaVideo, FaImage } from 'react-icons/fa';
+import { FaDownload, FaTwitter, FaVideo, FaImage, FaMobileAlt, FaHashtag, FaGlobe } from 'react-icons/fa';
 import PageTemplate from '@/components/PageTemplate';
 
 export default function TwitterDownloader() {
@@ -22,10 +22,22 @@ export default function TwitterDownloader() {
       gradient: 'from-purple-100 to-violet-100'
     },
     {
+      title: 'Mobile Friendly',
+      description: 'Works perfectly on all devices, including smartphones and tablets.',
+      icon: <FaMobileAlt className="h-6 w-6 text-blue-400" />,
+      gradient: 'from-pink-100 to-rose-100'
+    },
+    {
+      title: 'Trending Hashtags',
+      description: 'Discover and download media from trending Twitter hashtags.',
+      icon: <FaHashtag className="h-6 w-6 text-blue-400" />,
+      gradient: 'from-amber-100 to-yellow-100'
+    },
+    {
       title: 'No Registration',
       description: 'Download Twitter content without needing to create an account or log in.',
-      icon: <FaTwitter className="h-6 w-6 text-blue-400" />,
-      gradient: 'from-amber-100 to-yellow-100'
+      icon: <FaGlobe className="h-6 w-6 text-blue-400" />,
+      gradient: 'from-indigo-100 to-blue-100'
     }
   ];
 

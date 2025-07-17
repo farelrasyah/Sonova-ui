@@ -1,4 +1,4 @@
-import { FaDownload, FaPlay, FaUserFriends, FaHeart } from 'react-icons/fa';
+import { FaDownload, FaPlay, FaUserFriends, FaHeart, FaBolt, FaLayerGroup } from 'react-icons/fa';
 import PageTemplate from '@/components/PageTemplate';
 
 export default function InstagramDownloader() {
@@ -20,6 +20,18 @@ export default function InstagramDownloader() {
       description: 'Download in various formats including MP4, AVI, and more to suit your needs.',
       icon: <FaDownload className="h-6 w-6 text-indigo-500" />,
       gradient: 'from-purple-100 to-indigo-100'
+    },
+    {
+      title: 'Fast Processing',
+      description: 'Quickly process and prepare your downloads in seconds, no matter the video length.',
+      icon: <FaBolt className="h-6 w-6 text-indigo-500" />,
+      gradient: 'from-yellow-100 to-amber-100'
+    },
+    {
+      title: 'Batch Download',
+      description: 'Download multiple Instagram videos at once with our batch processing feature.',
+      icon: <FaLayerGroup className="h-6 w-6 text-indigo-500" />,
+      gradient: 'from-green-100 to-emerald-100'
     },
     {
       title: 'Private Accounts',

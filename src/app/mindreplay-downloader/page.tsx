@@ -1,4 +1,4 @@
-import { FaDownload, FaHistory, FaClock, FaUserShield } from 'react-icons/fa';
+import { FaDownload, FaHistory, FaClock, FaUserShield, FaMobileAlt, FaSearch, FaCloudDownloadAlt } from 'react-icons/fa';
 import PageTemplate from '@/components/PageTemplate';
 
 export default function MindReplayDownloader() {
@@ -16,16 +16,28 @@ export default function MindReplayDownloader() {
       gradient: 'from-violet-100 to-purple-100'
     },
     {
-      title: 'Easy Export',
-      description: 'Export your MindReplay sessions in various formats for easy sharing and archiving.',
-      icon: <FaDownload className="h-6 w-6 text-purple-500" />,
+      title: 'Smart Search',
+      description: 'Quickly find specific moments in your recordings with powerful search functionality.',
+      icon: <FaSearch className="h-6 w-6 text-purple-500" />,
+      gradient: 'from-pink-100 to-rose-100'
+    },
+    {
+      title: 'Cloud Sync',
+      description: 'Access your MindReplay sessions from any device with automatic cloud synchronization.',
+      icon: <FaCloudDownloadAlt className="h-6 w-6 text-purple-500" />,
       gradient: 'from-indigo-100 to-blue-100'
     },
     {
-      title: 'Privacy First',
-      description: 'Your MindReplay sessions are private and only accessible to you.',
-      icon: <FaUserShield className="h-6 w-6 text-purple-500" />,
+      title: 'Mobile Access',
+      description: 'Review and manage your MindReplay sessions on the go with our mobile-friendly interface.',
+      icon: <FaMobileAlt className="h-6 w-6 text-purple-500" />,
       gradient: 'from-blue-100 to-cyan-100'
+    },
+    {
+      title: 'Privacy First',
+      description: 'Your MindReplay sessions are private and only accessible to you with end-to-end encryption.',
+      icon: <FaUserShield className="h-6 w-6 text-purple-500" />,
+      gradient: 'from-cyan-100 to-teal-100'
     }
   ];
 

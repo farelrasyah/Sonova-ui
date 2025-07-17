@@ -14,8 +14,8 @@ export default function Home() {
       <Header />
       <main>
         <HeroSection 
-          title="Download YouTube Videos & Playlists"
-          description="Fast, secure, and free YouTube video and playlist downloader. Save your favorite videos in MP4 or extract audio in MP3 format with just a few clicks."
+          title="Download YouTube Videos"
+          description="Fast, secure, and free YouTube downloader. Save your favorite videos in MP4 or extract audio in MP3 format with just a few clicks."
         />
         <NoticeBar />
         <AboutSection />
@@ -81,7 +81,35 @@ export default function Home() {
             )
           }
         ]} />
-        <FAQSection />
+        <div className="py-12">
+          <h2 className="text-3xl font-bold text-center mb-8">YouTube Video Downloader FAQs</h2>
+          <FAQSection faqs={[
+            {
+              question: 'How to download YouTube videos?',
+              answer: 'Simply paste the YouTube video URL in the input field above and click the download button. Select your preferred format (MP4 or MP3) and quality, then the download will start automatically.'
+            },
+            {
+              question: 'Is it free to download videos?',
+              answer: 'Yes, our YouTube video downloader is completely free to use with no hidden charges. You can download as many videos as you want without any limitations.'
+            },
+            {
+              question: 'What video qualities are available?',
+              answer: 'Our downloader supports various video qualities including 144p, 240p, 360p, 480p, 720p (HD), 1080p (Full HD), and 4K (when available from the source).'
+            },
+            {
+              question: 'Can I download YouTube playlists?',
+              answer: 'Yes, you can download entire YouTube playlists. Just paste the playlist URL and our system will process all the videos in the playlist.'
+            },
+            {
+              question: 'Is it legal to download YouTube videos?',
+              answer: 'Downloading videos from YouTube is against their Terms of Service. However, you can download videos for personal use or if you have the necessary rights or permissions from the content owner.'
+            },
+            {
+              question: 'How to download YouTube videos on mobile?',
+              answer: 'Our website is fully responsive and works on mobile devices. Just open our site in your mobile browser, paste the YouTube URL, and download the video as you would on a desktop.'
+            }
+          ]} />
+        </div>
       </main>
       <Footer />
     </div>
