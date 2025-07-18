@@ -38,10 +38,21 @@ export default function YoutubePlaylistDownloader() {
 
   // Map translated features with icons and gradients
   const features = (t.youtube?.features || []).map((feature: any, index: number) => ({
-    ...feature,
+    title: feature.title,
+    description: feature.description,
     icon: featureIcons[index % featureIcons.length],
     gradient: gradients[index % gradients.length]
   }));
+  
+  // Ensure we have all 6 features
+  while (features.length < 6 && t.features?.default?.length > 0) {
+    const defaultFeature = t.features.default[features.length % t.features.default.length];
+    features.push({
+      ...defaultFeature,
+      icon: featureIcons[features.length % featureIcons.length],
+      gradient: gradients[features.length % gradients.length]
+    });
+  }
 
   // Transform FAQ data to match the expected format
   const faqItems = t.youtube?.faq?.map((item: any) => ({

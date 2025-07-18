@@ -78,6 +78,7 @@ interface FAQSectionProps {
 export default function FAQSection({ faqs: propFAQs = [] }: FAQSectionProps) {
   const [isSupportOpen, setIsSupportOpen] = useState(false);
   const { t } = useLanguage();
+  
   // Define FAQ data type
   type FAQTranslations = {
     subtitle: string;
@@ -87,7 +88,6 @@ export default function FAQSection({ faqs: propFAQs = [] }: FAQSectionProps) {
     ctaTitle: string;
     ctaDescription: string;
     ctaButton: string;
-    items: FAQItem[];
   };
 
   // Check if faq exists in translations, if not use fallback
@@ -96,20 +96,15 @@ export default function FAQSection({ faqs: propFAQs = [] }: FAQSectionProps) {
     title: 'Frequently Asked {highlight}Questions',
     sectionTitle: 'Frequently Asked Questions',
     noFAQs: 'No FAQs available at the moment.',
-    ctaTitle: 'Want to know more about me?',
-    ctaDescription: 'Learn more about the team behind Sonova and our mission.',
-    ctaButton: 'About Me',
-    items: []
+    ctaTitle: 'Need more help?',
+    ctaDescription: 'Contact our support team for any additional questions.',
+    ctaButton: 'Contact Support'
   };
   
-  const faqs = propFAQs.length > 0 ? propFAQs : faqData.items;
+  const faqs = Array.isArray(propFAQs) && propFAQs.length > 0 ? propFAQs : [];
   
-  // Log the FAQ translations for debugging
-  console.log('FAQ translations:', faqData);
-
   return (
-    <>
-      <section className="bg-gradient-to-b from-white via-slate-50/30 to-white py-24 px-6 lg:px-8 relative overflow-hidden">
+    <section className="bg-gradient-to-b from-white via-slate-50/30 to-white py-16 px-6 lg:px-8 relative overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-32 left-16 w-24 h-24 bg-gradient-to-br from-blue-100/20 to-purple-100/20 rounded-soft-xl blur-xl animate-gentle-float"></div>
@@ -118,7 +113,7 @@ export default function FAQSection({ faqs: propFAQs = [] }: FAQSectionProps) {
 
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Title */}
-        <div className="text-center mb-20 animate-fade-in-up">
+        <div className="text-center mb-12">
           <div className="inline-block">
             <div className="mb-4">
               <span className="text-slate-500 text-lg font-light tracking-wide">{faqData.subtitle}</span>
@@ -147,30 +142,26 @@ export default function FAQSection({ faqs: propFAQs = [] }: FAQSectionProps) {
           )}
         </div>
 
-        {/* Bottom About Section */}
-        <div className="text-center mt-16 animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
-          <FAQAccordion
-            items={faqs}
-            title={faqData.sectionTitle}
-          />
-          <div className="mt-10 text-center">
-            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+        {/* CTA Section */}
+        <div className="text-center mt-16">
+          <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-8 rounded-2xl inline-block">
+            <h3 className="text-2xl font-bold text-slate-800 mb-3">
               {faqData.ctaTitle}
             </h3>
-            <p className="text-gray-600 dark:text-gray-300 mb-6 max-w-2xl mx-auto">
+            <p className="text-slate-600 mb-6 max-w-2xl mx-auto">
               {faqData.ctaDescription}
             </p>
             <button
               onClick={() => setIsSupportOpen(true)}
-              className="px-6 py-3 bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-medium rounded-lg hover:opacity-90 transition-opacity"
+              className="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-medium rounded-lg hover:opacity-90 transition-opacity shadow-md hover:shadow-lg"
             >
               {faqData.ctaButton}
             </button>
           </div>
         </div>
       </div>
+      
+      <SupportPopup open={isSupportOpen} onClose={() => setIsSupportOpen(false)} />
     </section>
-    <SupportPopup open={isSupportOpen} onClose={() => setIsSupportOpen(false)} />
-    </>
   );
 }

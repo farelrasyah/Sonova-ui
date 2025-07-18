@@ -37,13 +37,8 @@ export default function InstagramDownloader() {
       }))
     : [];
 
-  // Transform FAQ data to match the expected format
-  const faqs = t.instagram?.faq 
-    ? Object.entries(t.instagram.faq).map(([key, value]) => ({
-        question: key.startsWith('q') ? String(value) : '',
-        answer: key.startsWith('a') ? String(value) : ''
-      })).filter(item => item.question && item.answer)
-    : [];
+  // Use FAQ data directly as it's already in the correct format
+  const faqs = Array.isArray(t.instagram?.faq) ? t.instagram.faq : [];
 
   return (
     <PageTemplate

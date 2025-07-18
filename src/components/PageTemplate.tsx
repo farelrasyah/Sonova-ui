@@ -6,17 +6,17 @@ import Header from './Header';
 import HeroSection from './HeroSection';
 import FeaturesSection, { FeatureCard } from './FeaturesSection';
 import FAQSection from './FAQSection';
-
 interface PageTemplateProps {
   title: string;
   description: string;
   heroTitle: string;
   heroDescription: string;
   features: FeatureCard[];
-  faqs: Array<{
+  faqs?: Array<{
     question: string;
     answer: string;
   }>;
+  children?: React.ReactNode;
 }
 
 const PageTemplate: React.FC<PageTemplateProps> = ({
@@ -26,6 +26,7 @@ const PageTemplate: React.FC<PageTemplateProps> = ({
   heroDescription,
   features,
   faqs,
+  children,
 }) => {
   return (
     <>
@@ -44,7 +45,15 @@ const PageTemplate: React.FC<PageTemplateProps> = ({
         
         <FeaturesSection features={features} />
         
-        <FAQSection faqs={faqs} />
+        {faqs && faqs.length > 0 && (
+          <div className="py-16 bg-gray-50">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <FAQSection faqs={faqs} />
+            </div>
+          </div>
+        )}
+        
+        {children}
       </main>
       
       <footer className="bg-gray-900 text-white py-8">

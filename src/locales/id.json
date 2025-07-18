@@ -101,6 +101,32 @@
       "description": "Unduh foto, video, dan reels dari Instagram dalam kualitas tinggi.",
       "heroTitle": "Pengunduh Instagram",
       "heroDescription": "Unduh video, reels, dan IGTV Instagram dalam kualitas tinggi. Gratis, mudah digunakan, tanpa perlu registrasi - simpan konten Instagram favorit Anda hanya dengan sekali klik!",
+      "faq": [
+        {
+          "question": "Bagaimana cara mengunduh dari Instagram?",
+          "answer": "Salin URL postingan Instagram dan tempelkan ke pengunduh kami. Klik unduh dan simpan kontennya."
+        },
+        {
+          "question": "Apakah mengunduh dari Instagram gratis?",
+          "answer": "Ya, pengunduh Instagram kami sepenuhnya gratis digunakan tanpa biaya tersembunyi."
+        },
+        {
+          "question": "Bisakah saya mengunduh konten Instagram pribadi?",
+          "answer": "Anda hanya dapat mengunduh konten dari akun privat jika Anda memiliki akses ke akun tersebut."
+        },
+        {
+          "question": "Apakah ada batasan berapa banyak yang bisa saya unduh?",
+          "answer": "Tidak, Anda dapat mengunduh sebanyak yang Anda inginkan tanpa batasan."
+        },
+        {
+          "question": "Kualitas video apa saja yang tersedia?",
+          "answer": "Anda dapat mengunduh video dalam berbagai kualitas, termasuk kualitas asli yang diposting di Instagram."
+        },
+        {
+          "question": "Apakah Anda mendukung pengunduhan Instagram Stories?",
+          "answer": "Ya, Anda dapat mengunduh Instagram Stories sebelum mereka menghilang."
+        }
+      ],
       "features": [
         {
           "title": "Unduhan Kualitas Tinggi",
@@ -345,7 +371,21 @@
         "q2": "Bisakah saya mengunduh video dari akun privat?",
         "a2": "Tidak, Anda hanya dapat mengunduh konten dari akun publik.",
         "q3": "Apakah ada batasan ukuran video yang bisa saya unduh?",
-        "a3": "Tidak ada batasan ukuran. Anda dapat mengunduh video apa pun dari Twitter."
+        "a3": "Tidak ada batasan ukuran. Anda dapat mengunduh video apa pun dari Twitter.",
+        "q4": "Apakah ada biaya untuk menggunakan pengunduh video Twitter ini?",
+        "a4": "Tidak, layanan kami sepenuhnya gratis tanpa biaya tersembunyi.",
+        "q5": "Bisakah saya mengunduh video dalam kualitas HD?",
+        "a5": "Ya, jika video tersedia dalam kualitas HD, Anda dapat mengunduhnya dalam kualitas tertinggi yang tersedia.",
+        "q6": "Apakah saya perlu membuat akun untuk mengunduh video?",
+        "a6": "Tidak, Anda tidak perlu membuat akun atau masuk untuk mengunduh video dari Twitter.",
+        "q7": "Apakah aman menggunakan pengunduh video Twitter ini?",
+        "a7": "Ya, layanan kami aman digunakan dan tidak menyimpan video yang Anda unduh di server kami.",
+        "q8": "Bisakah saya mengunduh video dari Twitter di ponsel?",
+        "a8": "Ya, pengunduh kami kompatibel dengan perangkat seluler dan dapat digunakan di browser ponsel Anda.",
+        "q9": "Bagaimana jika video yang saya unduh memiliki suara?",
+        "a9": "Video akan diunduh dengan audio aslinya, jadi Anda tidak perlu khawatir kehilangan suara.",
+        "q10": "Apakah ada batasan jumlah video yang bisa saya unduh?",
+        "a10": "Tidak, Anda dapat mengunduh video sebanyak yang Anda inginkan tanpa batasan."
       }
     },
     "footer": {

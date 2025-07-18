@@ -61,6 +61,16 @@
         "title": "Simple & Intuitive",
         "description": "Just paste the URL, select format, and download. Elegant simplicity at its best.",
         "gradient": "from-indigo-100 to-blue-100"
+      },
+      {
+        "title": "Bulk Download",
+        "description": "Download multiple videos from a playlist simultaneously for faster results.",
+        "gradient": "from-yellow-100 to-orange-100"
+      },
+      {
+        "title": "Background Processing",
+        "description": "Continue browsing while your playlists are being processed in the background.",
+        "gradient": "from-pink-100 to-rose-100"
       }
     ]
   },
@@ -101,7 +111,65 @@
     "description": "Download photos, videos, and reels from Instagram in high quality.",
     "heroTitle": "Instagram Downloader",
     "heroDescription": "Download photos, videos, and reels from Instagram with ease. Save your favorite content to view offline.",
-    "features": {
+    "features": [
+      {
+        "title": "High Quality Downloads",
+        "description": "Download Instagram videos in the highest available quality, including HD and 4K.",
+        "icon": "play"
+      },
+      {
+        "title": "No Watermark",
+        "description": "Get clean videos without any Instagram watermarks with just one click.",
+        "icon": "heart"
+      },
+      {
+        "title": "Multiple Format Support",
+        "description": "Download in various formats including MP4, AVI, and more to suit your needs.",
+        "icon": "download"
+      },
+      {
+        "title": "Fast Processing",
+        "description": "Process and prepare your downloads in seconds, no matter the video duration.",
+        "icon": "bolt"
+      },
+      {
+        "title": "Batch Download",
+        "description": "Download multiple Instagram videos at once with our batch processing feature.",
+        "icon": "layer-group"
+      },
+      {
+        "title": "Public Accounts",
+        "description": "Easily download from public profiles. Note: We respect privacy and only support downloads from public accounts.",
+        "icon": "user-friends"
+      }
+    ],
+    "faq": [
+      {
+        "question": "How do I download from Instagram?",
+        "answer": "Copy the Instagram post URL and paste it into our downloader. Click download and save the content."
+      },
+      {
+        "question": "Is downloading from Instagram free?",
+        "answer": "Yes, our Instagram downloader is completely free to use with no hidden costs."
+      },
+      {
+        "question": "Can I download private Instagram content?",
+        "answer": "You can only download content from private accounts if you have access to that account."
+      },
+      {
+        "question": "Is there a limit to how much I can download?",
+        "answer": "No, you can download as much content as you want without any limits."
+      },
+      {
+        "question": "What video qualities are available?",
+        "answer": "You can download videos in various qualities, including the original quality posted on Instagram."
+      },
+      {
+        "question": "Do you support downloading Instagram Stories?",
+        "answer": "Yes, you can download Instagram Stories before they disappear."
+      }
+    ],
+    "additionalFeatures": {
       "photoTitle": "Photo Downloader",
       "photoDesc": "Download high-quality photos from Instagram posts and stories.",
       "videoTitle": "Video Downloader",
@@ -112,14 +180,6 @@
       "storiesDesc": "Save Instagram stories before they disappear.",
       "privateTitle": "Private Account Support",
       "privateDesc": "Download content from private accounts (with permission)."
-    },
-    "faq": {
-      "q1": "How do I download from Instagram?",
-      "a1": "Copy the Instagram post URL and paste it into our downloader. Click download and save the content.",
-      "q2": "Can I download private Instagram content?",
-      "a2": "You can only download content from private accounts if you have access to that account.",
-      "q3": "Is there a limit to how much I can download?",
-      "a3": "No, you can download as much content as you want without any limits."
     }
   },
   "tiktok": {
@@ -222,8 +282,8 @@
     "heroDescription": "Download complete YouTube playlists with ease. Save entire music collections, tutorials, or any playlist in your preferred format and quality.",
     "features": [
       {
-        "title": "Entire Playlist Download",
-        "description": "Download complete YouTube playlists with a single click, saving you time and effort."
+        "title": "Complete Playlist Download",
+        "description": "Download entire YouTube playlists with a single click, saving you time and effort."
       },
       {
         "title": "Multiple Formats",
@@ -242,7 +302,7 @@
         "description": "Continue browsing while your playlists are being processed in the background."
       },
       {
-        "title": "Batch Download",
+        "title": "Bulk Download",
         "description": "Download multiple videos from a playlist simultaneously for faster results."
       }
     ],
@@ -391,6 +451,40 @@
       "a3": "Our downloader supports MP4 format, which is compatible with most devices and media players.",
       "q4": "Is there a limit to the video length I can download?",
       "a4": "You can download videos of any length, but longer videos may take more time to process."
+    }
+  },
+  "twitter": {
+    "title": "Twitter Video Downloader",
+    "description": "Download videos from Twitter in high quality.",
+    "heroTitle": "Twitter Video Downloader",
+    "heroDescription": "Download and save videos from Twitter in high quality. No registration required.",
+    "features": {
+      "videoTitle": "High-Quality Videos",
+      "videoDesc": "Download Twitter videos in HD quality.",
+      "imageTitle": "Download Images",
+      "imageDesc": "Save images from tweets with a single click.",
+      "fastTitle": "Fast Downloads",
+      "fastDesc": "Get your content quickly with our high-speed servers.",
+      "mobileTitle": "Mobile Friendly",
+      "mobileDesc": "Works perfectly on all mobile devices.",
+      "trendingTitle": "Trending Content",
+      "trendingDesc": "Download the latest trending videos.",
+      "noAccountTitle": "No Account Needed",
+      "noAccountDesc": "Download without logging in.",
+      "hdTitle": "HD Quality",
+      "hdDesc": "Download videos in high definition."
+    },
+    "faq": {
+      "q1": "Is it free to download Twitter videos?",
+      "a1": "Yes, our Twitter video downloader is completely free to use with no hidden charges.",
+      "q2": "How do I download a Twitter video?",
+      "a2": "Simply copy the URL of the tweet containing the video and paste it into our downloader.",
+      "q3": "What video quality can I download?",
+      "a3": "You can download videos in the highest quality available, up to 1080p HD.",
+      "q4": "Can I download videos from private Twitter accounts?",
+      "a4": "No, you can only download videos from public Twitter accounts.",
+      "q5": "Is there a limit to how many videos I can download?",
+      "a5": "No, you can download as many videos as you want without any limits."
     }
   },
   "faqSection": {
