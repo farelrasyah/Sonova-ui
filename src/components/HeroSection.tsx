@@ -58,7 +58,7 @@ export default function HeroSection({ title, description }: HeroSectionProps) {
               </>
             ) : (
               <>
-                YouTube Video <span className="gradient-text-soft">Downloader</span>
+                YouTube Playlist <span className="gradient-text-soft">Downloader</span>
               </>
             )}
           </h1>

@@ -93,7 +93,7 @@ export default function FAQSection({ faqs: propFAQs = [] }: FAQSectionProps) {
   // Check if faq exists in translations, if not use fallback
   const faqData: FAQTranslations = 'faq' in t ? (t.faq as FAQTranslations) : {
     subtitle: 'Get Answers',
-    title: 'Frequently Asked {highlight}Questions',
+    title: 'Frequently Asked ',
     sectionTitle: 'Frequently Asked Questions',
     noFAQs: 'No FAQs available at the moment.',
     ctaTitle: 'Need more help?',
