@@ -17,6 +17,7 @@ interface PageTemplateProps {
     answer: string;
   }>;
   children?: React.ReactNode;
+  heroPlatform?: 'tiktok' | 'instagram' | 'twitter' | 'youtube' | 'youtube-playlist' | 'youtube-summary' | 'mindreplay';
 }
 
 const PageTemplate: React.FC<PageTemplateProps> = ({
@@ -27,6 +28,7 @@ const PageTemplate: React.FC<PageTemplateProps> = ({
   features,
   faqs,
   children,
+  heroPlatform,
 }) => {
   return (
     <>
@@ -41,6 +43,7 @@ const PageTemplate: React.FC<PageTemplateProps> = ({
         <HeroSection 
           title={heroTitle}
           description={heroDescription}
+          platform={heroPlatform}
         />
         
         <FeaturesSection features={features} />

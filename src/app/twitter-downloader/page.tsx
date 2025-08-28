@@ -77,7 +77,8 @@ export default function TwitterDownloader() {
       title={t.twitter.title}
       description={t.twitter.description}
       heroTitle={t.twitter.heroTitle}
-      heroDescription={t.twitter.heroDescription}
+  heroDescription={t.twitter.heroDescription}
+  heroPlatform="twitter"
       features={features}
       faqs={faqs}
     />

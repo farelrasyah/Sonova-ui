@@ -19,6 +19,7 @@ export default function Home() {
         <HeroSection 
           title={t.home.title}
           description={t.home.description}
+          platform="youtube"
         />
         <NoticeBar />
         <AboutSection />

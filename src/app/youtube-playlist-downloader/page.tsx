@@ -65,7 +65,8 @@ export default function YoutubePlaylistDownloader() {
       title={`${t.youtube?.title || 'YouTube Playlist Downloader'} | Download Full Playlists in HD`}
       description={t.youtube?.description || ''}
       heroTitle={t.youtube?.heroTitle || ''}
-      heroDescription={t.youtube?.heroDescription || ''}
+  heroDescription={t.youtube?.heroDescription || ''}
+  heroPlatform="youtube-playlist"
       features={features}
       faqs={faqItems}
     />

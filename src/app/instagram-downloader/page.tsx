@@ -45,7 +45,8 @@ export default function InstagramDownloader() {
       title={`${t.instagram?.title} | Download Instagram Videos & Reels`}
       description={t.instagram?.description || ''}
       heroTitle={t.instagram?.heroTitle || ''}
-      heroDescription={t.instagram?.heroDescription || ''}
+  heroDescription={t.instagram?.heroDescription || ''}
+  heroPlatform="instagram"
       features={features}
       faqs={faqs}
     />

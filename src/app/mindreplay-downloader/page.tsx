@@ -65,7 +65,8 @@ export default function MindReplayDownloader() {
       title="MindReplay Downloader | Save & Export Your Sessions"
       description="Download and export your MindReplay sessions in various formats. Save your digital experiences for future reference."
       heroTitle="MindReplay Downloader"
-      heroDescription="Capture, save, and relive your digital experiences with MindReplay. Download your sessions for offline access or sharing with others."
+  heroDescription="Capture, save, and relive your digital experiences with MindReplay. Download your sessions for offline access or sharing with others."
+  heroPlatform="mindreplay"
       features={features}
       faqs={faqs}
     />
