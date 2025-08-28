@@ -300,26 +300,31 @@ const HeroSection: React.FC<HeroSectionProps> = ({ title, description, platform 
 
             {/* Result */}
             {result && (currentConfig?.showMeta ?? safePlatformConfig.showMeta) && (
-              <div className="bg-white rounded shadow p-4 mt-4">
-                <div className="flex gap-4 items-center">
-                  {result.cover && <img src={result.cover} alt="Cover" className="w-24 h-24 object-cover rounded" />}
-                  <div className="text-left">
-                    {result.title && <h2 className="font-bold text-lg mb-1">{result.title}</h2>}
-                    {result.duration && <div className="text-gray-500 text-sm mb-2">Durasi: {formatDuration(result.duration)}</div>}
-                    <div className="flex gap-2">
-                      {formats.length > 0 && (
-                        <a
-                          href={(currentConfig?.getDownloadLinks ?? safePlatformConfig.getDownloadLinks)(result, selectedFormat).url}
-                          className="bg-pink-500 hover:bg-pink-600 text-white px-3 py-2 rounded font-semibold text-sm"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          download
-                        >
-                          {(currentConfig?.getDownloadLinks ?? safePlatformConfig.getDownloadLinks)(result, selectedFormat).label}
-                        </a>
+              <div className="bg-white rounded shadow p-4 mt-4 text-left">
+                {/* Title / caption */}
+                {result.normalized?.title && <h2 className="font-bold text-lg mb-2">{result.normalized.title}</h2>}
+
+                {/* Instagram preview grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                  {(result.normalized?.items || []).map((it: any, idx: number) => (
+                    <div key={idx} className="border rounded p-2">
+                      {it.type === 'image' ? (
+                        <img src={`/api/instagram/proxy?mediaUrl=${encodeURIComponent(it.url)}`} alt={`image-${idx}`} className="w-full h-48 object-cover rounded" />
+                      ) : (
+                        <video controls poster={it.thumbnail ? `/api/instagram/proxy?mediaUrl=${encodeURIComponent(it.thumbnail)}` : ''} src={`/api/instagram/proxy?mediaUrl=${encodeURIComponent(it.url)}`} className="w-full h-48 object-cover rounded" />
                       )}
+
+                      <div className="mt-2 flex items-center justify-between">
+                        <div className="text-sm text-slate-600">{it.type.toUpperCase()}{it.quality ? ` • ${it.quality}` : ''}</div>
+                        <a
+                          href={`/api/instagram/download?mediaUrl=${encodeURIComponent(it.url)}&filename=${encodeURIComponent((result.normalized?.title || 'instagram') + (it.type === 'video' ? '.mp4' : '.jpg'))}`}
+                          className="bg-blue-600 text-white px-3 py-1 rounded text-sm"
+                        >
+                          Download
+                        </a>
+                      </div>
                     </div>
-                  </div>
+                  ))}
                 </div>
               </div>
             )}
