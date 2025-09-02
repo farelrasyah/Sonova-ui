@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import Header from '@/components/Header';
 import HeroSection from '@/components/HeroSection';
@@ -18,6 +18,7 @@ import { useDownloadStreams } from '@/hooks/useDownloadStreams';
 export default function Home() {
   const { t } = useLanguage();
   const [url, setUrl] = useState('');
+  const videoPreviewRef = useRef<HTMLDivElement>(null);
 
   const {
     loading: videoLoading,
@@ -37,6 +38,12 @@ export default function Home() {
 
   const loading = videoLoading || streamLoading;
   const error = videoError || streamError;
+
+  useEffect(() => {
+    if (videoDetails && streamData && videoPreviewRef.current) {
+      videoPreviewRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [videoDetails, streamData]);
 
   const clearError = () => {
     clearVideoError();
@@ -95,7 +102,7 @@ export default function Home() {
 
         {/* Video Details and Preview */}
         {videoDetails && (
-          <div className="py-8 bg-gray-50 dark:bg-gray-900">
+          <div ref={videoPreviewRef} className="py-8 bg-gray-50 dark:bg-gray-900">
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-8">
                 <div className="flex flex-col md:flex-row gap-6">
