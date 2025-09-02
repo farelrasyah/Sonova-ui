@@ -7,9 +7,23 @@ interface HeroSectionProps {
   title: string;
   description: string;
   platform?: 'tiktok' | 'youtube' | 'youtube-playlist' | 'instagram' | 'twitter' | 'youtube-summary' | 'mindreplay';
+  onUrlSubmit?: (e: React.FormEvent) => void;
+  loading?: boolean;
+  error?: string;
+  url?: string;
+  setUrl?: (url: string) => void;
 }
 
-const HeroSection: React.FC<HeroSectionProps> = ({ title, description, platform }) => {
+const HeroSection: React.FC<HeroSectionProps> = ({ 
+  title, 
+  description, 
+  platform,
+  onUrlSubmit,
+  loading: externalLoading,
+  error: externalError,
+  url: externalUrl,
+  setUrl: externalSetUrl
+}) => {
   const { t } = useLanguage();
   const [selectedFormat, setSelectedFormat] = useState('MP4');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -18,6 +32,12 @@ const HeroSection: React.FC<HeroSectionProps> = ({ title, description, platform 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // Use external state if provided, otherwise use internal state
+  const currentUrl = externalUrl !== undefined ? externalUrl : inputUrl;
+  const currentLoading = externalLoading !== undefined ? externalLoading : loading;
+  const currentError = externalError !== undefined ? externalError : error;
+  const handleUrlChange = externalSetUrl || setInputUrl;
 
   // Platform config
   const config = {
@@ -128,6 +148,14 @@ const HeroSection: React.FC<HeroSectionProps> = ({ title, description, platform 
   // Handler submit
   const handleDownload = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // If external handler is provided, use it instead
+    if (onUrlSubmit) {
+      onUrlSubmit(e);
+      return;
+    }
+
+    // Original internal logic
     setError('');
     setResult(null);
     if (!inputUrl.trim()) {
@@ -274,8 +302,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({ title, description, platform 
                 type="url"
                 placeholder={currentConfig?.placeholder || safePlatformConfig.placeholder}
                 className="flex-1 px-4 py-3 rounded-xl bg-gray-50 text-slate-700 placeholder-slate-400 font-medium border border-gray-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-violet-200 focus:border-violet-300 transition-all duration-150"
-                value={inputUrl}
-                onChange={e => setInputUrl(e.target.value)}
+                value={currentUrl}
+                onChange={e => handleUrlChange(e.target.value)}
                 required
               />
 
@@ -283,22 +311,22 @@ const HeroSection: React.FC<HeroSectionProps> = ({ title, description, platform 
               <button
                 type="submit"
                 className="flex-shrink-0 bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 text-white font-semibold px-6 py-3 rounded-xl transition-transform duration-150 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center gap-3"
-                disabled={loading}
+                disabled={currentLoading}
               >
                 <svg className="w-5 h-5 opacity-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v14m7-7H5" />
                 </svg>
-                <span>{loading ? 'Memproses...' : 'Get Media'}</span>
+                <span>{currentLoading ? 'Memproses...' : 'Get Media'}</span>
               </button>
             </div>
 
             {/* Error */}
-            {error && (
-              <div className="bg-red-50 text-red-700 px-4 py-2 rounded-md mt-4 border border-red-100">{error}</div>
+            {currentError && (
+              <div className="bg-red-50 text-red-700 px-4 py-2 rounded-md mt-4 border border-red-100">{currentError}</div>
             )}
 
             {/* Loading skeleton - Ultra Modern */}
-            {loading && !result && (
+            {currentLoading && !result && (
               <div className="mt-10 flex justify-center">
                 <div className="w-full max-w-2xl">
                   <div className="relative">

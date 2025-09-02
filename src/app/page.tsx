@@ -81,81 +81,22 @@ export default function Home() {
     <div className="min-h-screen bg-white">
       <Header />
       <main>
-        <HeroSection title={t.home.title} description={t.home.description} platform="youtube" />
+        <HeroSection 
+          title={t.home.title} 
+          description={t.home.description} 
+          platform="youtube"
+          onUrlSubmit={handleSubmit}
+          loading={loading}
+          error={error || undefined}
+          url={url}
+          setUrl={setUrl}
+        />
         <NoticeBar />
 
-        {/* YouTube Downloader Section */}
-        <div className="py-16 bg-gray-50 dark:bg-gray-900">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            {/* Input Section */}
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-8">
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4 text-center">
-                Download YouTube Videos
-              </h2>
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
-                  <label htmlFor="youtube-url" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    YouTube URL
-                  </label>
-                  <div className="flex gap-3">
-                    <input
-                      id="youtube-url"
-                      type="url"
-                      value={url}
-                      onChange={(e) => setUrl(e.target.value)}
-                      placeholder="https://www.youtube.com/watch?v=... or https://youtu.be/..."
-                      className="flex-1 p-3 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
-                      disabled={loading}
-                    />
-                    <Button type="submit" disabled={loading || !url.trim()} className="px-6 bg-blue-500 hover:bg-blue-600 text-white">
-                      {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : (<><Download className="w-4 h-4 mr-2" />Get Media</>)}
-                    </Button>
-                  </div>
-                </div>
-              </form>
-
-              {error && (
-                <div className="mt-4 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-md">
-                  <p className="text-red-700 dark:text-red-300">{error}</p>
-                </div>
-              )}
-
-              {/* Debug Buttons */}
-              <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-md">
-                <h4 className="font-medium text-blue-800 mb-2">Debug Controls</h4>
-                <div className="flex gap-2 flex-wrap">
-                  <button
-                    onClick={async () => {
-                      const id = extractVideoId(url);
-                      if (id) {
-                        console.log('[Debug] getDownloadStreams ->', id);
-                        await getDownloadStreams(id);
-                      }
-                    }}
-                    className="px-3 py-1 bg-blue-500 text-white rounded text-sm"
-                  >
-                    Test Download Streams
-                  </button>
-                  <button
-                    onClick={async () => {
-                      if (url) {
-                        console.log('[Debug] getVideoDetails ->', url);
-                        await getVideoDetailsHook(url);
-                      }
-                    }}
-                    className="px-3 py-1 bg-green-500 text-white rounded text-sm"
-                  >
-                    Test Video Details
-                  </button>
-                </div>
-                <p className="text-sm text-blue-600 mt-2">
-                  Current URL: {url || 'None'} | Video ID: {extractVideoId(url) || 'None'}
-                </p>
-              </div>
-            </div>
-
-            {/* Video Details */}
-            {videoDetails && (
+        {/* Video Details and Preview */}
+        {videoDetails && (
+          <div className="py-8 bg-gray-50 dark:bg-gray-900">
+            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-8">
                 <div className="flex flex-col md:flex-row gap-6">
                   <div className="flex-shrink-0">
@@ -177,32 +118,20 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-            )}
 
-            {/* Video Preview and Download Options */}
-            {streamData ? (
-              <VideoPreview
-                videoId={streamData.videoId}
-                previewStream={streamData.previewStream}
-                videoFormats={streamData.videoFormats}
-                audioFormats={streamData.audioFormats}
-                title={videoDetails?.title}
-                thumbnail={videoDetails?.thumbnail}
-              />
-            ) : (
-              <div className="bg-yellow-50 border border-yellow-200 text-yellow-800 p-4 rounded-lg">
-                <h4 className="font-medium">Debug Info:</h4>
-                <p>Video Details: {videoDetails ? '✅ Loaded' : '❌ Not loaded'}</p>
-                <p>Stream Data: {streamData ? '✅ Loaded' : '❌ Not loaded'}</p>
-                <p>Video Loading: {videoLoading ? '⏳ Loading...' : '✅ Done'}</p>
-                <p>Stream Loading: {streamLoading ? '⏳ Loading...' : '✅ Done'}</p>
-                <p>Video Error: {videoError || 'None'}</p>
-                <p>Stream Error: {streamError || 'None'}</p>
-                <p>General Error: {error || 'None'}</p>
-              </div>
-            )}
+              {streamData && (
+                <VideoPreview
+                  videoId={streamData.videoId}
+                  previewStream={streamData.previewStream}
+                  videoFormats={streamData.videoFormats}
+                  audioFormats={streamData.audioFormats}
+                  title={videoDetails?.title}
+                  thumbnail={videoDetails?.thumbnail}
+                />
+              )}
+            </div>
           </div>
-        </div>
+        )}
 
         <AboutSection />
         <FeaturesSection
