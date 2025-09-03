@@ -2,13 +2,13 @@
 
 import React from 'react';
 import { Download, Video, Music, FileVideo, FileAudio, Zap, Star } from 'lucide-react';
-import { YouTubeDownloadStream } from '@/types/youtube';
+import { DownloadStream } from '@/types/youtube';
 import { YouTubeApiUtils } from '@/lib/youtube-utils';
 import { Button } from '@/components/ui/button';
 
 interface DownloadStreamItemProps {
-  stream: YouTubeDownloadStream;
-  onDownload: (stream: YouTubeDownloadStream) => void;
+  stream: DownloadStream;
+  onDownload: (stream: DownloadStream) => void;
   isRecommended?: boolean;
   showDetails?: boolean;
   className?: string;
@@ -173,8 +173,8 @@ const DownloadStreamItem: React.FC<DownloadStreamItemProps> = ({
 };
 
 interface DownloadStreamsListProps {
-  streams: YouTubeDownloadStream[];
-  onDownload: (stream: YouTubeDownloadStream) => void;
+  streams: DownloadStream[];
+  onDownload: (stream: DownloadStream) => void;
   showRecommendations?: boolean;
   groupByType?: boolean;
   className?: string;

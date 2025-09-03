@@ -13,6 +13,11 @@ export interface DownloadStream {
   codec?: string;
   hasAudio?: boolean;
   hasVideo?: boolean;
+  bitrate?: number;
+  container?: string;
+  adaptive?: boolean;
+  audioCodec?: string;
+  videoCodec?: string;
 }
 
 export interface StreamsResponse {

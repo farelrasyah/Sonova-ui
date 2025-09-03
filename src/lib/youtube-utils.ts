@@ -1,6 +1,6 @@
 // sonova/src/lib/youtube-utils.ts
 
-import type { YouTubeVideoDetails } from '@/types/youtube';
+import type { YouTubeVideoDetails, DownloadStream } from '@/types/youtube';
 
 export const VIDEO_QUALITY_ORDER: string[] = [
   '144', '240', '360', '480', '720', '1080', '1440', '4k', '8k',
@@ -90,4 +90,35 @@ export const YouTubeApiUtils = {
     while ((m = re.exec(html))) ids.add(m[1]);
     return Array.from(ids);
   },
+
+  stream: {
+    getQualityPriority(quality: string): number {
+      const index = VIDEO_QUALITY_ORDER.indexOf(quality);
+      return index === -1 ? 999 : index;
+    },
+
+    sortStreams(streams: DownloadStream[]): DownloadStream[] {
+      return [...streams].sort((a, b) => {
+        const aPriority = this.getQualityPriority(a.quality);
+        const bPriority = this.getQualityPriority(b.quality);
+        return aPriority - bPriority;
+      });
+    },
+
+    getBestStream(streams: DownloadStream[], type: 'video' | 'audio'): DownloadStream | null {
+      const filtered = streams.filter(stream => {
+        if (type === 'video') {
+          return stream.hasVideo;
+        } else {
+          return stream.hasAudio && !stream.hasVideo;
+        }
+      });
+
+      if (filtered.length === 0) return null;
+
+      // Sort by quality priority and return the best one
+      const sorted = this.sortStreams(filtered);
+      return sorted[0];
+    }
+  }
 };
