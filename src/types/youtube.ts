@@ -2,12 +2,12 @@
 
 export type QualityCode =
   | '144' | '240' | '360' | '480' | '720' | '1080' | '1440' | '4k' | '8k'
-  | 'mp3'; // untuk audio
+  | 'mp3';
 
 export interface DownloadStream {
-  quality: string;           // "720p" | "4K" | "MP3 128kbps"
+  quality: string;
   format: 'mp4' | 'mp3';
-  url: string;               // endpoint internal /api/youtube/download?... (atau direct URL untuk preview)
+  url: string;
   size?: string;
   fps?: number;
   codec?: string;
@@ -36,50 +36,47 @@ export interface YouTubeStatsLite {
 }
 
 export interface YouTubeVideoDetails {
-  id: string;                  // 11-char video id
+  id: string;
   title: string;
   description?: string;
   thumbnail: string;
-  duration?: number;           // seconds (opsional)
+  duration?: number;
   channel: YouTubeChannelLite;
   stats: YouTubeStatsLite;
 }
 
-/** === Actor input (youtubemasters/youtube-downloader-stable) === */
+/** Input actor youtubemasters/youtube-downloader-stable */
 export interface YMInput {
-  targetUrl: string;           // YouTube watch URL
-  format: string;              // "720" | "4k" | "mp3" | ...
-  add_info?: boolean;          // include info {title,image}
-  audio_quality?: number;      // 128 | 192 | 320 ... (untuk mp3)
+  targetUrl: string;
+  format: string;
+  add_info?: boolean;
+  audio_quality?: number;
   no_merge?: boolean;
   start_time?: number;
   end_time?: number;
 }
 
-/** === Actor item output (dataset) ===
- *  contoh dari README actor:
- *  { "responseData": { "success": true, "id": "abcdef", "info": { "title": "...", "image": "..." } } }
- */
+/** Item awal dari actor (berisi id job), beberapa build menaruhnya di responseData */
 export interface YMStartItem {
   responseData?: {
     success?: boolean;
     id?: string;
-    content?: string; // base64 html (diabaikan)
+    content?: string;
     info?: { image?: string; title?: string };
+    message?: string;
   };
-  // fallback keys (kalau build berubah)
   id?: string;
   success?: boolean;
   info?: { image?: string; title?: string };
+  message?: string;
+  error?: string;
 }
 
-/** === Progress API response ===
- * GET https://p.oceansaver.in/ajax/progress?id=<ID>
- */
+/** Respons progress API */
 export interface YMProgress {
-  success: number;         // 1 sukses, 0 gagal
-  progress: number;        // 0..1000 (1000 = selesai)
-  download_url?: string;   // muncul saat progress 1000
-  text?: string;           // "Processing" | "Finished"
+  success: number;
+  progress: number;           // 0..1000
+  download_url?: string;
+  text?: string;
   message?: string;
 }

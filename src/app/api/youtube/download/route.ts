@@ -5,6 +5,11 @@ import { getDirectDownloadUrl } from '@/services/youtube';
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
+function toBool(v: string | null): boolean {
+  if (!v) return true; // default aktif
+  return v === '1' || v === 'true' || v === 'yes';
+}
+
 export async function GET(req: Request) {
   try {
     const { searchParams } = new URL(req.url);
@@ -13,14 +18,19 @@ export async function GET(req: Request) {
     const audioQuality = searchParams.get('audioQuality')
       ? parseInt(searchParams.get('audioQuality') as string, 10)
       : undefined;
+    const fallback = toBool(searchParams.get('fallback'));
 
-    if (!idOrUrl) return NextResponse.json({ error: 'Missing url or id' }, { status: 400 });
+    if (!idOrUrl) {
+      return NextResponse.json({ error: 'Missing url or id' }, { status: 400 });
+    }
 
-    const direct = await getDirectDownloadUrl(idOrUrl, format, { audioQuality });
+    const direct = await getDirectDownloadUrl(idOrUrl, format, { audioQuality, fallback });
 
-    // Redirect 302 ke URL file sehingga browser langsung mengunduh
+    // Sukses → redirect ke file langsung
     return NextResponse.redirect(direct, 302);
   } catch (e: any) {
-    return NextResponse.json({ error: e?.message || 'Download failed' }, { status: 500 });
+    // Kegagalan format/limit → 400 dengan pesan jelas (bukan 500)
+    const msg = e?.message || 'Download failed';
+    return NextResponse.json({ error: msg }, { status: 400 });
   }
 }
