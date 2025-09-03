@@ -1,3 +1,4 @@
+// sonova/src/app/page.tsx
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
@@ -10,10 +11,10 @@ import FAQSection from '@/components/FAQSection';
 import FeaturesSection from '@/components/FeaturesSection';
 import Footer from '@/components/Footer';
 import VideoPreview from '@/components/VideoPreview';
-import { Download, Play, User, Eye, ThumbsUp, Loader2 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { useYouTube, YouTubeUtils } from '@/hooks/useYouTube';
+import { Play, User, Eye, ThumbsUp } from 'lucide-react';
+import { useYouTube } from '@/hooks/useYouTube';
 import { useDownloadStreams } from '@/hooks/useDownloadStreams';
+import { YouTubeApiUtils as YouTubeUtils } from '@/lib/youtube-utils';
 
 export default function Home() {
   const { t } = useLanguage();
@@ -75,10 +76,8 @@ export default function Home() {
     clearError();
 
     try {
-      console.log('[Page] 🚀 Fetching details & streams...', { id, url });
-      await getVideoDetailsHook(url); // details via /api/youtube?action=details
-      await getDownloadStreams(id);   // streams via /api/youtube/download?id=ID
-      console.log('[Page] ✅ Done fetching');
+      await getVideoDetailsHook(url);   // /api/youtube?url=...
+      await getDownloadStreams(url);    // /api/youtube/streams?url=...
     } catch (err) {
       console.error('[Page] Error in handleSubmit:', err);
     }
@@ -113,9 +112,9 @@ export default function Home() {
                     <h3 className="text-xl font-bold text-gray-900 dark:text-white">{videoDetails.title}</h3>
                     <div className="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400 flex-wrap">
                       <div className="flex items-center gap-1"><User className="w-4 h-4" /><span>{videoDetails.channel.name}</span>{videoDetails.channel.verified && (<span className="text-blue-500">✓</span>)}</div>
-                      <div className="flex items-center gap-1"><Eye className="w-4 h-4" /><span>{YouTubeUtils.formatNumber(videoDetails.stats.views)} views</span></div>
-                      <div className="flex items-center gap-1"><ThumbsUp className="w-4 h-4" /><span>{YouTubeUtils.formatNumber(videoDetails.stats.likes)}</span></div>
-                      <div className="flex items-center gap-1"><Play className="w-4 h-4" /><span>{YouTubeUtils.formatDuration(videoDetails.duration)}</span></div>
+                      <div className="flex items-center gap-1"><Eye className="w-4 h-4" /><span>{YouTubeUtils.format.formatNumber(videoDetails.stats.views)} views</span></div>
+                      <div className="flex items-center gap-1"><ThumbsUp className="w-4 h-4" /><span>{YouTubeUtils.format.formatNumber(videoDetails.stats.likes)}</span></div>
+                      <div className="flex items-center gap-1"><Play className="w-4 h-4" /><span>{YouTubeUtils.format.formatDuration(videoDetails.duration)}</span></div>
                     </div>
                     {videoDetails.description && (
                       <p className="text-gray-700 dark:text-gray-300 text-sm line-clamp-2">
@@ -151,7 +150,7 @@ export default function Home() {
                 {[
                   <path key="1" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />,
                   <path key="2" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />,
-                  <path key="3" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />,
+                  <path key="3" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2z" />,
                 ][index % 3]}
               </svg>
             ),

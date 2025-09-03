@@ -54,19 +54,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
       }),
       showMeta: true,
     },
-    youtube: {
-      api: '/api/youtube',
-      placeholder: 'Paste your YouTube URL here...',
-      formats: [
-        { value: 'MP4', label: 'MP4 Video', icon: '🎥' },
-        { value: 'MP3', label: 'MP3 Audio', icon: '🎵' },
-      ],
-      getDownloadLinks: (data: any, format: string) => ({
-        url: format === 'MP4' ? data.videoUrl : data.audioUrl,
-        label: format === 'MP4' ? 'Download Video' : 'Download Audio (MP3)'
-      }),
-      showMeta: true,
-    },
+   
     'youtube-playlist': {
       api: '/api/youtube-playlist',
       placeholder: 'Paste your YouTube Playlist URL here...',
