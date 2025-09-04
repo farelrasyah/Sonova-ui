@@ -431,45 +431,25 @@ const HeroSection: React.FC<HeroSectionProps> = ({
                               {it.type === 'image' ? (
                                 <div className="relative group/media">
                                   <img
-                                    src={`/api/${platform || 'instagram'}/proxy?mediaUrl=${encodeURIComponent(it.url)}`}
-                                    alt={`${platform || 'Instagram'} media ${idx + 1}`}
-                                    className="w-full h-auto max-h-[350px] object-contain mx-auto group-hover:scale-[1.02] transition-transform duration-[2000ms] ease-out filter group-hover:brightness-105"
+                                    src={it.url.startsWith('/api/') ? it.url : `/api/${result?.platform || platform || 'twitter'}/proxy?mediaUrl=${encodeURIComponent(it.url)}`}
+                                    alt={`${result?.platform || platform || 'Twitter'} media ${idx + 1}`}
+                                    className="w-full h-auto max-h-[350px] object-contain mx-auto rounded-xl"
                                   />
-
-                                  {/* Premium corner accents */}
-                                  <div className="absolute top-4 left-4 w-8 h-8 border-l-2 border-t-2 border-gradient-to-br from-violet-400 to-purple-400 rounded-tl-xl opacity-60 group-hover:opacity-80 transition-opacity duration-500"></div>
-                                  <div className="absolute top-4 right-4 w-8 h-8 border-r-2 border-t-2 border-gradient-to-bl from-purple-400 to-indigo-400 rounded-tr-xl opacity-60 group-hover:opacity-80 transition-opacity duration-500"></div>
-                                  <div className="absolute bottom-4 left-4 w-8 h-8 border-l-2 border-b-2 border-gradient-to-tr from-indigo-400 to-violet-400 rounded-bl-xl opacity-60 group-hover:opacity-80 transition-opacity duration-500"></div>
-                                  <div className="absolute bottom-4 right-4 w-8 h-8 border-r-2 border-b-2 border-gradient-to-tl from-violet-400 to-purple-400 rounded-br-xl opacity-60 group-hover:opacity-80 transition-opacity duration-500"></div>
                                 </div>
                               ) : (
                                 <div className="relative group/media">
                                   <video
                                     controls
-                                    poster={it.thumbnail ? `/api/${platform || 'instagram'}/proxy?mediaUrl=${encodeURIComponent(it.thumbnail)}` : ''}
-                                    src={`/api/${platform || 'instagram'}/proxy?mediaUrl=${encodeURIComponent(it.url)}`}
-                                    className="w-full h-auto max-h-[350px] object-contain mx-auto group-hover:scale-[1.02] transition-transform duration-[2000ms] ease-out rounded-xl"
+                                    preload="metadata"
+                                    crossOrigin="anonymous"
+                                    poster={it.thumbnail ? (it.thumbnail.startsWith('/api/') ? it.thumbnail : `/api/${result?.platform || platform || 'twitter'}/proxy?mediaUrl=${encodeURIComponent(it.thumbnail)}`) : ''}
+                                    src={it.url.startsWith('/api/') ? it.url : `/api/${result?.platform || platform || 'twitter'}/proxy?mediaUrl=${encodeURIComponent(it.url)}`}
+                                    className="w-full h-auto max-h-[350px] object-contain mx-auto rounded-xl"
+                                    style={{ zIndex: 10, pointerEvents: 'auto' }}
                                   />
-
-                                  {/* Premium corner accents */}
-                                  <div className="absolute top-4 left-4 w-8 h-8 border-l-2 border-t-2 border-gradient-to-br from-violet-400 to-purple-400 rounded-tl-xl opacity-60 group-hover:opacity-80 transition-opacity duration-500"></div>
-                                  <div className="absolute top-4 right-4 w-8 h-8 border-r-2 border-t-2 border-gradient-to-bl from-purple-400 to-indigo-400 rounded-tr-xl opacity-60 group-hover:opacity-80 transition-opacity duration-500"></div>
-                                  <div className="absolute bottom-4 left-4 w-8 h-8 border-l-2 border-b-2 border-gradient-to-tr from-indigo-400 to-violet-400 rounded-bl-xl opacity-60 group-hover:opacity-80 transition-opacity duration-500"></div>
-                                  <div className="absolute bottom-4 right-4 w-8 h-8 border-r-2 border-b-2 border-gradient-to-tl from-violet-400 to-purple-400 rounded-br-xl opacity-60 group-hover:opacity-80 transition-opacity duration-500"></div>
                                 </div>
                               )}
 
-
-                              {/* Premium hover play button for videos */}
-                              {it.type === 'video' && (
-                                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-700">
-                                  <div className="bg-white/95 backdrop-blur-2xl rounded-full p-6 shadow-2xl transform scale-75 group-hover:scale-100 transition-all duration-500 border border-white/50">
-                                    <svg className="w-10 h-10 text-violet-600 drop-shadow-lg" fill="currentColor" viewBox="0 0 20 20">
-                                      <path d="M8 5v10l8-5-8-5z"/>
-                                    </svg>
-                                  </div>
-                                </div>
-                              )}
                             </div>
 
                             {/* Premium download section - separated and spaced */}

@@ -51,7 +51,9 @@ export async function GET(req: NextRequest) {
     const normalizedItems = [] as Array<{ type: 'video'|'image'; url: string; thumbnail?: string }>;
 
     if (mediaType === 'photo' && thumbnail) {
-      normalizedItems.push({ type: 'image', url: thumbnail, thumbnail });
+      // gunakan PROXY route untuk image juga agar konsisten
+      const proxied = `/api/twitter/proxy?mediaUrl=${encodeURIComponent(thumbnail)}`;
+      normalizedItems.push({ type: 'image', url: proxied, thumbnail: proxied });
     } else if ((mediaType === 'video' || mediaType === 'animated_gif') && best) {
       // gunakan PROXY route sendiri agar video <video> bisa stream range via domain kita (aman)
       const proxied = `/api/twitter/proxy?mediaUrl=${encodeURIComponent(best)}`;
