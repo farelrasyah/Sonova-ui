@@ -58,10 +58,7 @@ export default function TwitterDownloader() {
     }
   ];
 
-  // Transform FAQ object into array format expected by FAQSection
   const faqs: FAQ[] = [];
-  
-  // Add all available FAQ items (q1-a1, q2-a2, etc.)
   const twitterFaq = t.twitter.faq as Record<string, string>;
   let i = 1;
   while (twitterFaq[`q${i}`] && twitterFaq[`a${i}`]) {
@@ -77,8 +74,8 @@ export default function TwitterDownloader() {
       title={t.twitter.title}
       description={t.twitter.description}
       heroTitle={t.twitter.heroTitle}
-  heroDescription={t.twitter.heroDescription}
-  heroPlatform="twitter"
+      heroDescription={t.twitter.heroDescription}
+      heroPlatform="twitter"
       features={features}
       faqs={faqs}
     />

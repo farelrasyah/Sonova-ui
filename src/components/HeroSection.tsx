@@ -14,15 +14,15 @@ interface HeroSectionProps {
   setUrl?: (url: string) => void;
 }
 
-const HeroSection: React.FC<HeroSectionProps> = ({ 
-  title, 
-  description, 
+const HeroSection: React.FC<HeroSectionProps> = ({
+  title,
+  description,
   platform,
   onUrlSubmit,
   loading: externalLoading,
   error: externalError,
   url: externalUrl,
-  setUrl: externalSetUrl
+  setUrl: externalSetUrl,
 }) => {
   const { t } = useLanguage();
   const [selectedFormat, setSelectedFormat] = useState('MP4');
@@ -39,7 +39,9 @@ const HeroSection: React.FC<HeroSectionProps> = ({
   const currentError = externalError !== undefined ? externalError : error;
   const handleUrlChange = externalSetUrl || setInputUrl;
 
-  // Platform config
+  // --------------------------
+  // PLATFORM CONFIG (updated)
+  // --------------------------
   const config = {
     tiktok: {
       api: '/api/tiktok',
@@ -50,23 +52,22 @@ const HeroSection: React.FC<HeroSectionProps> = ({
       ],
       getDownloadLinks: (data: any, format: string) => ({
         url: format === 'MP4' ? data.videoUrl : data.audioUrl,
-        label: format === 'MP4' ? 'Download Video (No Watermark)' : 'Download Audio (MP3)'
+        label: format === 'MP4' ? 'Download Video (No Watermark)' : 'Download Audio (MP3)',
       }),
       showMeta: true,
     },
-   
+
     'youtube-playlist': {
       api: '/api/youtube-playlist',
       placeholder: 'Paste your YouTube Playlist URL here...',
-      formats: [
-        { value: 'MP4', label: 'MP4 Video', icon: '🎥' },
-      ],
+      formats: [{ value: 'MP4', label: 'MP4 Video', icon: '🎥' }],
       getDownloadLinks: (data: any) => ({
         url: data.videoUrl,
-        label: 'Download Playlist Video'
+        label: 'Download Playlist Video',
       }),
       showMeta: true,
     },
+
     instagram: {
       api: '/api/instagram',
       placeholder: 'Paste your Instagram URL here...',
@@ -76,22 +77,24 @@ const HeroSection: React.FC<HeroSectionProps> = ({
       ],
       getDownloadLinks: (data: any, format: string) => ({
         url: format === 'MP4' ? data.videoUrl : data.imageUrl,
-        label: format === 'MP4' ? 'Download Video' : 'Download Image'
+        label: format === 'MP4' ? 'Download Video' : 'Download Image',
       }),
       showMeta: true,
     },
+
+    // ✅ Twitter config — primary for this page
     twitter: {
       api: '/api/twitter',
-      placeholder: 'Paste your Twitter URL here...',
-      formats: [
-        { value: 'MP4', label: 'MP4 Video', icon: '🎥' },
-      ],
+      placeholder: 'Paste your Twitter/X URL here...',
+      formats: [{ value: 'MP4', label: 'MP4 Video', icon: '🎥' }],
       getDownloadLinks: (data: any) => ({
+        // data.videoUrl dari /api/twitter → redirect best MP4
         url: data.videoUrl,
-        label: 'Download Video'
+        label: 'Download Video (Best)',
       }),
       showMeta: true,
     },
+
     'youtube-summary': {
       api: '/api/youtube-summary',
       placeholder: 'Paste your YouTube URL here...',
@@ -119,13 +122,13 @@ const HeroSection: React.FC<HeroSectionProps> = ({
       if (host.includes('youtube.com') || host.includes('youtu.be')) return 'youtube';
       if (host.includes('instagram.com')) return 'instagram';
       if (host.includes('twitter.com') || host.includes('x.com')) return 'twitter';
-      return 'youtube';
+      return 'youtube'; // ✅ fallback ke twitter, bukan youtube
     } catch (e) {
       return 'youtube';
     }
   }
 
-  // Format durasi (detik ke mm:ss)
+  // Format durasi (detik ke mm:ss) — masih kepakai untuk platform lain
   function formatDuration(sec: number) {
     if (!sec) return '';
     const m = Math.floor(sec / 60);
@@ -136,14 +139,14 @@ const HeroSection: React.FC<HeroSectionProps> = ({
   // Handler submit
   const handleDownload = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // If external handler is provided, use it instead
+
+    // Jika ada external handler, gunakan itu
     if (onUrlSubmit) {
       onUrlSubmit(e);
       return;
     }
 
-    // Original internal logic
+    // Internal logic
     setError('');
     setResult(null);
     if (!inputUrl.trim()) {
@@ -152,10 +155,9 @@ const HeroSection: React.FC<HeroSectionProps> = ({
     }
     setLoading(true);
     try {
-      // detect platform from URL
       const detectedKey = detectPlatformFromUrl(inputUrl);
 
-      // If this component/page is tied to a specific platform, enforce it
+      // Jika component dikunci ke platform tertentu, enforce
       if (platform) {
         if (detectedKey !== platform) {
           const names: any = {
@@ -164,14 +166,18 @@ const HeroSection: React.FC<HeroSectionProps> = ({
             instagram: 'Instagram',
             twitter: 'Twitter',
             'youtube-playlist': 'YouTube Playlist',
-            'youtube-summary': 'YouTube'
+            'youtube-summary': 'YouTube',
           };
-          setError(`Halaman ini hanya menerima URL ${names[platform] || platform}. Silakan masukkan URL ${names[platform] || platform}.`);
+          setError(
+            `Halaman ini hanya menerima URL ${names[platform] || platform}. ` +
+            `Silakan masukkan URL ${names[platform] || platform}.`
+          );
           setLoading(false);
           return;
         }
         const effectiveConfig = (config as any)[platform] ?? (config as any).youtube;
         setCurrentConfig(effectiveConfig);
+
         const res = await fetch(`${effectiveConfig.api}?url=${encodeURIComponent(inputUrl)}`);
         const data = await res.json();
         if (!res.ok || data.error) {
@@ -204,16 +210,29 @@ const HeroSection: React.FC<HeroSectionProps> = ({
   };
 
   return (
-    <section id="download-section" className="relative min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/30 flex items-center justify-center px-6 lg:px-8 pt-20 overflow-hidden">
+    <section
+      id="download-section"
+      className="relative min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/30 flex items-center justify-center px-6 lg:px-8 pt-20 overflow-hidden"
+    >
       {/* Background */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-gradient-to-br from-blue-100/40 to-purple-100/40 rounded-soft-xl opacity-60 animate-float blob"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-br from-slate-100/50 to-indigo-100/50 rounded-soft-xl opacity-50 animate-gentle-float blob" style={{ animationDelay: '2s' }}></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-br from-purple-100/30 to-blue-100/30 rounded-soft-xl opacity-40 animate-blob" style={{ animationDelay: '4s' }}></div>
-        <div className="absolute inset-0 opacity-[0.03]" style={{
-          backgroundImage: 'radial-gradient(circle at 1px 1px, rgb(148, 163, 184) 1px, transparent 0)',
-          backgroundSize: '40px 40px'
-        }}></div>
+        <div
+          className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-br from-slate-100/50 to-indigo-100/50 rounded-soft-xl opacity-50 animate-gentle-float blob"
+          style={{ animationDelay: '2s' }}
+        ></div>
+        <div
+          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-br from-purple-100/30 to-blue-100/30 rounded-soft-xl opacity-40 animate-blob"
+          style={{ animationDelay: '4s' }}
+        ></div>
+        <div
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage:
+              'radial-gradient(circle at 1px 1px, rgb(148, 163, 184) 1px, transparent 0)',
+            backgroundSize: '40px 40px',
+          }}
+        ></div>
       </div>
 
       <div className="relative z-10 max-w-6xl mx-auto text-center">
@@ -223,39 +242,56 @@ const HeroSection: React.FC<HeroSectionProps> = ({
             {title ? (
               <>
                 <span className="mr-2">{title.split(' ').slice(0, -1).join(' ')}</span>
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-violet-600 to-indigo-500">{title.split(' ').slice(-1)}</span>
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-violet-600 to-indigo-500">
+                  {title.split(' ').slice(-1)}
+                </span>
               </>
             ) : (
               <>
-                <span className="mr-2">YouTube Playlist</span>
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-violet-600 to-indigo-500">Downloader</span>
+                {/* ✅ Fallback disesuaikan untuk Twitter */}
+                <span className="mr-2">Twitter</span>
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-violet-600 to-indigo-500">
+                  Downloader
+                </span>
               </>
             )}
           </h1>
-          <p className="text-sm text-slate-500 max-w-2xl mx-auto">{description || 'Paste a public Instagram link to preview and download media. Fast, private, and secure.'}</p>
-        </div>
-          <div className="flex justify-center mb-6">
-            <div className="w-32 h-1 bg-gradient-to-r from-blue-400 via-purple-400 to-slate-400 rounded-full opacity-60"></div>
-          </div>
-          <p className="text-xl text-slate-600 max-w-3xl mx-auto mb-8">
-            {description || 'Download high-quality YouTube videos quickly and easily. Convert to MP4 or MP3 format with just a few clicks. No registration required.'}
+          {/* ✅ Fallback description lebih netral */}
+          <p className="text-sm text-slate-500 max-w-2xl mx-auto">
+            {description || 'Paste a Twitter/X link to preview and download media. Fast, private, and secure.'}
           </p>
+        </div>
+
+        <div className="flex justify-center mb-6">
+          <div className="w-32 h-1 bg-gradient-to-r from-blue-400 via-purple-400 to-slate-400 rounded-full opacity-60"></div>
+        </div>
+        {/* ✅ Fallback paragraph lebih netral */}
+        <p className="text-xl text-slate-600 max-w-3xl mx-auto mb-8">
+          {description ||
+            'Download high-quality MP4 from Twitter/X quickly and easily. Optional MP3 conversion available. No registration required.'}
+        </p>
+
         {/* Download Form */}
         <form onSubmit={handleDownload} className="mb-20 animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
           <div className="bg-white rounded-xl p-6 shadow-lg border border-gray-100 max-w-4xl mx-auto transition-all duration-200">
             <div className="flex flex-col lg:flex-row items-center gap-6">
               {/* Dropdown */}
-        <div className="relative flex-shrink-0">
+              <div className="relative flex-shrink-0">
                 <button
                   type="button"
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-          className="flex items-center justify-between px-4 py-3 bg-white border border-gray-100 rounded-lg shadow-sm hover:shadow-md transition-transform duration-150 ease-out min-w-[140px] group"
+                  className="flex items-center justify-between px-4 py-3 bg-white border border-gray-100 rounded-lg shadow-sm hover:shadow-md transition-transform duration-150 ease-out min-w-[140px] group"
                 >
                   <div className="flex items-center gap-2">
                     <span className="text-lg">{selectedFormatData?.icon}</span>
                     <span className="font-medium text-slate-700">{selectedFormatData?.label}</span>
                   </div>
-                  <svg className={`w-4 h-4 text-slate-400 transition-gentle ml-2 ${isDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg
+                    className={`w-4 h-4 text-slate-400 transition-gentle ml-2 ${isDropdownOpen ? 'rotate-180' : ''}`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
                 </button>
@@ -291,7 +327,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
                 placeholder={currentConfig?.placeholder || safePlatformConfig.placeholder}
                 className="flex-1 px-4 py-3 rounded-xl bg-gray-50 text-slate-700 placeholder-slate-400 font-medium border border-gray-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-violet-200 focus:border-violet-300 transition-all duration-150"
                 value={currentUrl}
-                onChange={e => handleUrlChange(e.target.value)}
+                onChange={(e) => handleUrlChange(e.target.value)}
                 required
               />
 
@@ -313,29 +349,28 @@ const HeroSection: React.FC<HeroSectionProps> = ({
               <div className="bg-red-50 text-red-700 px-4 py-2 rounded-md mt-4 border border-red-100">{currentError}</div>
             )}
 
-            {/* Loading skeleton - Ultra Modern */}
+            {/* Loading skeleton */}
             {currentLoading && !result && (
               <div className="mt-10 flex justify-center">
                 <div className="w-full max-w-2xl">
                   <div className="relative">
-                    {/* Animated background glow */}
                     <div className="absolute -inset-2 bg-gradient-to-r from-violet-600/20 via-purple-600/20 to-indigo-600/20 rounded-[1rem] blur-md animate-pulse"></div>
 
                     <div className="relative bg-gradient-to-br from-white via-gray-50/50 to-white backdrop-blur-2xl rounded-[1rem] overflow-hidden shadow-xl border border-white/40">
-                      {/* Subtle pattern overlay */}
-                      <div className="absolute inset-0 opacity-[0.02]" style={{
-                        backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.4'%3E%3Ccircle cx='30' cy='30' r='1.5'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-                        backgroundSize: '60px 60px'
-                      }}></div>
+                      <div
+                        className="absolute inset-0 opacity-[0.02]"
+                        style={{
+                          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.4'%3E%3Ccircle cx='30' cy='30' r='1.5'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+                          backgroundSize: '60px 60px',
+                        }}
+                      ></div>
 
                       <div className="relative z-10 p-6 md:p-8">
                         <div className="relative bg-gradient-to-br from-slate-100 via-gray-50 to-slate-100 rounded-xl overflow-hidden shadow-inner border border-gray-200/50">
                           <div className="w-full h-[280px] bg-gradient-to-br from-gray-200 via-gray-100 to-gray-200 animate-pulse relative overflow-hidden">
-                            {/* Shimmer effect */}
                             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer"></div>
                           </div>
-
-                          {/* Premium corner accents */}
+                              {/* Premium corner accents */}
                           <div className="absolute top-3 left-3 w-6 h-6 border-l-2 border-t-2 border-gradient-to-br from-violet-400 to-purple-400 rounded-tl-lg"></div>
                           <div className="absolute top-3 right-3 w-6 h-6 border-r-2 border-t-2 border-gradient-to-bl from-purple-400 to-indigo-400 rounded-tr-lg"></div>
                           <div className="absolute bottom-3 left-3 w-6 h-6 border-l-2 border-b-2 border-gradient-to-tr from-indigo-400 to-violet-400 rounded-bl-lg"></div>
@@ -358,7 +393,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({
               </div>
             )}
 
-            {result && (currentConfig?.showMeta ?? safePlatformConfig.showMeta) && (
+            {/* PREVIEW */}
+{result && (currentConfig?.showMeta ?? safePlatformConfig.showMeta) && (
               <div className="mt-10">
                 {/* Premium Title Section */}
                 {result.normalized?.title && (
