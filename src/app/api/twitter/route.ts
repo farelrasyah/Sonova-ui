@@ -1,4 +1,3 @@
-
 // sonova/src/app/api/twitter/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 

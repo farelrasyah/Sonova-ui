@@ -431,8 +431,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({
                               {it.type === 'image' ? (
                                 <div className="relative group/media">
                                   <img
-                                    src={`/api/instagram/proxy?mediaUrl=${encodeURIComponent(it.url)}`}
-                                    alt={`Instagram media ${idx + 1}`}
+                                    src={`/api/${platform || 'instagram'}/proxy?mediaUrl=${encodeURIComponent(it.url)}`}
+                                    alt={`${platform || 'Instagram'} media ${idx + 1}`}
                                     className="w-full h-auto max-h-[350px] object-contain mx-auto group-hover:scale-[1.02] transition-transform duration-[2000ms] ease-out filter group-hover:brightness-105"
                                   />
 
@@ -446,8 +446,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({
                                 <div className="relative group/media">
                                   <video
                                     controls
-                                    poster={it.thumbnail ? `/api/instagram/proxy?mediaUrl=${encodeURIComponent(it.thumbnail)}` : ''}
-                                    src={`/api/instagram/proxy?mediaUrl=${encodeURIComponent(it.url)}`}
+                                    poster={it.thumbnail ? `/api/${platform || 'instagram'}/proxy?mediaUrl=${encodeURIComponent(it.thumbnail)}` : ''}
+                                    src={`/api/${platform || 'instagram'}/proxy?mediaUrl=${encodeURIComponent(it.url)}`}
                                     className="w-full h-auto max-h-[350px] object-contain mx-auto group-hover:scale-[1.02] transition-transform duration-[2000ms] ease-out rounded-xl"
                                   />
 
@@ -481,7 +481,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
                                 {/* Download button - static, no animations */}
                                 <div className="flex-shrink-0">
                                   <a
-                                    href={`/api/instagram/download?mediaUrl=${encodeURIComponent(it.url)}&filename=${encodeURIComponent((result.normalized?.title || 'instagram') + (it.type === 'video' ? '.mp4' : '.jpg'))}`}
+                                    href={`/api/${platform || 'instagram'}/download?mediaUrl=${encodeURIComponent(it.url)}&filename=${encodeURIComponent((result.normalized?.title || (platform || 'instagram')) + (it.type === 'video' ? '.mp4' : '.jpg'))}`}
                                     className="inline-flex items-center gap-3 bg-gradient-to-r from-violet-600 via-purple-600 to-indigo-600 text-white font-semibold py-2 px-6 rounded-lg shadow-sm border border-white/20"
                                   >
                                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
