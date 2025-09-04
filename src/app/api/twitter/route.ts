@@ -7,7 +7,6 @@ export const dynamic = 'force-dynamic';
 const DEFAULT_WORKER_BASE = 'https://xmediahub.farelrasyah87.workers.dev';
 
 function getWorkerBase() {
-  // Bisa override via env kalau mau
   return process.env.NEXT_PUBLIC_TWITTER_WORKER_BASE?.replace(/\/+$/, '') || DEFAULT_WORKER_BASE;
 }
 
@@ -33,7 +32,6 @@ export async function GET(req: NextRequest) {
     }
 
     const worker = getWorkerBase();
-    // panggil worker JSON (all=1 agar dapat semua varian; best = index 0)
     const workerUrl = `${worker}/twitter/resolve?url=${encodeURIComponent(url)}&all=1`;
     const wres = await fetch(workerUrl, {
       headers: { 'user-agent': 'Mozilla/5.0' },
@@ -50,7 +48,6 @@ export async function GET(req: NextRequest) {
 
     const data = await wres.json();
 
-    // validasi + normalisasi struktur dari worker
     const mediaType: 'video' | 'animated_gif' | 'photo' = data?.media?.type;
     const bestRaw: string | null = data?.media?.best || null;
     const thumbRaw: string | null = data?.media?.thumbnail || null;
@@ -69,10 +66,8 @@ export async function GET(req: NextRequest) {
     const normalizedItems: Array<{ type: 'video'|'image'; url: string; thumbnail?: string }> = [];
 
     if (mediaType === 'photo' && thumbnail) {
-      // image → tampilkan langsung (tanpa proxy) karena pbs.twimg.com sudah CORS-friendly
       normalizedItems.push({ type: 'image', url: thumbnail, thumbnail });
     } else if ((mediaType === 'video' || mediaType === 'animated_gif') && best) {
-      // video → gunakan PROXY route agar dapat Range streaming & CORS aman
       const proxied = `/api/twitter/proxy?mediaUrl=${encodeURIComponent(best)}`;
       normalizedItems.push({ type: 'video', url: proxied, thumbnail: thumbnail || undefined });
     }
@@ -80,8 +75,11 @@ export async function GET(req: NextRequest) {
     const titleText: string =
       (data?.tweet?.text as string | undefined)?.trim() || 'Twitter Media';
 
-    // tombol download utama (best quality) → Worker download endpoint
-    const downloadUrl = `${worker}/twitter/download?url=${encodeURIComponent(url)}`;
+    // ✅ Download button → pakai proxy sendiri agar auto-save & aman di mobile
+    const filename = `twitter-${data?.tweet?.id || 'video'}.mp4`;
+    const downloadUrl = best
+      ? `/api/twitter/proxy?mediaUrl=${encodeURIComponent(best)}&download=1&filename=${encodeURIComponent(filename)}`
+      : `${worker}/twitter/download?url=${encodeURIComponent(url)}`;
 
     return NextResponse.json({
       success: true,
@@ -89,7 +87,7 @@ export async function GET(req: NextRequest) {
       source: 'cloudflare-worker',
       input: url,
 
-      // tombol download langsung
+      // tombol download
       videoUrl: downloadUrl,
 
       // info untuk UI
@@ -110,7 +108,7 @@ export async function GET(req: NextRequest) {
         items: normalizedItems,
       },
 
-      // opsional: render list kualitas
+      // list kualitas (opsional)
       variants: variants.map((v) => ({
         url: `/api/twitter/proxy?mediaUrl=${encodeURIComponent(v.url)}`,
         bitrate: v.bitrate || null,
