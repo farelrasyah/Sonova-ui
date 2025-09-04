@@ -481,7 +481,27 @@ const HeroSection: React.FC<HeroSectionProps> = ({
                                 {/* Download button - static, no animations */}
                                 <div className="flex-shrink-0">
                                   <a
-                                    href={`/api/${platform || 'instagram'}/download?mediaUrl=${encodeURIComponent(it.url)}&filename=${encodeURIComponent((result.normalized?.title || (platform || 'instagram')) + (it.type === 'video' ? '.mp4' : '.jpg'))}`}
+                                    href={(() => {
+                                      // Tentukan platform yang benar
+                                      const currentPlatform = platform || 'instagram';
+                                      
+                                      // Sanitasi filename - hapus emoji dan karakter bermasalah
+                                      const rawTitle = result.normalized?.title || `${currentPlatform}_media`;
+                                      const sanitizedTitle = rawTitle
+                                        .replace(/[\u{1F600}-\u{1F64F}]|[\u{1F300}-\u{1F5FF}]|[\u{1F680}-\u{1F6FF}]|[\u{1F1E0}-\u{1F1FF}]|[\u{2600}-\u{26FF}]|[\u{2700}-\u{27BF}]/gu, '') // Remove emojis
+                                        .replace(/[<>:"/\\|?*]/g, '') // Remove Windows forbidden chars
+                                        .replace(/[\u0000-\u001f\u007f-\u009f]/g, '') // Remove control chars
+                                        .replace(/\s+/g, '_') // Replace spaces with underscores
+                                        .replace(/[^\w\-_.]/g, '') // Keep only alphanumeric, dash, underscore, dot
+                                        .trim()
+                                        .slice(0, 50) // Limit length
+                                        || `${currentPlatform}_media`;
+                                      
+                                      const extension = it.type === 'video' ? '.mp4' : '.jpg';
+                                      const filename = sanitizedTitle + extension;
+                                      
+                                      return `/api/${currentPlatform}/download?mediaUrl=${encodeURIComponent(it.url)}&filename=${encodeURIComponent(filename)}`;
+                                    })()}
                                     className="inline-flex items-center gap-3 bg-gradient-to-r from-violet-600 via-purple-600 to-indigo-600 text-white font-semibold py-2 px-6 rounded-lg shadow-sm border border-white/20"
                                   >
                                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
