@@ -13,7 +13,7 @@ function getWorkerBase() {
 
 export async function GET(req: NextRequest) {
   try {
-    const { searchParams, pathname } = new URL(req.url);
+    const { searchParams } = new URL(req.url);
     const url = searchParams.get('url');
 
     if (!url) {

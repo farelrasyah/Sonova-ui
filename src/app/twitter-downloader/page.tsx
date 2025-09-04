@@ -1,6 +1,6 @@
 'use client';
 
-import { FaDownload, FaTwitter, FaVideo, FaImage, FaMobileAlt, FaHashtag, FaGlobe } from 'react-icons/fa';
+import { FaDownload, FaVideo, FaImage, FaMobileAlt, FaHashtag, FaGlobe } from 'react-icons/fa';
 import PageTemplate from '@/components/PageTemplate';
 import { useLanguage } from '@/contexts/LanguageContext';
 

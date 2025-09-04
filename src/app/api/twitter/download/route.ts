@@ -7,10 +7,6 @@ export const dynamic = 'force-dynamic';
 const DEFAULT_WORKER_BASE = 'https://xmediahub.farelrasyah87.workers.dev';
 const ALLOWED_HOSTS = new Set(['video.twimg.com', 'pbs.twimg.com']);
 
-function getWorkerBase() {
-  return process.env.NEXT_PUBLIC_TWITTER_WORKER_BASE?.replace(/\/+$/, '') || DEFAULT_WORKER_BASE;
-}
-
 function sanitizeFilename(filename: string): string {
   // Decode URL encoded string
   let decoded = '';
@@ -88,7 +84,7 @@ export async function GET(req: NextRequest) {
 
     // Tentukan nama file dan content type
     let finalFilename = 'twitter_media';
-    let contentType = upstream.headers.get('content-type') || 'application/octet-stream';
+    const contentType = upstream.headers.get('content-type') || 'application/octet-stream';
     
     if (filename) {
       finalFilename = sanitizeFilename(filename);
