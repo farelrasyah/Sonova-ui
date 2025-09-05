@@ -4,38 +4,38 @@ import PageTemplate from '@/components/PageTemplate';
 export default function MindReplayDownloader() {
   const features = [
     {
-      title: 'Session Recording',
-      description: 'Record and save your MindReplay sessions for future reference or sharing.',
+      title: 'AI-Powered Summarization',
+      description: 'Get intelligent summaries of YouTube videos using advanced AI technology.',
       icon: <FaHistory className="h-6 w-6 text-purple-500" />,
       gradient: 'from-purple-100 to-indigo-100'
     },
     {
-      title: 'Time-Stamped Notes',
-      description: 'Access your time-stamped notes and highlights from any MindReplay session.',
+      title: 'Instant Processing',
+      description: 'Paste a YouTube URL and get a comprehensive summary in seconds.',
       icon: <FaClock className="h-6 w-6 text-purple-500" />,
       gradient: 'from-violet-100 to-purple-100'
     },
     {
-      title: 'Smart Search',
-      description: 'Quickly find specific moments in your recordings with powerful search functionality.',
+      title: 'Smart Analysis',
+      description: 'AI analyzes video transcripts to extract key points, themes, and insights.',
       icon: <FaSearch className="h-6 w-6 text-purple-500" />,
       gradient: 'from-pink-100 to-rose-100'
     },
     {
-      title: 'Cloud Sync',
-      description: 'Access your MindReplay sessions from any device with automatic cloud synchronization.',
+      title: 'Cloud-Based AI',
+      description: 'Powered by Google Gemini 1.5 Flash for fast and accurate summarization.',
       icon: <FaCloudDownloadAlt className="h-6 w-6 text-purple-500" />,
       gradient: 'from-indigo-100 to-blue-100'
     },
     {
-      title: 'Mobile Access',
-      description: 'Review and manage your MindReplay sessions on the go with our mobile-friendly interface.',
+      title: 'Multi-Language Support',
+      description: 'Summarize videos in multiple languages with AI translation capabilities.',
       icon: <FaMobileAlt className="h-6 w-6 text-purple-500" />,
       gradient: 'from-blue-100 to-cyan-100'
     },
     {
       title: 'Privacy First',
-      description: 'Your MindReplay sessions are private and only accessible to you with end-to-end encryption.',
+      description: 'Your video URLs and summaries are processed securely with no data retention.',
       icon: <FaUserShield className="h-6 w-6 text-purple-500" />,
       gradient: 'from-cyan-100 to-teal-100'
     }
@@ -43,30 +43,30 @@ export default function MindReplayDownloader() {
 
   const faqs = [
     {
-      question: 'What is MindReplay?',
-      answer: 'MindReplay is a powerful tool that helps you record, review, and relive your digital experiences with perfect recall.'
+      question: 'What is MindReplay AI Summarizer?',
+      answer: 'MindReplay AI Summarizer uses Google Gemini 1.5 Flash to create intelligent summaries of YouTube videos from their transcripts.'
     },
     {
-      question: 'How do I download my MindReplay sessions?',
-      answer: 'Navigate to your MindReplay dashboard, select the session you want to download, and choose your preferred format for export.'
+      question: 'How do I use the YouTube summarizer?',
+      answer: 'Simply paste any YouTube video URL into the input field and click "Get Summary" to receive an AI-generated summary.'
     },
     {
-      question: 'What formats can I export my sessions in?',
-      answer: 'MindReplay supports various formats including MP4 for video, PDF for notes, and JSON for data analysis.'
+      question: 'What languages are supported?',
+      answer: 'The AI can summarize videos in multiple languages and provides summaries in English by default.'
     },
     {
-      question: 'Is there a limit to session length?',
-      answer: 'You can record sessions of any length, but longer sessions will require more storage space.'
+      question: 'Is there a limit to video length?',
+      answer: 'Videos of any length are supported, but very long videos may take slightly longer to process.'
     }
   ];
 
   return (
     <PageTemplate
-      title="MindReplay Downloader | Save & Export Your Sessions"
-      description="Download and export your MindReplay sessions in various formats. Save your digital experiences for future reference."
-      heroTitle="MindReplay Downloader"
-  heroDescription="Capture, save, and relive your digital experiences with MindReplay. Download your sessions for offline access or sharing with others."
-  heroPlatform="mindreplay"
+      title="MindReplay AI YouTube Summarizer | Get Video Summaries with AI"
+      description="Summarize YouTube videos instantly using AI. Paste a YouTube URL and get comprehensive summaries powered by Google Gemini."
+      heroTitle="YouTube AI Summarizer"
+      heroDescription="Get intelligent summaries of any YouTube video using advanced AI technology. Paste a URL and receive detailed insights in seconds."
+      heroPlatform="mindreplay"
       features={features}
       faqs={faqs}
     />

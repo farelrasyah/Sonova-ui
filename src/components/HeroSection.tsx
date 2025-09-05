@@ -2,6 +2,7 @@
 
 import React, { useState, useRef } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import SummaryDisplay from '@/components/SummaryDisplay';
 
 interface HeroSectionProps {
   title: string;
@@ -102,6 +103,14 @@ const HeroSection: React.FC<HeroSectionProps> = ({
       getDownloadLinks: () => ({}),
       showMeta: false,
     },
+
+    mindreplay: {
+      api: '/api/mindreplay',
+      placeholder: 'Paste your YouTube URL here...',
+      formats: [],
+      getDownloadLinks: () => ({}),
+      showMeta: false,
+    },
   } as const;
 
   // ensure platform key is valid and provide safe fallbacks
@@ -159,7 +168,15 @@ const HeroSection: React.FC<HeroSectionProps> = ({
 
       // Jika component dikunci ke platform tertentu, enforce
       if (platform) {
-        if (detectedKey !== platform) {
+        let isValidUrl = detectedKey === platform;
+        
+        // Special case for mindreplay: accept YouTube URLs
+        if (platform === 'mindreplay') {
+          const host = new URL(inputUrl).hostname.toLowerCase();
+          isValidUrl = host.includes('youtube.com') || host.includes('youtu.be');
+        }
+        
+        if (!isValidUrl) {
           const names: any = {
             tiktok: 'TikTok',
             youtube: 'YouTube',
@@ -167,6 +184,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
             twitter: 'Twitter',
             'youtube-playlist': 'YouTube Playlist',
             'youtube-summary': 'YouTube',
+            mindreplay: 'YouTube',
           };
           setError(
             `Halaman ini hanya menerima URL ${names[platform] || platform}. ` +
@@ -340,7 +358,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
                 <svg className="w-5 h-5 opacity-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v14m7-7H5" />
                 </svg>
-                <span>{currentLoading ? 'Memproses...' : 'Get Media'}</span>
+                <span>{currentLoading ? 'Memproses...' : (platform === 'mindreplay' ? 'Get Summary' : 'Get Media')}</span>
               </button>
             </div>
 
@@ -505,10 +523,9 @@ const HeroSection: React.FC<HeroSectionProps> = ({
             )}
 
             {/* YouTube Summary */}
-            {result && platform === 'youtube-summary' && (
-              <div className="bg-white rounded shadow p-4 mt-4 text-left">
-                <h2 className="font-bold text-lg mb-2">Ringkasan Video:</h2>
-                <div className="whitespace-pre-line text-gray-700">{result.summary}</div>
+            {result && (platform === 'youtube-summary' || platform === 'mindreplay') && (
+              <div className="mt-10 max-w-5xl mx-auto">
+                <SummaryDisplay summaries={result.summaries || { brief: result.summary, detailed: result.summary, keyPoints: result.summary }} />
               </div>
             )}
           </div>
