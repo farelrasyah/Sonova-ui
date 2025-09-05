@@ -123,9 +123,17 @@ const HeroSection: React.FC<HeroSectionProps> = ({
       if (host.includes('instagram.com')) return 'instagram';
       if (host.includes('twitter.com') || host.includes('x.com')) return 'twitter';
       return 'youtube'; // ✅ fallback ke twitter, bukan youtube
-    } catch (_e) {
+    } catch (e) {
       return 'youtube';
     }
+  }
+
+  // Format durasi (detik ke mm:ss) — masih kepakai untuk platform lain
+  function formatDuration(sec: number) {
+    if (!sec) return '';
+    const m = Math.floor(sec / 60);
+    const s = sec % 60;
+    return `${m}:${s.toString().padStart(2, '0')}`;
   }
 
   // Handler submit
@@ -193,7 +201,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
       } else {
         setResult(data);
       }
-    } catch (_err) {
+    } catch (err) {
       setError('Terjadi kesalahan jaringan.');
       setResult(null);
     } finally {

@@ -13,7 +13,7 @@ function getWorkerBase() {
 
 export async function GET(req: NextRequest) {
   try {
-    const { searchParams } = new URL(req.url);
+    const { searchParams, pathname } = new URL(req.url);
     const url = searchParams.get('url');
 
     if (!url) {
@@ -51,9 +51,7 @@ export async function GET(req: NextRequest) {
     const normalizedItems = [] as Array<{ type: 'video'|'image'; url: string; thumbnail?: string }>;
 
     if (mediaType === 'photo' && thumbnail) {
-      // gunakan PROXY route untuk image juga agar konsisten
-      const proxied = `/api/twitter/proxy?mediaUrl=${encodeURIComponent(thumbnail)}`;
-      normalizedItems.push({ type: 'image', url: proxied, thumbnail: proxied });
+      normalizedItems.push({ type: 'image', url: thumbnail, thumbnail });
     } else if ((mediaType === 'video' || mediaType === 'animated_gif') && best) {
       // gunakan PROXY route sendiri agar video <video> bisa stream range via domain kita (aman)
       const proxied = `/api/twitter/proxy?mediaUrl=${encodeURIComponent(best)}`;
