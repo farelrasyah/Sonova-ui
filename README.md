@@ -195,6 +195,7 @@ sonova/
 | **MP3** | 320kbps | Ekstraksi audio dari video |
 | **WEBM** | HD | Format video yang dioptimalkan untuk web |
 | **WAV** | Lossless | File audio berkualitas tinggi |
+| **photo** | jpg, png, dll | File photo berkualitas tinggi |
 
 ## 🔧 Pengembangan
 
