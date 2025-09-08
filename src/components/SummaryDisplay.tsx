@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaCopy, FaEdit, FaSave, FaUndo, FaExpand, FaCompress } from 'react-icons/fa';
 
 interface SummaryDisplayProps {
@@ -19,6 +19,9 @@ const SummaryDisplay: React.FC<SummaryDisplayProps> = ({ summaries }) => {
   const [copySuccess, setCopySuccess] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const [toast, setToast] = useState('');
+  const [targetLang, setTargetLang] = useState('id'); // default Indonesian
+  const [translations, setTranslations] = useState<Record<string, any>>({});
+  const [translating, setTranslating] = useState(false);
 
   const tabs = [
     { key: 'brief', label: 'Ringkasan Singkat', icon: '📝', content: summaries.brief },
@@ -90,10 +93,96 @@ const SummaryDisplay: React.FC<SummaryDisplayProps> = ({ summaries }) => {
     setTimeout(() => setToast(''), 2200);
   };
 
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('sonova_lang');
+      if (saved) setTargetLang(saved);
+    } catch (e) {
+      /* ignore */
+    }
+  }, []);
+
+  useEffect(() => {
+    try { localStorage.setItem('sonova_lang', targetLang); } catch (e) { }
+  }, [targetLang]);
+
+  const availableLangs = [
+  { code: 'id', label: 'Indonesia' },
+  { code: 'en', label: 'English' },
+  { code: 'es', label: 'Español' },
+  { code: 'fr', label: 'Français' },
+  { code: 'de', label: 'Deutsch' },
+  { code: 'pt', label: 'Português' },
+  { code: 'ru', label: 'Русский' },
+  { code: 'zh', label: '中文' },
+  { code: 'ja', label: '日本語' },
+  { code: 'ko', label: '한국어' },
+  { code: 'ar', label: 'العربية' }
+  ];
+
+  const requestTranslation = async (lang: string, force = false) => {
+    if (!lang) return null;
+    // don't re-request if cached and not forced
+    if (!force && translations[lang]) return translations[lang];
+    setTranslating(true);
+    showToast('Translating...');
+    try {
+      const sections = buildPaperSections(getCurrentContent());
+      const res = await fetch('/api/translate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sections, target: lang })
+      });
+      const data = await res.json();
+      if (data?.translated) {
+        setTranslations(prev => ({ ...prev, [lang]: data.translated }));
+        setTranslating(false);
+        showToast('Terjemahan selesai');
+        return data.translated;
+      }
+      // API returned no translated object
+      console.error('translation response missing translated', data);
+      showToast('Gagal menerjemahkan');
+    } catch (e) {
+      console.error('translation error', e);
+      showToast('Gagal menerjemahkan');
+    }
+    setTranslating(false);
+    return null;
+  };
+
+  // Auto-request translation when language changes or content changes
+  useEffect(() => {
+    // If editing, skip translation requests until saved
+    if (editMode) return;
+    // If user selected default 'id' but original may already be in Indonesian, still safe to request once
+    requestTranslation(targetLang).catch(() => {});
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [targetLang, summaries.brief, summaries.detailed, summaries.keyPoints, activeTab]);
+
+  const buildPaperTextFromSections = (s: any) => {
+    if (!s) return '';
+    let out = '';
+    out += (s.title || '') + '\n\n';
+    out += (targetLang === 'en' ? 'Introduction\n' : 'Pendahuluan\n') + (s.intro || '') + '\n\n';
+    out += (targetLang === 'en' ? 'Discussion\n' : 'Pembahasan\n');
+    (s.paragraphs || []).forEach((p: string) => { out += p.trim() + '\n\n'; });
+    if (s.points && s.points.length) {
+      out += (targetLang === 'en' ? 'Key Points\n' : 'Poin Penting\n');
+      s.points.forEach((pt: string) => { out += '- ' + pt + '\n'; });
+      out += '\n';
+    }
+    out += (targetLang === 'en' ? 'Conclusion\n' : 'Kesimpulan\n') + (s.conclusion || '') + '\n';
+    return out.trim();
+  };
+
   const handleCopy = async () => {
     try {
       // Copy the formatted paper text when not editing, otherwise copy edited content
-      const contentToCopy = editMode ? editedContent : buildPaperText(getCurrentContent());
+  let contentToCopy = '';
+  if (editMode) contentToCopy = editedContent;
+  else if (translations[targetLang]) contentToCopy = buildPaperTextFromSections(translations[targetLang]);
+  else contentToCopy = buildPaperText(getCurrentContent());
       await navigator.clipboard.writeText(contentToCopy);
       setCopySuccess(true);
       showToast('Teks disalin ke clipboard');
@@ -212,6 +301,28 @@ const SummaryDisplay: React.FC<SummaryDisplayProps> = ({ summaries }) => {
               </div>
             </div>
             <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2 bg-white/20 rounded-xl p-1">
+                <label htmlFor="lang-select" className="sr-only">Language</label>
+                <select
+                  id="lang-select"
+                  value={targetLang}
+                  onChange={async (e) => {
+                    const lang = e.target.value;
+                    setTargetLang(lang);
+                    // force a new translation request so UI updates
+                    await requestTranslation(lang, true);
+                  }}
+                  className="bg-transparent text-white text-sm px-2 py-1 rounded-md focus:outline-none"
+                  disabled={translating}
+                  aria-label="Pilih bahasa"
+                >
+                  {availableLangs.map(l => (
+                    <option key={l.code} value={l.code}>{l.label}</option>
+                  ))}
+                </select>
+                {translating && <div className="text-xs text-white/80 ml-2">Translating…</div>}
+              </div>
+
               <button
                 type="button"
                 onClick={() => setIsExpanded(!isExpanded)}
@@ -323,36 +434,39 @@ const SummaryDisplay: React.FC<SummaryDisplayProps> = ({ summaries }) => {
                   <div className="max-h-96 overflow-y-auto p-6">
                     {/* Structured paper view */}
                     {(() => {
-                      const sections = buildPaperSections(getCurrentContent());
-                                      return (
-                                        <article className="max-w-none">
-                                          <h1 className="text-xl lg:text-2xl font-extrabold text-slate-900 text-center mb-4">{sections.title}</h1>
+                      const baseSections = buildPaperSections(getCurrentContent());
+                      const translated = translations[targetLang];
+                      const sections = translated || baseSections;
 
-                                          <h2 className="mt-4 text-lg font-semibold text-slate-700 text-left">Pendahuluan</h2>
-                                          <p className="text-slate-700 leading-relaxed mt-2" style={{ textAlign: 'justify' }}>{sections.intro}</p>
+                      return (
+                        <article className="max-w-none">
+                          <h1 className="text-xl lg:text-2xl font-extrabold text-slate-900 text-center mb-4">{sections.title}</h1>
 
-                                          <h2 className="mt-6 text-lg font-semibold text-slate-700 text-left">Pembahasan</h2>
-                                          {sections.paragraphs.map((p: string, idx: number) => (
-                                            <section key={idx} className="mt-4">
-                                              <p className="text-slate-700 leading-relaxed" style={{ textAlign: 'justify' }}>{p}</p>
-                                            </section>
-                                          ))}
+                          <h2 className="mt-4 text-lg font-semibold text-slate-700 text-left">{translated ? (sections.title ? (targetLang === 'en' ? 'Introduction' : 'Pendahuluan') : 'Pendahuluan') : 'Pendahuluan'}</h2>
+                          <p className="text-slate-700 leading-relaxed mt-2" style={{ textAlign: 'justify' }}>{sections.intro}</p>
 
-                                          {sections.points && sections.points.length > 0 && (
-                                            <div className="mt-6">
-                                              <h3 className="text-md font-semibold text-slate-700 text-left">Poin Penting</h3>
-                                              <ul className="list-disc list-inside mt-2 text-slate-700 text-left">
-                                                {sections.points.map((pt: string, i: number) => (
-                                                  <li key={i} className="mb-1">{pt}</li>
-                                                ))}
-                                              </ul>
-                                            </div>
-                                          )}
+                          <h2 className="mt-6 text-lg font-semibold text-slate-700 text-left">{translated ? (targetLang === 'en' ? 'Discussion' : 'Pembahasan') : 'Pembahasan'}</h2>
+                          {sections.paragraphs && sections.paragraphs.map((p: string, idx: number) => (
+                            <section key={idx} className="mt-4">
+                              <p className="text-slate-700 leading-relaxed" style={{ textAlign: 'justify' }}>{p}</p>
+                            </section>
+                          ))}
 
-                                          <h2 className="mt-6 text-lg font-semibold text-slate-700 text-left">Kesimpulan</h2>
-                                          <p className="text-slate-700 leading-relaxed mt-2" style={{ textAlign: 'justify' }}>{sections.conclusion}</p>
-                                        </article>
-                                      );
+                          {sections.points && sections.points.length > 0 && (
+                            <div className="mt-6">
+                              <h3 className="text-md font-semibold text-slate-700 text-left">{translated ? (targetLang === 'en' ? 'Key Points' : 'Poin Penting') : 'Poin Penting'}</h3>
+                              <ul className="list-disc list-inside mt-2 text-slate-700 text-left">
+                                {sections.points.map((pt: string, i: number) => (
+                                  <li key={i} className="mb-1">{pt}</li>
+                                ))}
+                              </ul>
+                            </div>
+                          )}
+
+                          <h2 className="mt-6 text-lg font-semibold text-slate-700 text-left">{translated ? (targetLang === 'en' ? 'Conclusion' : 'Kesimpulan') : 'Kesimpulan'}</h2>
+                          <p className="text-slate-700 leading-relaxed mt-2" style={{ textAlign: 'justify' }}>{sections.conclusion}</p>
+                        </article>
+                      );
                     })()}
                   </div>
                 </div>
