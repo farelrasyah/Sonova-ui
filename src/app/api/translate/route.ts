@@ -17,7 +17,7 @@ export async function POST(req: Request) {
     const client = new GoogleGenerativeAI(apiKey);
     const model = client.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
-    const prompt = `You are a professional translator and academic editor. Translate the JSON object below into ${target} exactly preserving the keys: title, intro, paragraphs (array), points (array), conclusion. Return only valid JSON and nothing else. Keep the tone formal and natural for an academic paper.\n\nINPUT_JSON:\n${JSON.stringify(sections)}`;
+  const prompt = `You are a professional translator and academic editor. Translate the following JSON bundle into ${target}. The input has keys: brief, detailed, keyPoints; each value is an object with keys: title, intro, paragraphs (array), points (array), conclusion. Return ONLY valid JSON with the same top-level keys (brief,detailed,keyPoints) and translated sub-objects. Do not include any commentary or extra text. Ensure the translated text is formal and appropriate for an academic paper.\n\nINPUT_JSON:\n${JSON.stringify(sections)}`;
 
     // Use the same generateContent pattern used elsewhere in the project
     const response = await model.generateContent(prompt);
@@ -34,7 +34,7 @@ export async function POST(req: Request) {
       aiText = JSON.stringify(response);
     }
 
-    // find JSON substring
+    // find JSON substring and parse
     let parsed: any = null;
     try {
       const m = aiText.match(/\{[\s\S]*\}/m);
@@ -44,7 +44,14 @@ export async function POST(req: Request) {
     }
 
     if (!parsed) {
+      console.error('Translate API parse failed, aiText:', aiText);
       return NextResponse.json({ error: 'translation_failed', raw: aiText }, { status: 502 });
+    }
+
+    // Basic validation: expect keys brief/detailed/keyPoints
+    if (!parsed.brief && !parsed.detailed && !parsed.keyPoints) {
+      // If model returned a single section, wrap it for all tabs
+      return NextResponse.json({ translated: { brief: parsed, detailed: parsed, keyPoints: parsed } });
     }
 
     return NextResponse.json({ translated: parsed });

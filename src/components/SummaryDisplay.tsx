@@ -127,20 +127,26 @@ const SummaryDisplay: React.FC<SummaryDisplayProps> = ({ summaries }) => {
     setTranslating(true);
     showToast('Translating...');
     try {
-      const sections = buildPaperSections(getCurrentContent());
+      // Build sections bundle for all three tabs so server can translate each independently
+      const bundle = {
+        brief: buildPaperSections(summaries.brief || ''),
+        detailed: buildPaperSections(summaries.detailed || ''),
+        keyPoints: buildPaperSections(summaries.keyPoints || '')
+      };
+
       const res = await fetch('/api/translate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ sections, target: lang })
+        body: JSON.stringify({ sections: bundle, target: lang })
       });
       const data = await res.json();
       if (data?.translated) {
+        // expect translated to be an object with brief/detailed/keyPoints
         setTranslations(prev => ({ ...prev, [lang]: data.translated }));
         setTranslating(false);
         showToast('Terjemahan selesai');
         return data.translated;
       }
-      // API returned no translated object
       console.error('translation response missing translated', data);
       showToast('Gagal menerjemahkan');
     } catch (e) {
@@ -292,12 +298,11 @@ const SummaryDisplay: React.FC<SummaryDisplayProps> = ({ summaries }) => {
         <div className="bg-gradient-to-r from-violet-600 via-purple-600 to-indigo-600 px-8 py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center">
-                <span className="text-2xl">🤖</span>
-              </div>
-              <div>
-                <h2 className="text-2xl font-bold text-white">AI Summary</h2>
-                <p className="text-violet-100 text-sm">Powered by Google Gemini 1.5 Flash</p>
+              <div className="flex flex-col">
+                <div className="mt-1">
+                  <h2 className="text-lg lg:text-xl font-serif font-semibold text-white">Ringkasan Profesional</h2>
+                  <p className="text-violet-100 text-xs mt-0.5">Diterjemahkan & disusun dengan Profesional</p>
+                </div>
               </div>
             </div>
             <div className="flex items-center gap-3">
@@ -322,15 +327,6 @@ const SummaryDisplay: React.FC<SummaryDisplayProps> = ({ summaries }) => {
                 </select>
                 {translating && <div className="text-xs text-white/80 ml-2">Translating…</div>}
               </div>
-
-              <button
-                type="button"
-                onClick={() => setIsExpanded(!isExpanded)}
-                className="p-3 bg-white/20 hover:bg-white/30 rounded-xl transition-all duration-200 text-white"
-                title={isExpanded ? "Collapse" : "Expand"}
-              >
-                {isExpanded ? <FaCompress /> : <FaExpand />}
-              </button>
             </div>
           </div>
         </div>
@@ -434,9 +430,14 @@ const SummaryDisplay: React.FC<SummaryDisplayProps> = ({ summaries }) => {
                   <div className="max-h-96 overflow-y-auto p-6">
                     {/* Structured paper view */}
                     {(() => {
-                      const baseSections = buildPaperSections(getCurrentContent());
                       const translated = translations[targetLang];
-                      const sections = translated || baseSections;
+                      // Choose the correct source based on active tab
+                      const baseMap: any = {
+                        brief: buildPaperSections(summaries.brief || ''),
+                        detailed: buildPaperSections(summaries.detailed || ''),
+                        keyPoints: buildPaperSections(summaries.keyPoints || '')
+                      };
+                      const sections = (translated && translated[activeTab]) ? translated[activeTab] : baseMap[activeTab];
 
                       return (
                         <article className="max-w-none">
