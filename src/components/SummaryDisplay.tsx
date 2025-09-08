@@ -18,6 +18,7 @@ const SummaryDisplay: React.FC<SummaryDisplayProps> = ({ summaries }) => {
   const [originalContent, setOriginalContent] = useState('');
   const [copySuccess, setCopySuccess] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [toast, setToast] = useState('');
 
   const tabs = [
     { key: 'brief', label: 'Ringkasan Singkat', icon: '📝', content: summaries.brief },
@@ -28,6 +29,39 @@ const SummaryDisplay: React.FC<SummaryDisplayProps> = ({ summaries }) => {
   const getCurrentContent = () => {
     if (editMode) return editedContent;
     return tabs.find(tab => tab.key === activeTab)?.content || '';
+  };
+
+  // Sanitize text for display (remove common markdown characters that may clutter view)
+  const sanitizeForDisplay = (text: string) => {
+    if (!text) return '';
+    // remove code fences and inline code
+    let out = String(text)
+      .replace(/```[\s\S]*?```/g, '') // remove code blocks
+      .replace(/`+/g, '')
+      // remove images entirely
+      .replace(/!\[[^\]]*\]\([^)]*\)/g, '')
+      // preserve link text, drop URL: [text](url) -> text
+      .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
+      // remove common markdown emphasis markers but keep content
+      .replace(/~~(.*?)~~/g, '$1')
+      .replace(/\*\*(.*?)\*\*/g, '$1')
+      .replace(/__(.*?)__/g, '$1')
+      .replace(/\*(.*?)\*/g, '$1')
+      .replace(/_(.*?)_/g, '$1')
+      // remove remaining stray asterisks, tildes, backslashes
+      .replace(/[\*~\\]+/g, '')
+      // normalize Windows newlines
+      .replace(/\r\n/g, '\n');
+
+    // Clean up each line: drop leading list markers or heading hashes
+    out = out
+      .split('\n')
+      .map(line => line.replace(/^\s*[\-\*+\u2022\•]+\s*/, '').replace(/^\s*#{1,6}\s*/, ''))
+      .join('\n')
+      .replace(/\s{2,}/g, ' ')
+      .trim();
+
+    return out;
   };
 
   const handleEdit = () => {
@@ -51,14 +85,112 @@ const SummaryDisplay: React.FC<SummaryDisplayProps> = ({ summaries }) => {
     setEditMode(false);
   };
 
+  const showToast = (msg: string) => {
+    setToast(msg);
+    setTimeout(() => setToast(''), 2200);
+  };
+
   const handleCopy = async () => {
     try {
-      await navigator.clipboard.writeText(getCurrentContent());
+      // Copy the formatted paper text when not editing, otherwise copy edited content
+      const contentToCopy = editMode ? editedContent : buildPaperText(getCurrentContent());
+      await navigator.clipboard.writeText(contentToCopy);
       setCopySuccess(true);
+      showToast('Teks disalin ke clipboard');
       setTimeout(() => setCopySuccess(false), 2000);
     } catch (err) {
       console.error('Failed to copy text: ', err);
+      showToast('Gagal menyalin teks');
     }
+  };
+
+  // Build structured paper sections from raw content and summaries
+  const buildPaperSections = (raw: string) => {
+  const brief = sanitizeForDisplay(summaries.brief || '');
+  const detailed = sanitizeForDisplay(raw || summaries.detailed || '');
+  const keyPoints = sanitizeForDisplay(summaries.keyPoints || '');
+
+    const titleCandidate = (brief.split('\n')[0] || detailed.split('\n')[0] || '').trim();
+    const title = titleCandidate || 'Ringkasan Video';
+
+    const intro = brief.trim() || extractFirstNSentences(detailed, 2);
+
+    // Split detailed into paragraphs by double newline, or chunk sentences
+      const rawParagraphs = detailed.split(/\n\s*\n/).map(p => p.trim()).filter(Boolean);
+      // If paragraphs are very long, further split by sentences into chunks
+      const paragraphs: string[] = [];
+      const paragraphMaxChars = 600; // heuristic: split paragraphs longer than this
+      const paragraphMaxSentences = 6; // or split if more than this many sentences
+      const pushChunked = (text: string) => {
+        const sents = sentenceSplit(text).map(s => s.trim()).filter(Boolean);
+        if (sents.length === 0) return;
+        if (sents.length <= paragraphMaxSentences && text.length <= paragraphMaxChars) {
+          paragraphs.push(text.trim());
+          return;
+        }
+        // chunk into groups of 2-3 sentences per paragraph ensuring reasonable length
+        let chunkSize = 3;
+        if (sents.length <= 8) chunkSize = 2;
+        for (let i = 0; i < sents.length; i += chunkSize) {
+          paragraphs.push(sents.slice(i, i + chunkSize).join(' ').trim());
+        }
+      };
+
+      if (rawParagraphs.length) {
+        rawParagraphs.forEach(p => pushChunked(p));
+      } else {
+        pushChunked(detailed);
+      }
+
+    const points = keyPoints
+      .split(/\r?\n|;|\u2022|\u2023|\*|\-|•|\u2024|\u00B7/)
+      .map(s => s.replace(/^[\s\-\*\u2022\•\u2023\u2024\u00B7]+/, '').replace(/[\*_`~]+/g, '').trim())
+      .filter(Boolean);
+
+    let conclusion = extractLastNSentences(detailed, 2) || (points.length ? points.slice(0,3).join('. ') + '.' : 'Kesimpulan: poin-poin utama tercantum di atas.');
+    // If conclusion is long, split into multiple short paragraphs
+    if (conclusion.length > paragraphMaxChars) {
+      const consSents = sentenceSplit(conclusion).map(s => s.trim()).filter(Boolean);
+      conclusion = consSents.slice(-4).join(' ');
+    }
+
+  return { title, intro, paragraphs, points, conclusion };
+  };
+
+  const buildPaperText = (raw: string) => {
+    const s = buildPaperSections(raw);
+    let out = '';
+    out += s.title + '\n\n';
+    out += 'Pendahuluan\n' + s.intro + '\n\n';
+    out += 'Pembahasan\n';
+    s.paragraphs.forEach((p: string) => {
+      out += p.trim() + '\n\n';
+    });
+    if (s.points.length) {
+      out += 'Poin Penting\n';
+      s.points.forEach((pt: string) => {
+        out += '- ' + pt + '\n';
+      });
+      out += '\n';
+    }
+    out += 'Kesimpulan\n' + s.conclusion + '\n';
+    return out.trim();
+  };
+
+  // small helpers
+  const sentenceSplit = (text: string) => text.match(/[^.!?]+[.!?]?/g) || [text];
+  const extractFirstNSentences = (text: string, n: number) => sentenceSplit(text).slice(0,n).join(' ').trim();
+  const extractLastNSentences = (text: string, n: number) => {
+    const arr = sentenceSplit(text);
+    return arr.slice(-n).join(' ').trim();
+  };
+  const chunkSentences = (text: string, per = 3) => {
+    const sents = sentenceSplit(text).map(s => s.trim()).filter(Boolean);
+    const chunks: string[] = [];
+    for (let i=0;i<sents.length;i+=per){
+      chunks.push(sents.slice(i,i+per).join(' '));
+    }
+    return chunks.length ? chunks : [text];
   };
 
   return (
@@ -81,6 +213,7 @@ const SummaryDisplay: React.FC<SummaryDisplayProps> = ({ summaries }) => {
             </div>
             <div className="flex items-center gap-3">
               <button
+                type="button"
                 onClick={() => setIsExpanded(!isExpanded)}
                 className="p-3 bg-white/20 hover:bg-white/30 rounded-xl transition-all duration-200 text-white"
                 title={isExpanded ? "Collapse" : "Expand"}
@@ -96,6 +229,7 @@ const SummaryDisplay: React.FC<SummaryDisplayProps> = ({ summaries }) => {
           <div className="flex gap-2 bg-gray-100/50 rounded-2xl p-2">
             {tabs.map((tab) => (
               <button
+                type="button"
                 key={tab.key}
                 onClick={() => {
                   setActiveTab(tab.key as any);
@@ -123,6 +257,7 @@ const SummaryDisplay: React.FC<SummaryDisplayProps> = ({ summaries }) => {
                 {!editMode ? (
                   <>
                     <button
+                      type="button"
                       onClick={handleEdit}
                       className="flex items-center gap-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-all duration-200 text-sm font-medium shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
                     >
@@ -130,6 +265,7 @@ const SummaryDisplay: React.FC<SummaryDisplayProps> = ({ summaries }) => {
                       Edit
                     </button>
                     <button
+                      type="button"
                       onClick={handleCopy}
                       className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-200 text-sm font-medium shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 ${
                         copySuccess
@@ -144,6 +280,7 @@ const SummaryDisplay: React.FC<SummaryDisplayProps> = ({ summaries }) => {
                 ) : (
                   <>
                     <button
+                      type="button"
                       onClick={handleSave}
                       className="flex items-center gap-2 px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-all duration-200 text-sm font-medium shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
                     >
@@ -151,6 +288,7 @@ const SummaryDisplay: React.FC<SummaryDisplayProps> = ({ summaries }) => {
                       Save
                     </button>
                     <button
+                      type="button"
                       onClick={handleCancel}
                       className="flex items-center gap-2 px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-lg transition-all duration-200 text-sm font-medium shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
                     >
@@ -167,7 +305,7 @@ const SummaryDisplay: React.FC<SummaryDisplayProps> = ({ summaries }) => {
             </div>
 
             {/* Content Display */}
-            <div className={`transition-all duration-500 ${isExpanded ? 'max-h-none' : 'max-h-96 overflow-hidden'}`}>
+            <div className={`transition-all duration-500 ${isExpanded ? 'max-h-[none]' : 'max-h-96'}`}>
               {editMode ? (
                 <div className="relative">
                   <textarea
@@ -181,11 +319,41 @@ const SummaryDisplay: React.FC<SummaryDisplayProps> = ({ summaries }) => {
                   </div>
                 </div>
               ) : (
-                <div className="bg-gradient-to-br from-white to-violet-50/30 rounded-2xl p-6 shadow-inner border border-violet-100/50">
-                  <div className="prose prose-violet max-w-none">
-                    <div className="text-gray-800 leading-relaxed whitespace-pre-line text-base">
-                      {getCurrentContent()}
-                    </div>
+                <div className="bg-gradient-to-br from-white to-violet-50/30 rounded-2xl p-0 shadow-inner border border-violet-100/50">
+                  <div className="max-h-96 overflow-y-auto p-6">
+                    {/* Structured paper view */}
+                    {(() => {
+                      const sections = buildPaperSections(getCurrentContent());
+                                      return (
+                                        <article className="max-w-none">
+                                          <h1 className="text-xl lg:text-2xl font-extrabold text-slate-900 text-center mb-4">{sections.title}</h1>
+
+                                          <h2 className="mt-4 text-lg font-semibold text-slate-700 text-left">Pendahuluan</h2>
+                                          <p className="text-slate-700 leading-relaxed mt-2" style={{ textAlign: 'justify' }}>{sections.intro}</p>
+
+                                          <h2 className="mt-6 text-lg font-semibold text-slate-700 text-left">Pembahasan</h2>
+                                          {sections.paragraphs.map((p: string, idx: number) => (
+                                            <section key={idx} className="mt-4">
+                                              <p className="text-slate-700 leading-relaxed" style={{ textAlign: 'justify' }}>{p}</p>
+                                            </section>
+                                          ))}
+
+                                          {sections.points && sections.points.length > 0 && (
+                                            <div className="mt-6">
+                                              <h3 className="text-md font-semibold text-slate-700 text-left">Poin Penting</h3>
+                                              <ul className="list-disc list-inside mt-2 text-slate-700 text-left">
+                                                {sections.points.map((pt: string, i: number) => (
+                                                  <li key={i} className="mb-1">{pt}</li>
+                                                ))}
+                                              </ul>
+                                            </div>
+                                          )}
+
+                                          <h2 className="mt-6 text-lg font-semibold text-slate-700 text-left">Kesimpulan</h2>
+                                          <p className="text-slate-700 leading-relaxed mt-2" style={{ textAlign: 'justify' }}>{sections.conclusion}</p>
+                                        </article>
+                                      );
+                    })()}
                   </div>
                 </div>
               )}
@@ -209,6 +377,13 @@ const SummaryDisplay: React.FC<SummaryDisplayProps> = ({ summaries }) => {
             </div>
           </div>
         </div>
+
+        {/* Toast */}
+        {toast && (
+          <div className="fixed right-6 bottom-6 z-50">
+            <div className="bg-black text-white px-4 py-2 rounded-lg shadow-lg animate-fade-in-up">{toast}</div>
+          </div>
+        )}
       </div>
     </div>
   );
