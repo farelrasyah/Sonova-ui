@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { FaCopy, FaEdit, FaSave, FaUndo, FaExpand, FaCompress } from 'react-icons/fa';
+import React, { useState, useEffect, useRef } from 'react';
+import { FaCopy, FaEdit, FaSave, FaUndo } from 'react-icons/fa';
 
 interface SummaryDisplayProps {
   summaries: {
@@ -15,18 +15,40 @@ const SummaryDisplay: React.FC<SummaryDisplayProps> = ({ summaries }) => {
   const [activeTab, setActiveTab] = useState<'brief' | 'detailed' | 'keyPoints'>('brief');
   const [editMode, setEditMode] = useState(false);
   const [editedContent, setEditedContent] = useState('');
+  const editorRef = useRef<HTMLDivElement | null>(null);
   const [originalContent, setOriginalContent] = useState('');
+  const [currentSummaries, setCurrentSummaries] = useState<{ brief: string; detailed: string; keyPoints: string }>({
+    brief: summaries.brief || '',
+    detailed: summaries.detailed || '',
+    keyPoints: summaries.keyPoints || ''
+  });
+  const summariesKeyRef = useRef<string>('');
+
+  const computeSummariesKey = (obj: { brief?: string; detailed?: string; keyPoints?: string }) => {
+    const s = `${obj.brief || ''}||${obj.detailed || ''}||${obj.keyPoints || ''}`;
+    // simple non-crypto hash to keep key short
+    let h = 2166136261 >>> 0;
+    for (let i = 0; i < s.length; i++) {
+      h ^= s.charCodeAt(i);
+      h = Math.imul(h, 16777619) >>> 0;
+    }
+    return 'k_' + (h >>> 0).toString(16);
+  };
   const [copySuccess, setCopySuccess] = useState(false);
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpanded] = useState(false);
   const [toast, setToast] = useState('');
+  const showToast = (msg: string) => {
+    setToast(msg);
+    setTimeout(() => setToast(''), 2200);
+  };
   const [targetLang, setTargetLang] = useState('id'); // default Indonesian
   const [translations, setTranslations] = useState<Record<string, any>>({});
   const [translating, setTranslating] = useState(false);
 
   const tabs = [
-    { key: 'brief', label: 'Ringkasan Singkat', icon: '📝', content: summaries.brief },
-    { key: 'detailed', label: 'Ringkasan Detail', icon: '📖', content: summaries.detailed },
-    { key: 'keyPoints', label: 'Poin Penting', icon: '🎯', content: summaries.keyPoints }
+  { key: 'brief', label: 'Ringkasan Singkat', icon: '📝', content: currentSummaries.brief },
+  { key: 'detailed', label: 'Ringkasan Detail', icon: '📖', content: currentSummaries.detailed },
+  { key: 'keyPoints', label: 'Poin Penting', icon: '🎯', content: currentSummaries.keyPoints }
   ];
 
   const getCurrentContent = () => {
@@ -68,35 +90,105 @@ const SummaryDisplay: React.FC<SummaryDisplayProps> = ({ summaries }) => {
   };
 
   const handleEdit = () => {
-    const currentContent = tabs.find(tab => tab.key === activeTab)?.content || '';
+    // Build the full displayed content (title + intro + paragraphs + points + conclusion)
+    const translated = translations[targetLang];
+    const baseMap: any = {
+      brief: buildPaperSections(currentSummaries.brief || ''),
+      detailed: buildPaperSections(currentSummaries.detailed || ''),
+      keyPoints: buildPaperSections(currentSummaries.keyPoints || '')
+    };
+    const sections = (translated && translated[activeTab]) ? translated[activeTab] : baseMap[activeTab];
+
+    const fullTextParts: string[] = [];
+    if (sections.title) fullTextParts.push(sections.title.trim());
+    if (sections.intro) fullTextParts.push(sections.intro.trim());
+    if (sections.paragraphs && sections.paragraphs.length) fullTextParts.push(...sections.paragraphs.map((p: string) => p.trim()));
+    if (sections.points && sections.points.length) fullTextParts.push('Poin Penting: ' + sections.points.map((pt: string) => '- ' + pt.trim()).join('\n'));
+    if (sections.conclusion) fullTextParts.push(sections.conclusion.trim());
+
+    const currentContent = sanitizeForDisplay(fullTextParts.join('\n\n'));
     setOriginalContent(currentContent);
     setEditedContent(currentContent);
     setEditMode(true);
+    // build structured HTML and populate editor
+    setTimeout(() => {
+      if (editorRef.current) {
+        const sectionsHtml = sectionsToHtml(sections);
+        editorRef.current.innerHTML = sectionsHtml;
+      }
+    }, 0);
   };
 
-  const handleSave = () => {
-    // Update the summary content (you might want to save this to state management or backend)
-    const tabIndex = tabs.findIndex(tab => tab.key === activeTab);
-    if (tabIndex !== -1) {
-      tabs[tabIndex].content = editedContent;
+  // Convert sections object into structured HTML for editor
+  const sectionsToHtml = (s: any) => {
+    if (!s) return '';
+    const parts: string[] = [];
+    if (s.title) parts.push(`<h1 style="text-align:center;margin-bottom:0.5rem">${escapeHtml(s.title)}</h1>`);
+    if (s.intro) parts.push(`<h2 style="text-align:left;margin-top:1rem;margin-bottom:0.25rem;font-weight:600">${escapeHtml(targetLang === 'en' ? 'Introduction' : 'Pendahuluan')}</h2><p style="text-align:justify;margin-top:0.25rem">${escapeHtml(s.intro)}</p>`);
+    if (s.paragraphs && s.paragraphs.length) {
+      parts.push(`<h2 style="text-align:left;margin-top:1rem;margin-bottom:0.25rem;font-weight:600">${escapeHtml(targetLang === 'en' ? 'Discussion' : 'Pembahasan')}</h2>`);
+      s.paragraphs.forEach((p: string) => {
+        parts.push(`<p style="text-align:justify;margin-top:0.75rem">${escapeHtml(p)}</p>`);
+      });
     }
+    if (s.points && s.points.length) {
+      parts.push(`<h3 style="text-align:left;margin-top:1rem;margin-bottom:0.25rem;font-weight:600">${escapeHtml(targetLang === 'en' ? 'Key Points' : 'Poin Penting')}</h3><ul style="margin-left:1rem">` + s.points.map((pt: string) => `<li style="text-align:justify;margin-bottom:0.25rem">${escapeHtml(pt)}</li>`).join('') + `</ul>`);
+    }
+    if (s.conclusion) parts.push(`<h2 style="text-align:left;margin-top:1rem;margin-bottom:0.25rem;font-weight:600">${escapeHtml(targetLang === 'en' ? 'Conclusion' : 'Kesimpulan')}</h2><p style="text-align:justify;margin-top:0.25rem">${escapeHtml(s.conclusion)}</p>`);
+    return parts.join('');
+  };
+
+  const escapeHtml = (str: string) => String(str).replace(/[&<>'"]/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'} as Record<string,string>)[c]);
+
+  const handleSave = () => {
+    // Read editor content, sanitize, update currentSummaries, persist entire summaries object
+  // Prefer editor innerText for storage (clean text), but keep HTML for display in editor
+  const rawText = editorRef.current ? editorRef.current.innerText : editedContent;
+  const cleaned = sanitizeForDisplay(String(rawText));
+
+  const updated = { ...currentSummaries };
+  if (activeTab === 'brief') updated.brief = cleaned;
+  if (activeTab === 'detailed') updated.detailed = cleaned;
+  if (activeTab === 'keyPoints') updated.keyPoints = cleaned;
+
+  setCurrentSummaries(updated);
+
+    try {
+  const k = summariesKeyRef.current || computeSummariesKey(summaries);
+  localStorage.setItem('sonova_saved_summaries_' + k, JSON.stringify(updated));
+    } catch (e) {
+      // ignore storage errors
+    }
+
     setEditMode(false);
+    // clear translation cache so translated views refresh
+    setTranslations({});
+  showToast('Rangkuman berhasil diperbarui');
   };
 
   const handleCancel = () => {
     setEditedContent(originalContent);
+    if (editorRef.current) editorRef.current.innerText = originalContent;
     setEditMode(false);
-  };
-
-  const showToast = (msg: string) => {
-    setToast(msg);
-    setTimeout(() => setToast(''), 2200);
   };
 
   useEffect(() => {
     try {
       const saved = localStorage.getItem('sonova_lang');
       if (saved) setTargetLang(saved);
+      // load saved summaries if present
+      // compute per-video key and load from that key
+      const k = computeSummariesKey(summaries);
+      summariesKeyRef.current = k;
+      const savedSummariesRaw = localStorage.getItem('sonova_saved_summaries_' + k);
+      if (savedSummariesRaw) {
+        const savedSummaries = JSON.parse(savedSummariesRaw || '{}');
+        setCurrentSummaries(prev => ({
+          brief: savedSummaries.brief ?? prev.brief,
+          detailed: savedSummaries.detailed ?? prev.detailed,
+          keyPoints: savedSummaries.keyPoints ?? prev.keyPoints
+        }));
+      }
     } catch (e) {
       /* ignore */
     }
@@ -105,6 +197,24 @@ const SummaryDisplay: React.FC<SummaryDisplayProps> = ({ summaries }) => {
   useEffect(() => {
     try { localStorage.setItem('sonova_lang', targetLang); } catch (e) { }
   }, [targetLang]);
+
+  // Keep currentSummaries in sync if the incoming summaries prop updates and there's no saved override
+  useEffect(() => {
+    try {
+      // recompute key for incoming summaries and load overrides for this video if any
+      const k = computeSummariesKey(summaries);
+      summariesKeyRef.current = k;
+      const savedRaw = localStorage.getItem('sonova_saved_summaries_' + k);
+      const saved = savedRaw ? JSON.parse(savedRaw) : {};
+      setCurrentSummaries(prev => ({
+        brief: saved.brief ?? summaries.brief ?? prev.brief,
+        detailed: saved.detailed ?? summaries.detailed ?? prev.detailed,
+        keyPoints: saved.keyPoints ?? summaries.keyPoints ?? prev.keyPoints
+      }));
+    } catch (e) {
+      // ignore
+    }
+  }, [summaries.brief, summaries.detailed, summaries.keyPoints]);
 
   const availableLangs = [
   { code: 'id', label: 'Indonesia' },
@@ -129,9 +239,9 @@ const SummaryDisplay: React.FC<SummaryDisplayProps> = ({ summaries }) => {
     try {
       // Build sections bundle for all three tabs so server can translate each independently
       const bundle = {
-        brief: buildPaperSections(summaries.brief || ''),
-        detailed: buildPaperSections(summaries.detailed || ''),
-        keyPoints: buildPaperSections(summaries.keyPoints || '')
+        brief: buildPaperSections(currentSummaries.brief || ''),
+        detailed: buildPaperSections(currentSummaries.detailed || ''),
+        keyPoints: buildPaperSections(currentSummaries.keyPoints || '')
       };
 
       const res = await fetch('/api/translate', {
@@ -164,7 +274,7 @@ const SummaryDisplay: React.FC<SummaryDisplayProps> = ({ summaries }) => {
     // If user selected default 'id' but original may already be in Indonesian, still safe to request once
     requestTranslation(targetLang).catch(() => {});
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [targetLang, summaries.brief, summaries.detailed, summaries.keyPoints, activeTab]);
+  }, [targetLang, currentSummaries.brief, currentSummaries.detailed, currentSummaries.keyPoints, activeTab]);
 
   const buildPaperTextFromSections = (s: any) => {
     if (!s) return '';
@@ -186,7 +296,7 @@ const SummaryDisplay: React.FC<SummaryDisplayProps> = ({ summaries }) => {
     try {
       // Copy the formatted paper text when not editing, otherwise copy edited content
   let contentToCopy = '';
-  if (editMode) contentToCopy = editedContent;
+  if (editMode) contentToCopy = editorRef.current ? editorRef.current.innerText : editedContent;
   else if (translations[targetLang]) contentToCopy = buildPaperTextFromSections(translations[targetLang]);
   else contentToCopy = buildPaperText(getCurrentContent());
       await navigator.clipboard.writeText(contentToCopy);
@@ -199,11 +309,73 @@ const SummaryDisplay: React.FC<SummaryDisplayProps> = ({ summaries }) => {
     }
   };
 
+  // Editor toolbar commands using document.execCommand fallback
+  const applyCommand = (cmd: string, value?: string) => {
+    if (!editorRef.current) return;
+    editorRef.current.focus();
+    try {
+      // use execCommand for basic formatting
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      document.execCommand(cmd, false, value);
+      // sync editedContent
+      setEditedContent(editorRef.current.innerHTML || editorRef.current.innerText);
+    } catch (e) {
+      console.warn('Formatting command failed', e);
+    }
+  };
+
+  const handleInsertLink = () => {
+    const url = window.prompt('Masukkan URL (https://...)');
+    if (url) applyCommand('createLink', url);
+  };
+
+  const exportAsTxt = (text: string) => {
+    const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'summary.txt';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  };
+
+  const exportAsDoc = (html: string) => {
+    // Basic Word export using HTML blob
+    const header = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>";
+    const footer = '</html>';
+    const source = header + '<body>' + html + '</body>' + footer;
+    const blob = new Blob(['\ufeff', source], { type: 'application/msword' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'summary.doc';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  };
+
+  const exportAsPdf = (html: string) => {
+    // Open printable window
+    const w = window.open('', '_blank');
+    if (!w) { showToast('Popup blocked'); return; }
+    w.document.write('<html><head><title>Print Summary</title></head><body>' + html + '</body></html>');
+    w.document.close();
+    w.focus();
+    // Give it a moment to render
+    setTimeout(() => { w.print(); }, 500);
+  };
+
   // Build structured paper sections from raw content and summaries
   const buildPaperSections = (raw: string) => {
-  const brief = sanitizeForDisplay(summaries.brief || '');
-  const detailed = sanitizeForDisplay(raw || summaries.detailed || '');
-  const keyPoints = sanitizeForDisplay(summaries.keyPoints || '');
+  // Use currentSummaries (latest saved/edited) as the source of truth to avoid duplication
+  const brief = sanitizeForDisplay(currentSummaries.brief || '');
+  // Avoid using the same text for both brief and detailed (prevents duplicate intro+paragraphs)
+  const detailed = sanitizeForDisplay((raw && raw !== currentSummaries.brief) ? raw : (currentSummaries.detailed || ''));
+  const keyPoints = sanitizeForDisplay(currentSummaries.keyPoints || '');
 
     const titleCandidate = (brief.split('\n')[0] || detailed.split('\n')[0] || '').trim();
     const title = titleCandidate || 'Ringkasan Video';
@@ -402,6 +574,32 @@ const SummaryDisplay: React.FC<SummaryDisplayProps> = ({ summaries }) => {
                       <FaUndo className="w-3 h-3" />
                       Cancel
                     </button>
+                    <div className="relative">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const text = editorRef.current ? (editorRef.current.innerText || editorRef.current.innerHTML) : editedContent;
+                          exportAsTxt(String(text));
+                        }}
+                        className="ml-2 px-3 py-2 rounded-lg bg-yellow-500 hover:bg-yellow-600 text-white text-sm"
+                      >Export TXT</button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const html = editorRef.current ? editorRef.current.innerHTML : editedContent;
+                          exportAsDoc(String(html));
+                        }}
+                        className="ml-2 px-3 py-2 rounded-lg bg-indigo-500 hover:bg-indigo-600 text-white text-sm"
+                      >Export DOC</button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const html = editorRef.current ? editorRef.current.innerHTML : editedContent;
+                          exportAsPdf(String(html));
+                        }}
+                        className="ml-2 px-3 py-2 rounded-lg bg-slate-700 hover:bg-slate-800 text-white text-sm"
+                      >Print / PDF</button>
+                    </div>
                   </>
                 )}
               </div>
@@ -415,15 +613,31 @@ const SummaryDisplay: React.FC<SummaryDisplayProps> = ({ summaries }) => {
             <div className={`transition-all duration-500 ${isExpanded ? 'max-h-[none]' : 'max-h-96'}`}>
               {editMode ? (
                 <div className="relative">
-                  <textarea
-                    value={editedContent}
-                    onChange={(e) => setEditedContent(e.target.value)}
-                    className="w-full h-64 p-6 border-2 border-violet-200 rounded-2xl focus:border-violet-400 focus:outline-none resize-none bg-gradient-to-br from-white to-violet-50/30 text-gray-800 leading-relaxed shadow-inner"
-                    placeholder="Edit your summary here..."
-                  />
-                  <div className="absolute bottom-4 right-4 text-xs text-gray-400">
-                    Click Save to keep changes
+                  {/* Toolbar */}
+                  <div className="flex gap-2 mb-3">
+                    <button type="button" onClick={() => applyCommand('bold')} className="px-3 py-1 bg-white rounded-md shadow-sm">B</button>
+                    <button type="button" onClick={() => applyCommand('italic')} className="px-3 py-1 bg-white rounded-md shadow-sm">I</button>
+                    <button type="button" onClick={() => applyCommand('underline')} className="px-3 py-1 bg-white rounded-md shadow-sm">U</button>
+                    <button type="button" onClick={() => applyCommand('insertUnorderedList')} className="px-3 py-1 bg-white rounded-md shadow-sm">• List</button>
+                    <button type="button" onClick={() => applyCommand('insertOrderedList')} className="px-3 py-1 bg-white rounded-md shadow-sm">1. List</button>
+                    <button type="button" onClick={handleInsertLink} className="px-3 py-1 bg-white rounded-md shadow-sm">Link</button>
+                    <button type="button" onClick={() => applyCommand('undo')} className="px-3 py-1 bg-white rounded-md shadow-sm">Undo</button>
+                    <button type="button" onClick={() => applyCommand('redo')} className="px-3 py-1 bg-white rounded-md shadow-sm">Redo</button>
                   </div>
+
+                  <div className="bg-gradient-to-br from-white to-violet-50/30 rounded-2xl p-0 shadow-inner border border-violet-100/50">
+                    <div className="max-h-96 overflow-y-auto p-6">
+                      <div
+                        ref={editorRef}
+                        contentEditable
+                        role="textbox"
+                        aria-multiline
+                        onInput={() => setEditedContent(editorRef.current ? editorRef.current.innerHTML : '')}
+                        className="w-full min-h-[10rem] whitespace-pre-wrap p-0 text-gray-800 leading-relaxed outline-none"
+                        style={{ whiteSpace: 'pre-wrap' }}
+                      />
+                    </div>
+                  </div>  
                 </div>
               ) : (
                 <div className="bg-gradient-to-br from-white to-violet-50/30 rounded-2xl p-0 shadow-inner border border-violet-100/50">
@@ -433,9 +647,9 @@ const SummaryDisplay: React.FC<SummaryDisplayProps> = ({ summaries }) => {
                       const translated = translations[targetLang];
                       // Choose the correct source based on active tab
                       const baseMap: any = {
-                        brief: buildPaperSections(summaries.brief || ''),
-                        detailed: buildPaperSections(summaries.detailed || ''),
-                        keyPoints: buildPaperSections(summaries.keyPoints || '')
+                        brief: buildPaperSections(currentSummaries.brief || ''),
+                        detailed: buildPaperSections(currentSummaries.detailed || ''),
+                        keyPoints: buildPaperSections(currentSummaries.keyPoints || '')
                       };
                       const sections = (translated && translated[activeTab]) ? translated[activeTab] : baseMap[activeTab];
 
@@ -474,7 +688,7 @@ const SummaryDisplay: React.FC<SummaryDisplayProps> = ({ summaries }) => {
               )}
             </div>
 
-            {!isExpanded && getCurrentContent().length > 500 && (
+            {!isExpanded && !editMode && getCurrentContent().length > 500 && (
               <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-white to-transparent pointer-events-none"></div>
             )}
           </div>

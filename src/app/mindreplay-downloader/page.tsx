@@ -1,4 +1,4 @@
-import { FaDownload, FaHistory, FaClock, FaUserShield, FaMobileAlt, FaSearch, FaCloudDownloadAlt } from 'react-icons/fa';
+import { FaHistory, FaClock, FaUserShield, FaMobileAlt, FaSearch, FaCloudDownloadAlt } from 'react-icons/fa';
 import PageTemplate from '@/components/PageTemplate';
 
 export default function MindReplayDownloader() {

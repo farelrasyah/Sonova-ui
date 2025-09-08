@@ -30,7 +30,7 @@ export async function POST(req: Request) {
       } else {
         aiText = JSON.stringify(response);
       }
-    } catch (e) {
+    } catch (_e) {
       aiText = JSON.stringify(response);
     }
 
@@ -39,7 +39,7 @@ export async function POST(req: Request) {
     try {
       const m = aiText.match(/\{[\s\S]*\}/m);
       if (m) parsed = JSON.parse(m[0]);
-    } catch (e) {
+    } catch (_e) {
       parsed = null;
     }
 

@@ -26,7 +26,7 @@ export async function GET(request: Request) {
     try {
       const transcript = await YoutubeTranscript.fetchTranscript(videoId);
       transcriptText = transcript.map(item => item.text).join(' ');
-    } catch (transcriptError) {
+    } catch (_transcriptError) {
       console.log('Transcript not available, trying to get video info instead');
     }
 
@@ -49,8 +49,8 @@ export async function GET(request: Request) {
         } else {
           throw new Error('Invalid video URL');
         }
-      } catch (videoError) {
-        console.error('Video info fetch error:', videoError);
+      } catch (_videoError) {
+        console.error('Video info fetch error:', _videoError);
         
         // Final fallback - create summary from URL/ID
         transcriptText = `This is a YouTube video with ID: ${videoId}. While we couldn't access the full video details, this appears to be a video that may contain educational, entertainment, or informational content. Please note that we couldn't retrieve specific details about this video's content.`;

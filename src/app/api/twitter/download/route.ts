@@ -87,8 +87,8 @@ export async function GET(req: NextRequest) {
     }
 
     // Tentukan nama file dan content type
-    let finalFilename = 'twitter_media';
-    let contentType = upstream.headers.get('content-type') || 'application/octet-stream';
+  let finalFilename = 'twitter_media';
+  const contentType = upstream.headers.get('content-type') || 'application/octet-stream';
     
     if (filename) {
       finalFilename = sanitizeFilename(filename);
